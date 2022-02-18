@@ -32,15 +32,15 @@ endif()
 
 # Meta information about the project
 # cmake-format: off
-set(META_PROJECT_NAME        "asap")
+set(META_PROJECT_NAME        "asap-textwrap")
 set(META_PROJECT_DESCRIPTION "Instantly start with a fully loaded CMake project")
 set(META_AUTHOR_ORGANIZATION "The Authors")
-set(META_GITHUB_REPO         "https://github.com/abdes/asap")
-set(META_AUTHOR_DOMAIN       "https://github.com/abdes/asap")
+set(META_GITHUB_REPO         "https://github.com/asap-projects/asap-textwrap")
+set(META_AUTHOR_DOMAIN       "https://github.com/asap-projects")
 set(META_AUTHOR_MAINTAINER   "Abdessattar Sassi")
-set(META_VERSION_MAJOR       "4")
-set(META_VERSION_MINOR       "1")
-set(META_VERSION_PATCH       "1")
+set(META_VERSION_MAJOR       "1")
+set(META_VERSION_MINOR       "0")
+set(META_VERSION_PATCH       "0")
 set(META_VERSION_REVISION    "${GIT_REV}")
 set(META_VERSION             "${META_VERSION_MAJOR}.${META_VERSION_MINOR}.${META_VERSION_PATCH}")
 set(META_NAME_VERSION        "${META_PROJECT_NAME} v${META_VERSION} (${META_VERSION_REVISION})")
@@ -314,6 +314,8 @@ endif()
 
 add_subdirectory(common)
 add_subdirectory(contract)
+add_subdirectory(fsm)
+add_subdirectory(textwrap)
 
 # ==============================================================================
 # Code analyzers: clang-tidy, cppcheck, valgrind, sanitizers, etc...
