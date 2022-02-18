@@ -6,9 +6,9 @@
      ^ for sub-subsections
      " for paragraphs
 
-###################
-ASAP documentation!
-###################
+###############################
+ASAP Text Wrapper documentation
+###############################
 
 .. |date| date::
 
@@ -19,49 +19,29 @@ Last Updated on |date|
    :titlesonly:
    :hidden:
 
-   getting-started/index
-   project-development/index
-   documentation/index
-   library-modules/index
    license
    changelog.md
    version
 
-Welcome! This is the documentation for the *asap* project. This is the top level
-container project for the asap modules. It provides the integrated build system
-and the overall structure for projects following the asap development workflow.
+Welcome! This is the documentation for the
+`asap-fsm <https://github.com/asap-projects/asap-textwrap>`_ |version| project.
 
-The main goal from this family of modules and projects is to significantly cut
-the bootstrap time of starting a new c++ application, using CMake as the build
-system.
+This is a build container for the :doc:`textwrap <textwrap:index>` module. It
+uses the `asap <https://github.com/abdes/asap>`_ integrated build system and
+follows its development workflow.
 
 Parts of the documentation
 ==========================
 
-:doc:`Getting Started! <getting-started/index>`
------------------------------------------------
+:doc:`textwrap <textwrap:api>`
+------------------------------
+  *start here to understand the classes provided by the library and how to use
+  them.*
 
-*start here to understand how to use this project as a starter for your own
-project*
-
-:doc:`Project Development <project-development/index>`
-------------------------------------------------------
-
-*refer to this part of the documentation to understand the build system
-specifics for this project, the development workflow, coding and unit testing
-guidelines*
-
-:doc:`Documentation <documentation/index>`
-------------------------------------------
-
-*refer to this part of the documentation to understand how project documentation
-is structured and built from source using `doxygen` and `sphinx`.*
-
-:doc:`Library Modules <library-modules/index>`
-----------------------------------------------
-*check this out to explore the different modules part of this project. From
-there, you can also jump to the detailed API documentation of each of those
-modules.*
+`Developer Guides <https://abdes.github.io/asap/master/html/project-development/index.html>`_
+---------------------------------------------------------------------------------------------
+  *head over to the `asap` project documentation for detailed guides on how to
+  build and maintain the different targets in this project.*
 
 Acknowledgements
 ================
