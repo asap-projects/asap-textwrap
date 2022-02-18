@@ -1,0 +1,392 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tutorial: A more robust door &#8212; Module: fsm</title>
+    
+  <link href="../_static/css/theme.css" rel="stylesheet">
+  <link href="../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-book-theme.css?digest=84ace793992934648b4de8eed757e5a2" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/sphinx-book-theme.9d8b4a8b9bb19db25eeaddc40d639ba2.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Tutorial: A secure door" href="secure.html" />
+    <link rel="prev" title="Tutorial: A basic door" href="basic.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<div class="col-12 col-md-3 bd-sidebar site-navigation " id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Module: fsm</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="current nav bd-sidenav">
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="../tutorial.html">
+   Tutorial
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="basic.html">
+     Basic door
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     Robust door
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="secure.html">
+     Secure door
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../api.html">
+   API
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../api/statemachine.html">
+     State Machine
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../api/actions.html">
+     Actions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../api/state-helpers.html">
+     State Helpers
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../api/exceptions.html">
+     Exceptions
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../license.html">
+   License
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../version.html">
+   Version
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+</div>
+
+
+          
+
+
+          
+<!-- This is an invisible pixel that we watch to see if we've scrolled. -->
+<div class="sbt-scroll-pixel-helper"></div>
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            <div class="topbar-left">
+                
+                <label class="nav-toggle-button" for="__navigation">
+                    <div class="visually-hidden">Toggle navigation</div>
+                    <i class="fas fa-bars"></i>
+                </label>
+                
+            </div>
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/tutorial/robust.rst.txt"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.rst</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/asap-projects/asap-textwrap"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/asap-projects/asap-textwrap/issues/new?title=Issue%20on%20page%20%2Ftutorial/robust.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
+            
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Tutorial: A more robust door</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                    </div>
+                </div>
+            </div>
+            
+              <div>
+                
+  <div class="section" id="tutorial-a-more-robust-door">
+<h1>Tutorial: A more robust door<a class="headerlink" href="#tutorial-a-more-robust-door" title="Permalink to this headline">¶</a></h1>
+<p>So far, we have created the door state machine with two states (Open and
+Closed), but we don’t like the fact that the current implementation does not
+check if the door is already open or already closed when someone attempts to
+open/close it.</p>
+<p>We want the implementation to report an error when such cases happen. For that,
+we will use custom event handlers.</p>
+<p>We will also use this opportunity to simplify the diagnostics of the state
+machine by having the states themselves report when enter/leave them. For that
+we will use the <cite>OnEnter()</cite> method. OnEnter/OnLeave are optional, but when they
+are present, they get called during state transitions. For this example, we will
+omit the <cite>OnLeave</cite> method as we just want to report the new state.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;fsm/fsm.h&gt;</span><span class="cp"></span>
+<span class="linenos"> 2</span>
+<span class="linenos"> 3</span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+<span class="linenos"> 4</span>
+<span class="linenos"> 5</span><span class="k">using</span><span class="w"> </span><span class="n">asap</span><span class="o">::</span><span class="n">fsm</span><span class="o">::</span><span class="n">ByDefault</span><span class="p">;</span><span class="w"></span>
+<span class="linenos"> 6</span><span class="k">using</span><span class="w"> </span><span class="n">asap</span><span class="o">::</span><span class="n">fsm</span><span class="o">::</span><span class="n">Continue</span><span class="p">;</span><span class="w"></span>
+<span class="linenos"> 7</span><span class="k">using</span><span class="w"> </span><span class="n">asap</span><span class="o">::</span><span class="n">fsm</span><span class="o">::</span><span class="n">DoNothing</span><span class="p">;</span><span class="w"></span>
+<span class="linenos"> 8</span><span class="k">using</span><span class="w"> </span><span class="n">asap</span><span class="o">::</span><span class="n">fsm</span><span class="o">::</span><span class="n">On</span><span class="p">;</span><span class="w"></span>
+<span class="linenos"> 9</span><span class="k">using</span><span class="w"> </span><span class="n">asap</span><span class="o">::</span><span class="n">fsm</span><span class="o">::</span><span class="n">StateMachine</span><span class="p">;</span><span class="w"></span>
+<span class="linenos">10</span><span class="k">using</span><span class="w"> </span><span class="n">asap</span><span class="o">::</span><span class="n">fsm</span><span class="o">::</span><span class="n">Status</span><span class="p">;</span><span class="w"></span>
+<span class="linenos">11</span><span class="k">using</span><span class="w"> </span><span class="n">asap</span><span class="o">::</span><span class="n">fsm</span><span class="o">::</span><span class="n">TransitionTo</span><span class="p">;</span><span class="w"></span>
+<span class="linenos">12</span><span class="k">using</span><span class="w"> </span><span class="n">asap</span><span class="o">::</span><span class="n">fsm</span><span class="o">::</span><span class="n">Will</span><span class="p">;</span><span class="w"></span>
+<span class="linenos">13</span>
+<span class="linenos">14</span><span class="k">struct</span><span class="w"> </span><span class="nc">OpenEvent</span><span class="w"> </span><span class="p">{};</span><span class="w"></span>
+<span class="linenos">15</span><span class="k">struct</span><span class="w"> </span><span class="nc">CloseEvent</span><span class="w"> </span><span class="p">{};</span><span class="w"></span>
+<span class="linenos">16</span>
+<span class="linenos">17</span><span class="k">struct</span><span class="w"> </span><span class="nc">ClosedState</span><span class="p">;</span><span class="w"></span>
+<span class="linenos">18</span><span class="k">struct</span><span class="w"> </span><span class="nc">OpenState</span><span class="p">;</span><span class="w"></span>
+<span class="linenos">19</span>
+<span class="linenos">20</span><span class="k">struct</span><span class="w"> </span><span class="nc">ClosedState</span><span class="w"></span>
+<span class="linenos">21</span><span class="w">    </span><span class="o">:</span><span class="w"> </span><span class="n">Will</span><span class="o">&lt;</span><span class="n">ByDefault</span><span class="o">&lt;</span><span class="n">DoNothing</span><span class="o">&gt;</span><span class="p">,</span><span class="w"> </span><span class="n">On</span><span class="o">&lt;</span><span class="n">OpenEvent</span><span class="p">,</span><span class="w"> </span><span class="n">TransitionTo</span><span class="o">&lt;</span><span class="n">OpenState</span><span class="o">&gt;&gt;&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="linenos">22</span><span class="w">  </span><span class="k">using</span><span class="w"> </span><span class="n">Will</span><span class="o">::</span><span class="n">Handle</span><span class="p">;</span><span class="w"></span>
+<span class="linenos">23</span>
+<span class="linenos">24</span><span class="w">  </span><span class="k">template</span><span class="w"> </span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">Event</span><span class="o">&gt;</span><span class="w"> </span><span class="k">auto</span><span class="w"> </span><span class="n">OnEnter</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">Event</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="cm">/*event*/</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">Status</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="linenos">25</span><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;   &gt; door is closed</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="linenos">26</span><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">Continue</span><span class="p">{};</span><span class="w"></span>
+<span class="linenos">27</span><span class="w">  </span><span class="p">}</span><span class="w"></span>
+<span class="linenos">28</span>
+<span class="linenos">29</span><span class="w">  </span><span class="p">[[</span><span class="n">nodiscard</span><span class="p">]]</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="k">auto</span><span class="w"> </span><span class="n">Handle</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">CloseEvent</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="cm">/*event*/</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">DoNothing</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="linenos">30</span><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cerr</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Error: the door is already closed!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="linenos">31</span><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">DoNothing</span><span class="p">{};</span><span class="w"></span>
+<span class="linenos">32</span><span class="w">  </span><span class="p">}</span><span class="w"></span>
+<span class="linenos">33</span><span class="p">};</span><span class="w"></span>
+<span class="linenos">34</span>
+<span class="linenos">35</span><span class="k">struct</span><span class="w"> </span><span class="nc">OpenState</span><span class="w"></span>
+<span class="linenos">36</span><span class="w">    </span><span class="o">:</span><span class="w"> </span><span class="n">Will</span><span class="o">&lt;</span><span class="n">ByDefault</span><span class="o">&lt;</span><span class="n">DoNothing</span><span class="o">&gt;</span><span class="p">,</span><span class="w"> </span><span class="n">On</span><span class="o">&lt;</span><span class="n">CloseEvent</span><span class="p">,</span><span class="w"> </span><span class="n">TransitionTo</span><span class="o">&lt;</span><span class="n">ClosedState</span><span class="o">&gt;&gt;&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="linenos">37</span><span class="w">  </span><span class="k">using</span><span class="w"> </span><span class="n">Will</span><span class="o">::</span><span class="n">Handle</span><span class="p">;</span><span class="w"></span>
+<span class="linenos">38</span>
+<span class="linenos">39</span><span class="w">  </span><span class="k">template</span><span class="w"> </span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">Event</span><span class="o">&gt;</span><span class="w"> </span><span class="k">auto</span><span class="w"> </span><span class="n">OnEnter</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">Event</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="cm">/*event*/</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">Status</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="linenos">40</span><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;   &gt; door is open</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="linenos">41</span><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">Continue</span><span class="p">{};</span><span class="w"></span>
+<span class="linenos">42</span><span class="w">  </span><span class="p">}</span><span class="w"></span>
+<span class="linenos">43</span>
+<span class="linenos">44</span><span class="w">  </span><span class="p">[[</span><span class="n">nodiscard</span><span class="p">]]</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="k">auto</span><span class="w"> </span><span class="n">Handle</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">OpenEvent</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="cm">/*event*/</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">DoNothing</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="linenos">45</span><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cerr</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Error: the door is already open!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="linenos">46</span><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">DoNothing</span><span class="p">{};</span><span class="w"></span>
+<span class="linenos">47</span><span class="w">  </span><span class="p">}</span><span class="w"></span>
+<span class="linenos">48</span><span class="p">};</span><span class="w"></span>
+<span class="linenos">49</span>
+<span class="linenos">50</span><span class="k">using</span><span class="w"> </span><span class="n">Door</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">StateMachine</span><span class="o">&lt;</span><span class="n">ClosedState</span><span class="p">,</span><span class="w"> </span><span class="n">OpenState</span><span class="o">&gt;</span><span class="p">;</span><span class="w"></span>
+<span class="linenos">51</span>
+<span class="linenos">52</span><span class="k">auto</span><span class="w"> </span><span class="n">main</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="linenos">53</span><span class="w">  </span><span class="n">Door</span><span class="w"> </span><span class="n">door</span><span class="p">{</span><span class="n">ClosedState</span><span class="p">{},</span><span class="w"> </span><span class="n">OpenState</span><span class="p">{}};</span><span class="w"></span>
+<span class="linenos">54</span><span class="w">  </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;-- Starting</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="linenos">55</span>
+<span class="linenos">56</span><span class="w">  </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;-- sending close event</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="linenos">57</span><span class="w">  </span><span class="n">door</span><span class="p">.</span><span class="n">Handle</span><span class="p">(</span><span class="n">CloseEvent</span><span class="p">{});</span><span class="w"></span>
+<span class="linenos">58</span>
+<span class="linenos">59</span><span class="w">  </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;-- sending open event</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="linenos">60</span><span class="w">  </span><span class="n">door</span><span class="p">.</span><span class="n">Handle</span><span class="p">(</span><span class="n">OpenEvent</span><span class="p">{});</span><span class="w"></span>
+<span class="linenos">61</span>
+<span class="linenos">62</span><span class="w">  </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;-- sending open event</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="linenos">63</span><span class="w">  </span><span class="n">door</span><span class="p">.</span><span class="n">Handle</span><span class="p">(</span><span class="n">OpenEvent</span><span class="p">{});</span><span class="w"></span>
+<span class="linenos">64</span>
+<span class="linenos">65</span><span class="w">  </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;-- sending close event</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="linenos">66</span><span class="w">  </span><span class="n">door</span><span class="p">.</span><span class="n">Handle</span><span class="p">(</span><span class="n">CloseEvent</span><span class="p">{});</span><span class="w"></span>
+<span class="linenos">67</span><span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Notice how we define a template method for OnEnter that gets called on any type
+of event. We could also write OnEnter handlers for a specific type of event.
+Such handlers will only get called when the event type matches the handler’s
+signature (templates SFINAE).</p>
+<p>If we run that example, this is what we get:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>-- Starting
+-- sending close event
+Error: the door is already closed!
+-- sending open event
+  &gt; door is open
+-- sending open event
+Error: the door is already open!
+-- sending close event
+  &gt; door is closed
+</pre></div>
+</div>
+<p>Now, we want to make our door more secure by adding a lock pad and a code that
+will be required to unlock it once it is locked.</p>
+<p>Head over to the <a class="reference internal" href="secure.html"><span class="doc">next step</span></a> to see how we can do that.</p>
+</div>
+
+
+              </div>
+              
+            
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="basic.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Tutorial: A basic door</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="secure.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Tutorial: A secure door</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            
+        </div>
+    </div>
+    <footer class="footer">
+  <p>
+    
+        &copy; Copyright 2018, The Authors.<br/>
+  </p>
+</footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+  </body>
+</html>
