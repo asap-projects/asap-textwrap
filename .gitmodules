@@ -10,3 +10,6 @@
 [submodule "fsm"]
 	path = fsm
 	url = https://github.com/asap-projects/fsm.git
+[submodule "textwrap"]
+	path = textwrap
+	url = https://github.com/asap-projects/textwrap.git
