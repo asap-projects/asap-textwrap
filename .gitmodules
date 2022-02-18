@@ -1,0 +1,9 @@
+[submodule "third_party/gsl"]
+	path = third_party/gsl
+	url = https://github.com/microsoft/GSL.git
+[submodule "cmake/common"]
+	path = cmake/common
+	url = https://github.com/abdes/cmake
+[submodule "doxygen/doxygen-awesome-css"]
+	path = doxygen/doxygen-awesome-css
+	url = https://github.com/jothepro/doxygen-awesome-css.git
