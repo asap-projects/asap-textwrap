@@ -24,11 +24,13 @@ Last Updated on |date|
    version
 
 Welcome! This is the documentation for the
-`asap-fsm <https://github.com/asap-projects/asap-textwrap>`_ |version| project.
+`asap-textwrap <https://github.com/asap-projects/asap-textwrap>`_ |version|
+project.
 
-This is a build container for the :doc:`textwrap <textwrap:index>` module. It
-uses the `asap <https://github.com/abdes/asap>`_ integrated build system and
-follows its development workflow.
+This is a build container for the
+`textwrap <https://github.com/asap-projects/textwrap>`_
+module. It uses the `asap <https://github.com/abdes/asap>`_ integrated build
+system and follows its development workflow.
 
 Parts of the documentation
 ==========================
