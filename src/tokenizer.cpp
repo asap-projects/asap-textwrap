@@ -15,7 +15,6 @@
 #include <common/compilers.h>
 #include <common/overload.h>
 #include <fsm/fsm.h>
-#include <logging/logging.h>
 
 // fmt causes a bunch of compiler warnings we can't do anything about except
 // temporarily disabling them
@@ -199,9 +198,7 @@ struct FinalState;
  * token before returning.
  */
 void DispatchTokenToConsumer(const TokenConsumer &consume_token,
-    TokenType token_type, std::string &token, spdlog::logger &logger) {
-  ASLOG_TO_LOGGER(logger, info, "== new token: {} / \"{}\"", TokenType::Chunk,
-      EscapeSpecialWhiteSpaces(token));
+    TokenType token_type, std::string &token) {
   consume_token(token_type, token);
   token.clear();
 }
@@ -215,18 +212,16 @@ void DispatchTokenToConsumer(const TokenConsumer &consume_token,
  * produced. The tokenizer can be reused for a new input text.
  */
 struct FinalState : public Will<ByDefault<DoNothing>> {
-  FinalState(spdlog::logger &logger, TokenConsumer callback)
-      : logger_(logger), consume_token_{std::move(callback)} {
+  FinalState(TokenConsumer callback)
+      : consume_token_{std::move(callback)} {
   }
 
   auto OnEnter(const InputEnd & /*event*/) -> Status {
-    ASLOG_TO_LOGGER(logger_, debug, "enter(FinalState) with InputEnd");
     consume_token_(TokenType::EndOfInput, "");
     return Terminate{};
   }
 
 private:
-  spdlog::logger &logger_;
   TokenConsumer consume_token_;
 };
 
@@ -242,17 +237,6 @@ struct InitialState
           On<WhiteSpaceChar, TransitionTo<WhiteSpaceState>>,
           On<InputEnd, TransitionTo<FinalState>>> {
   using Will::Handle;
-
-  explicit InitialState(spdlog::logger &logger) : logger_(logger) {
-  }
-
-  template <typename Event> auto OnLeave(const Event &event) -> Status {
-    ASLOG_TO_LOGGER(logger_, debug, "leave(InitialState) with {}", event);
-    return Continue{};
-  }
-
-private:
-  spdlog::logger &logger_;
 };
 
 /*!
@@ -268,34 +252,29 @@ struct WordState : public Will<On<InputEnd, TransitionTo<FinalState>>,
                        On<WhiteSpaceChar, TransitionTo<WhiteSpaceState>>> {
   using Will::Handle;
 
-  WordState(
-      spdlog::logger &logger, TokenConsumer callback, bool break_on_hyphens)
-      : logger_(logger), consume_token_{std::move(callback)},
+  WordState( TokenConsumer callback, bool break_on_hyphens)
+      : consume_token_{std::move(callback)},
         break_on_hyphens_{break_on_hyphens} {
   }
 
   auto OnEnter(const NonWhiteSpaceChar &event) -> Status {
-    ASLOG_TO_LOGGER(logger_, debug, "enter(WordState) with {}", event);
     return ReissueEvent{};
   }
 
   template <typename Event> auto OnLeave(const Event &event) -> Status {
     if (!token_.empty()) {
       DispatchTokenToConsumer(
-          consume_token_, TokenType::Chunk, token_, logger_);
+          consume_token_, TokenType::Chunk, token_);
     }
-    ASLOG_TO_LOGGER(logger_, debug, "leave(WordState) with {}", event);
     return Continue{};
   }
 
   auto Handle(const NonWhiteSpaceChar &event) -> DoNothing {
-    ASLOG_TO_LOGGER(logger_, debug, "WordState.Handle {}", event);
     if (break_on_hyphens_ && event.value == '-' && !token_.empty() &&
         (std::isalpha(token_.back()) != 0)) {
-      ASLOG_TO_LOGGER(logger_, debug, "found '-' and must break on hyphens");
       token_.push_back(event.value);
       DispatchTokenToConsumer(
-          consume_token_, TokenType::Chunk, token_, logger_);
+          consume_token_, TokenType::Chunk, token_);
     } else {
       token_.push_back(event.value);
     }
@@ -303,7 +282,6 @@ struct WordState : public Will<On<InputEnd, TransitionTo<FinalState>>,
   }
 
 private:
-  spdlog::logger &logger_;
   std::string token_;
   TokenConsumer consume_token_;
   const bool break_on_hyphens_;
@@ -324,35 +302,28 @@ struct WhiteSpaceState : public Will<On<InputEnd, TransitionTo<FinalState>>,
                              On<NonWhiteSpaceChar, TransitionTo<WordState>>> {
   using Will::Handle;
 
-  explicit WhiteSpaceState(spdlog::logger &logger, TokenConsumer callback,
+  explicit WhiteSpaceState(TokenConsumer callback,
       const std::string &tab, bool replace_ws, bool collapse_ws)
-      : logger_(logger), consume_token_{std::move(callback)}, tab_{tab},
+      : consume_token_{std::move(callback)}, tab_{tab},
         replace_ws_{replace_ws}, collapse_ws_{collapse_ws} {
   }
 
   auto OnEnter(const WhiteSpaceChar &event) -> Status {
-    ASLOG_TO_LOGGER(logger_, debug, "enter(WhiteSpaceState) with {}", event);
     return ReissueEvent{};
   }
 
   template <typename Event> auto OnLeave(const Event &event) -> Status {
     if (!token_.empty()) {
+      // This is not a paragraph mark so dispatch as white space token
       DispatchToConsumer(TokenType::WhiteSpace);
-    } else {
-      // We're leaving after a paragraph mark
-      ASLOG_TO_LOGGER(
-          logger_, debug, "leave(WhiteSpaceState) with {} -> no token", event);
     }
     last_was_newline_ = false;
     return Continue{};
   }
 
   auto Handle(const WhiteSpaceChar &event) -> DoNothing {
-    ASLOG_TO_LOGGER(logger_, debug, "WhiteSpaceState.Handle {}", event);
     if (event.value == '\n') {
       if (last_was_newline_) {
-        ASLOG_TO_LOGGER(
-            logger_, debug, "WhiteSpaceState.Handle - new paragraph");
         token_.pop_back();
         if (!token_.empty()) {
           DispatchToConsumer(TokenType::WhiteSpace);
@@ -396,14 +367,13 @@ private:
             });
       }
       DispatchTokenToConsumer(
-          consume_token_, TokenType::WhiteSpace, token_, logger_);
+          consume_token_, TokenType::WhiteSpace, token_);
     } else {
       DispatchTokenToConsumer(
-          consume_token_, TokenType::ParagraphMark, token_, logger_);
+          consume_token_, TokenType::ParagraphMark, token_);
     }
   }
 
-  spdlog::logger &logger_;
   bool last_was_newline_{false};
   std::string token_;
   TokenConsumer consume_token_;
@@ -416,15 +386,13 @@ private:
 
 auto asap::wrap::detail::Tokenizer::Tokenize(
     const std::string &text, const TokenConsumer &consume_token) const -> bool {
-  auto &logger =
-      asap::logging::Registry::instance().GetLogger("TextWrapper-Tokenizer");
 
   using Machine =
       StateMachine<InitialState, WordState, WhiteSpaceState, FinalState>;
-  Machine machine{InitialState(logger),
-      WordState(logger, consume_token, break_on_hyphens_),
-      WhiteSpaceState(logger, consume_token, tab_, replace_ws_, collapse_ws_),
-      FinalState(logger, consume_token)};
+  Machine machine{InitialState(),
+      WordState(consume_token, break_on_hyphens_),
+      WhiteSpaceState(consume_token, tab_, replace_ws_, collapse_ws_),
+      FinalState(consume_token)};
 
   bool continue_running{true};
   bool no_errors{true};
@@ -447,9 +415,8 @@ auto asap::wrap::detail::Tokenizer::Tokenize(
                    [&continue_running](const Terminate & /*status*/) noexcept {
                      continue_running = false;
                    },
-                   [&continue_running, &no_errors, &logger](
+                   [&continue_running, &no_errors](
                        const TerminateWithError &status) noexcept {
-                     ASLOG_TO_LOGGER(logger, error, "{}", status.error_message);
                      continue_running = false;
                      no_errors = false;
                    },
@@ -464,7 +431,6 @@ auto asap::wrap::detail::Tokenizer::Tokenize(
       if (reissue) {
         reissue = false;
         // reuse the same token again
-        ASLOG_TO_LOGGER(logger, debug, "re-issuing event as requested");
       } else {
         cursor++;
       }

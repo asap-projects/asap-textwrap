@@ -21,7 +21,6 @@ asap_add_test(
   "main.cpp"
   LINK
   asap::common
-  asap::logging
   asap::textwrap
   gtest_main
   gmock_main
@@ -52,7 +51,7 @@ asap_add_test(
   "main.cpp"
   LINK
   asap::common
-  asap::logging
+  asap::contract
   asap::textwrap
   gtest_main
   gmock_main

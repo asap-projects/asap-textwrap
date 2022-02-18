@@ -7,7 +7,6 @@
 #include "textwrap/textwrap.h"
 
 #include <common/compilers.h>
-#include <logging/logging.h>
 
 #include <gtest/gtest.h>
 
@@ -30,9 +29,6 @@ namespace {
 
 // NOLINTNEXTLINE
 TEST(TextWrapper, WrapExample) {
-  asap::logging::Registry::instance().SetLogLevel(
-      asap::logging::Logger::Level::off);
-
   //! [Example usage]
   const auto *book = "Pride and Prejudice:";
   const auto *passage = "It is a truth universally acknowledged, that a single "

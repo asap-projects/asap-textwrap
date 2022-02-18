@@ -7,7 +7,6 @@
 #include "textwrap/textwrap.h"
 
 #include <common/compilers.h>
-#include <logging/logging.h>
 
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
@@ -29,16 +28,8 @@ namespace asap::wrap {
 
 namespace {
 
-class TextWrapperTest : public ::testing::Test {
-public:
-  static void SetUpTestSuite() {
-    asap::logging::Registry::instance().SetLogLevel(
-        asap::logging::Logger::Level::off);
-  }
-};
-
 // NOLINTNEXTLINE
-TEST_F(TextWrapperTest, ShortString) {
+TEST(TextWrapperTest, ShortString) {
   constexpr size_t column_width = 30;
   const auto *text = "short string";
   TextWrapper wrapper = TextWrapper::Create().Width(column_width);
@@ -46,7 +37,7 @@ TEST_F(TextWrapperTest, ShortString) {
 }
 
 // NOLINTNEXTLINE
-TEST_F(TextWrapperTest, ExactString) {
+TEST(TextWrapperTest, ExactString) {
   const auto *text = "short string";
   const size_t column_width = std::strlen(text);
   TextWrapper wrapper = TextWrapper::Create().Width(column_width);
@@ -70,11 +61,6 @@ class LongStringTest
 public:
   inline static constexpr const char *text =
       "The quick brown fox jumped over the lazy dog";
-
-  static void SetUpTestSuite() {
-    asap::logging::Registry::instance().SetLogLevel(
-        asap::logging::Logger::Level::off);
-  }
 };
 
 // NOLINTNEXTLINE
@@ -181,7 +167,7 @@ INSTANTIATE_TEST_SUITE_P(NoTrimLines, LongStringTest,
 );
 
 // NOLINTNEXTLINE
-TEST_F(TextWrapperTest, EmptyString) {
+TEST(TextWrapperTest, EmptyString) {
   constexpr size_t column_width = 30;
   const auto *text = "";
   TextWrapper wrapper = TextWrapper::Create().Width(column_width);
@@ -189,7 +175,7 @@ TEST_F(TextWrapperTest, EmptyString) {
 }
 
 // NOLINTNEXTLINE
-TEST_F(TextWrapperTest, Space) {
+TEST(TextWrapperTest, Space) {
   constexpr size_t column_width = 30;
   const auto *text = " ";
   TextWrapper wrapper = TextWrapper::Create().Width(column_width);
@@ -197,7 +183,7 @@ TEST_F(TextWrapperTest, Space) {
 }
 
 // NOLINTNEXTLINE
-TEST_F(TextWrapperTest, EmptyLine) {
+TEST(TextWrapperTest, EmptyLine) {
   constexpr size_t column_width = 30;
   const auto *text = "\n";
   TextWrapper wrapper = TextWrapper::Create().Width(column_width);
@@ -205,7 +191,7 @@ TEST_F(TextWrapperTest, EmptyLine) {
 }
 
 // NOLINTNEXTLINE
-TEST_F(TextWrapperTest, OneShortWord) {
+TEST(TextWrapperTest, OneShortWord) {
   constexpr size_t column_width = 30;
   const auto *text = "hello";
   TextWrapper wrapper = TextWrapper::Create().Width(column_width);
@@ -213,7 +199,7 @@ TEST_F(TextWrapperTest, OneShortWord) {
 }
 
 // NOLINTNEXTLINE
-TEST_F(TextWrapperTest, OneLongWord) {
+TEST(TextWrapperTest, OneLongWord) {
   constexpr size_t column_width = 5;
   const auto *text = "unequivocally";
   TextWrapper wrapper = TextWrapper::Create().Width(column_width);
@@ -221,7 +207,7 @@ TEST_F(TextWrapperTest, OneLongWord) {
 }
 
 // NOLINTNEXTLINE
-TEST_F(TextWrapperTest, IndentInitialOnly) {
+TEST(TextWrapperTest, IndentInitialOnly) {
   constexpr size_t column_width = 6;
   const auto *text = "hello world!";
   TextWrapper wrapper = TextWrapper::Create()
@@ -233,7 +219,7 @@ TEST_F(TextWrapperTest, IndentInitialOnly) {
 }
 
 // NOLINTNEXTLINE
-TEST_F(TextWrapperTest, IndentNoInitial) {
+TEST(TextWrapperTest, IndentNoInitial) {
   constexpr size_t column_width = 6;
   const auto *text = "hello world!";
   TextWrapper wrapper = TextWrapper::Create()
@@ -246,7 +232,7 @@ TEST_F(TextWrapperTest, IndentNoInitial) {
 }
 
 // NOLINTNEXTLINE
-TEST_F(TextWrapperTest, IndentAll) {
+TEST(TextWrapperTest, IndentAll) {
   constexpr size_t column_width = 6;
   const auto *text = "hello world!";
   TextWrapper wrapper = TextWrapper::Create()
@@ -259,7 +245,7 @@ TEST_F(TextWrapperTest, IndentAll) {
 }
 
 // NOLINTNEXTLINE
-TEST_F(TextWrapperTest, IndentOneWord) {
+TEST(TextWrapperTest, IndentOneWord) {
   constexpr size_t column_width = 3;
   const auto *text = "hello";
   TextWrapper wrapper = TextWrapper::Create()
@@ -272,7 +258,7 @@ TEST_F(TextWrapperTest, IndentOneWord) {
 }
 
 // NOLINTNEXTLINE
-TEST_F(TextWrapperTest, IndentExactWidth) {
+TEST(TextWrapperTest, IndentExactWidth) {
   constexpr size_t column_width = 17;
   const auto *text = "hello world!";
   TextWrapper wrapper = TextWrapper::Create()
@@ -285,7 +271,7 @@ TEST_F(TextWrapperTest, IndentExactWidth) {
 }
 
 // NOLINTNEXTLINE
-TEST_F(TextWrapperTest, IndentMultipleLines) {
+TEST(TextWrapperTest, IndentMultipleLines) {
   constexpr size_t column_width = 10;
   const auto *text = "bye world - welcome universe!";
   TextWrapper wrapper = TextWrapper::Create()
@@ -302,7 +288,7 @@ TEST_F(TextWrapperTest, IndentMultipleLines) {
 }
 
 // NOLINTNEXTLINE
-TEST_F(TextWrapperTest, IndentEmptyStringNotIndented) {
+TEST(TextWrapperTest, IndentEmptyStringNotIndented) {
   constexpr size_t column_width = 17;
   const auto *text = "";
   TextWrapper wrapper = TextWrapper::Create()
@@ -314,7 +300,7 @@ TEST_F(TextWrapperTest, IndentEmptyStringNotIndented) {
 }
 
 // NOLINTNEXTLINE
-TEST_F(TextWrapperTest, IndentEmptyLineNotIndented) {
+TEST(TextWrapperTest, IndentEmptyLineNotIndented) {
   constexpr size_t column_width = 17;
   const auto *text = "hello\n\n\nworld!";
   TextWrapper wrapper = TextWrapper::Create()

@@ -8,7 +8,6 @@
 
 #include <common/compilers.h>
 #include <contract/contract.h>
-#include <logging/logging.h>
 
 #include "gmock/gmock.h"
 #include <gtest/gtest.h>
@@ -109,9 +108,6 @@ public:
 
 // NOLINTNEXTLINE
 TEST(TextWrapper, RandomTests) {
-  asap::logging::Registry::instance().SetLogLevel(
-      asap::logging::Logger::Level::off);
-
   constexpr size_t maximum_text_length = 80;
 
   Timer<std::chrono::milliseconds, std::chrono::steady_clock> clock;

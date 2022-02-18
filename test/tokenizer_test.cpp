@@ -7,7 +7,6 @@
 #include "tokenizer.h"
 
 #include <common/compilers.h>
-#include <logging/logging.h>
 
 #include <gmock/gmock-more-matchers.h>
 #include <gtest/gtest.h>
@@ -33,16 +32,8 @@ namespace asap::wrap::detail {
 
 namespace {
 
-class TokenizerTest : public ::testing::Test {
-public:
-  static void SetUpTestSuite() {
-    asap::logging::Registry::instance().SetLogLevel(
-        asap::logging::Logger::Level::off);
-  }
-};
-
 // NOLINTNEXTLINE
-TEST_F(TokenizerTest, Example) {
+TEST(TokenizerTest, Example) {
   //! [Tokenizer example]
   constexpr const char *tab = " ";
   constexpr bool replace_ws = true;
@@ -85,7 +76,7 @@ TEST_F(TokenizerTest, Example) {
 }
 
 // NOLINTNEXTLINE
-TEST_F(TokenizerTest, CallsTokenConsumerWhenTokenIsReady) {
+TEST(TokenizerTest, CallsTokenConsumerWhenTokenIsReady) {
   Tokenizer tokenizer{"\t", false, false, false};
 
   //! [Example token consumer]
@@ -118,11 +109,6 @@ using ParamType = std::tuple<
     std::vector<Token>>;
 
 class TokenizerScenariosTest : public ::testing::TestWithParam<ParamType> {
-public:
-  static void SetUpTestSuite() {
-    asap::logging::Registry::instance().SetLogLevel(
-        asap::logging::Logger::Level::off);
-  }
 };
 
 // NOLINTNEXTLINE
