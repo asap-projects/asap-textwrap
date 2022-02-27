@@ -84,7 +84,6 @@ function(_module_pkgconfig_files)
   set(MODULE_LINK_LIBS "-l${MODULE_TARGET_NAME}${TARGET_DEBUG_POSTFIX}")
   configure_file(config.pc.in
                  ${CMAKE_CURRENT_BINARY_DIR}/${MODULE_PKGCONFIG_FILE} @ONLY)
-
   if(${META_PROJECT_ID}_INSTALL)
     install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${MODULE_PKGCONFIG_FILE}
             DESTINATION ${ASAP_INSTALL_PKGCONFIG})

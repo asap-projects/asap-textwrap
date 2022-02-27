@@ -17,7 +17,7 @@ include(FetchGoogleTest)
 # your projects.
 
 # ------------------------------------------------------------------------------
-# asaP::common
+# asap::common
 # ------------------------------------------------------------------------------
 
 FetchContent_Declare(
@@ -29,7 +29,7 @@ FetchContent_MakeAvailable(asap_common)
 # ------------------------------------------------------------------------------
 # asap::fsm
 # ------------------------------------------------------------------------------
-set(ASAP_FSM_INSTALL OFF)
+set(ASAP_FSM_INSTALL ON)
 FetchContent_Declare(
   asap_fsm
   GIT_REPOSITORY https://github.com/asap-projects/asap-fsm.git

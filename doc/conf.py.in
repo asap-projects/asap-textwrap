@@ -123,6 +123,12 @@ html_theme_options = {
 # -- Options for intersphinx extension ---------------------------------------
 
 intersphinx_mapping = {
+    'common': (
+        'https://asap-projects.github.io/asap-common/asap_common/html',
+        'https://asap-projects.github.io/asap-common/asap_common/html/objects.inv'),
+    'fsm': (
+        'https://asap-projects.github.io/asap-fsm/asap_fsm/html',
+        'https://asap-projects.github.io/asap-fsm/asap_fsm/html/objects.inv'),
     'textwrap': (
         'https://asap-projects.github.io/asap-textwrap/asap_textwrap/html',
         '@SPHINX_BUILD_DIR@/asap_textwrap/html/objects.inv')
