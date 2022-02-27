@@ -7,7 +7,6 @@
 #include "textwrap/textwrap.h"
 
 #include <common/compilers.h>
-#include <contract/contract.h>
 
 #include "gmock/gmock.h"
 #include <gtest/gtest.h>
@@ -101,7 +100,6 @@ public:
   }
 
   template <class T = DT> [[nodiscard]] auto duration() const {
-    ASAP_EXPECT(_end != timep_t{} && "toc before reporting");
     return std::chrono::duration_cast<T>(_end - _start);
   }
 };

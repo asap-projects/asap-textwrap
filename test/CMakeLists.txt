@@ -51,7 +51,6 @@ asap_add_test(
   "main.cpp"
   LINK
   asap::common
-  asap::contract
   asap::textwrap
   gtest_main
   gmock_main
