@@ -6,29 +6,53 @@
 
 message("=> [third-party modules]")
 
+include(FetchContent)
+# We make sure that we have 'third_party' in the name so that the targets get
+# excluded from the generated target lists for the various tools.
+set(FETCHCONTENT_BASE_DIR ${CMAKE_BINARY_DIR}/third_party_deps)
+
+include(FetchGoogleTest)
+
+# Live at Head philosophy. Always use the latest commit in the main branch in
+# your projects.
+
 # ------------------------------------------------------------------------------
-# gsl
+# asaP::common
 # ------------------------------------------------------------------------------
 
-set(GSL_INSTALL ON)
-add_subdirectory(gsl)
+FetchContent_Declare(
+  asap_common
+  GIT_REPOSITORY https://github.com/asap-projects/asap-common.git
+  GIT_TAG origin/master)
+FetchContent_MakeAvailable(asap_common)
+
+# ------------------------------------------------------------------------------
+# asap::fsm
+# ------------------------------------------------------------------------------
+set(ASAP_FSM_INSTALL OFF)
+FetchContent_Declare(
+  asap_fsm
+  GIT_REPOSITORY https://github.com/asap-projects/asap-fsm.git
+  GIT_TAG origin/master)
+FetchContent_MakeAvailable(asap_fsm)
 
 # ------------------------------------------------------------------------------
 # magic_enum
 # ------------------------------------------------------------------------------
 
-set(MAGIC_ENUM_OPT_INSTALL TRUE)
-add_subdirectory(magic_enum)
+FetchContent_Declare(
+  magic_enum
+  GIT_REPOSITORY https://github.com/Neargye/magic_enum.git
+  GIT_TAG origin/master)
+FetchContent_MakeAvailable(magic_enum)
 
 # ------------------------------------------------------------------------------
 # fmt (must come before spdlog)
 # ------------------------------------------------------------------------------
 
-# We want the spdlog install target to be generated even though we are using it
-# as a submodule. The reason for that is that is spdlog and also we want our
-# project to be self contained with all dependencies included.
-set(FMT_INSTALL
-    ON
-    CACHE BOOL "Generate the install target.")
-
-add_subdirectory(fmt)
+set(FMT_INSTALL ON)
+FetchContent_Declare(
+  fmtlib_fmt
+  GIT_REPOSITORY https://github.com/fmtlib/fmt.git
+  GIT_TAG origin/master)
+FetchContent_MakeAvailable(fmtlib_fmt)
