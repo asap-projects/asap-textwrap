@@ -67,9 +67,6 @@ target_compile_features(${MODULE_TARGET_NAME} PUBLIC cxx_std_17)
 # convenient to simply use it as asap::common
 add_library(asap::${META_MODULE_NAME} ALIAS ${MODULE_TARGET_NAME})
 
-# Add support for (optional) code quality tools
-asap_add_sanitizers(${MODULE_TARGET_NAME})
-
 # Generate module config files for cmake and pkgconfig
 asap_create_module_config_files()
 
@@ -78,6 +75,8 @@ asap_create_module_config_files()
 # ------------------------------------------------------------------------------
 
 if(ASAP_BUILD_TESTS)
+  # Add support for (optional) code quality tools
+  asap_add_sanitizers(${MODULE_TARGET_NAME})
   add_subdirectory(test)
 endif()
 
