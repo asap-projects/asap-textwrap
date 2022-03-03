@@ -38,14 +38,3 @@ FetchContent_Declare(
   GIT_REPOSITORY https://github.com/Neargye/magic_enum.git
   GIT_TAG origin/master)
 FetchContent_MakeAvailable(magic_enum)
-
-# ------------------------------------------------------------------------------
-# fmt (must come before spdlog)
-# ------------------------------------------------------------------------------
-
-set(FMT_INSTALL ON)
-FetchContent_Declare(
-  fmtlib_fmt
-  GIT_REPOSITORY https://github.com/fmtlib/fmt.git
-  GIT_TAG origin/master)
-FetchContent_MakeAvailable(fmtlib_fmt)
