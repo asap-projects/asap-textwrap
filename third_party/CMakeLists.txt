@@ -6,13 +6,6 @@
 
 message("=> [third-party modules]")
 
-include(FetchContent)
-# We make sure that we have 'third_party' in the name so that the targets get
-# excluded from the generated target lists for the various tools.
-set(FETCHCONTENT_BASE_DIR ${CMAKE_BINARY_DIR}/third_party_deps)
-
-include(FetchGoogleTest)
-
 # Live at Head philosophy. Always use the latest commit in the main branch in
 # your projects.
 
