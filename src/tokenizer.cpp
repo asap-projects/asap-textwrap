@@ -15,15 +15,6 @@
 #include <common/compilers.h>
 #include <fsm/fsm.h>
 
-// fmt causes a bunch of compiler warnings we can't do anything about except
-// temporarily disabling them
-ASAP_DIAGNOSTIC_PUSH
-#if defined(__clang__)
-ASAP_PRAGMA(clang diagnostic ignored "-Weverything")
-#endif
-#include <fmt/format.h>
-ASAP_DIAGNOSTIC_POP
-
 #include <magic_enum.hpp>
 
 #include <algorithm>
@@ -55,20 +46,6 @@ auto asap::wrap::detail::operator<<(
   out << magic_enum::enum_name(token_type);
   return out;
 }
-
-#if !defined(DOXYGEN_DOCUMENTATION_BUILD)
-template <> struct fmt::formatter<asap::wrap::detail::TokenType> {
-  template <typename ParseContext> constexpr auto parse(ParseContext &ctx) {
-    return ctx.begin();
-  }
-
-  template <typename FormatContext>
-  auto format(
-      const asap::wrap::detail::TokenType &token_type, FormatContext &ctx) {
-    return fmt::format_to(ctx.out(), "{}", magic_enum::enum_name(token_type));
-  }
-};
-#endif
 
 // -----------------------------------------------------------------------------
 //  Tokenizer state machine events
@@ -143,42 +120,6 @@ inline auto EscapeSpecialWhiteSpaces(const std::string &str) -> std::string {
       });
 }
 
-#if !defined(DOXYGEN_DOCUMENTATION_BUILD)
-template <> struct fmt::formatter<NonWhiteSpaceChar> {
-  template <typename ParseContext> constexpr auto parse(ParseContext &ctx) {
-    return ctx.begin();
-  }
-
-  template <typename FormatContext>
-  auto format(const NonWhiteSpaceChar &event, FormatContext &ctx) {
-    return fmt::format_to(ctx.out(), "NonWhiteSpaceChar('{}')", event.value);
-  }
-};
-
-template <> struct fmt::formatter<WhiteSpaceChar> {
-  template <typename ParseContext> constexpr auto parse(ParseContext &ctx) {
-    return ctx.begin();
-  }
-
-  template <typename FormatContext>
-  auto format(const WhiteSpaceChar &event, FormatContext &ctx) {
-    return fmt::format_to(ctx.out(), "WhiteSpaceChar('{}')",
-        EscapeSpecialWhiteSpaces(event.value));
-  }
-};
-
-template <> struct fmt::formatter<InputEnd> {
-  template <typename ParseContext> constexpr auto parse(ParseContext &ctx) {
-    return ctx.begin();
-  }
-
-  template <typename FormatContext>
-  auto format(const InputEnd & /*event*/, FormatContext &ctx) {
-    return fmt::format_to(ctx.out(), "InputEnd");
-  }
-};
-#endif
-
 // -----------------------------------------------------------------------------
 //  Tokenizer state machine states
 // -----------------------------------------------------------------------------
@@ -211,7 +152,7 @@ void DispatchTokenToConsumer(const TokenConsumer &consume_token,
  * produced. The tokenizer can be reused for a new input text.
  */
 struct FinalState : public Will<ByDefault<DoNothing>> {
-  FinalState(TokenConsumer callback)
+  explicit FinalState(TokenConsumer callback)
       : consume_token_{std::move(callback)} {
   }
 
@@ -256,11 +197,11 @@ struct WordState : public Will<On<InputEnd, TransitionTo<FinalState>>,
         break_on_hyphens_{break_on_hyphens} {
   }
 
-  auto OnEnter(const NonWhiteSpaceChar &event) -> Status {
+  static auto OnEnter(const NonWhiteSpaceChar &/*event*/) -> Status {
     return ReissueEvent{};
   }
 
-  template <typename Event> auto OnLeave(const Event &event) -> Status {
+  template <typename Event> auto OnLeave(const Event &/*event*/) -> Status {
     if (!token_.empty()) {
       DispatchTokenToConsumer(
           consume_token_, TokenType::Chunk, token_);
@@ -307,11 +248,11 @@ struct WhiteSpaceState : public Will<On<InputEnd, TransitionTo<FinalState>>,
         replace_ws_{replace_ws}, collapse_ws_{collapse_ws} {
   }
 
-  auto OnEnter(const WhiteSpaceChar &event) -> Status {
+  static auto OnEnter(const WhiteSpaceChar &/*event*/) -> Status {
     return ReissueEvent{};
   }
 
-  template <typename Event> auto OnLeave(const Event &event) -> Status {
+  template <typename Event> auto OnLeave(const Event &/*event*/) -> Status {
     if (!token_.empty()) {
       // This is not a paragraph mark so dispatch as white space token
       DispatchToConsumer(TokenType::WhiteSpace);
@@ -431,7 +372,7 @@ auto asap::wrap::detail::Tokenizer::Tokenize(
                      continue_running = false;
                    },
                    [&continue_running, &no_errors](
-                       const TerminateWithError &status) noexcept {
+                       const TerminateWithError &/*status*/) noexcept {
                      continue_running = false;
                      no_errors = false;
                    },

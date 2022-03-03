@@ -198,7 +198,7 @@ void MoveAppend(std::vector<std::string> src, std::vector<std::string> &dst) {
   };
 
   if (tokenizer.Tokenize(str, consume_token)) {
-    return result;
+    return std::move(result);
   }
 
   return {};
@@ -230,7 +230,7 @@ void MoveAppend(std::vector<std::string> src, std::vector<std::string> &dst) {
         }
         return next_write;
       });
-  return result;
+  return std::move(result);
 }
 
 auto asap::wrap::TextWrapper::Create() -> asap::wrap::TextWrapperBuilder {
