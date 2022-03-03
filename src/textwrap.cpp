@@ -17,6 +17,7 @@
 #include <iostream>
 #include <limits>
 #include <numeric>
+#include <optional>
 #include <utility>
 
 auto asap::wrap::operator<<(std::ostream &out,
@@ -198,7 +199,7 @@ void MoveAppend(std::vector<std::string> src, std::vector<std::string> &dst) {
   };
 
   if (tokenizer.Tokenize(str, consume_token)) {
-    return std::move(result);
+    return std::make_optional(result);
   }
 
   return {};
@@ -230,7 +231,7 @@ void MoveAppend(std::vector<std::string> src, std::vector<std::string> &dst) {
         }
         return next_write;
       });
-  return std::move(result);
+  return std::make_optional(result);
 }
 
 auto asap::wrap::TextWrapper::Create() -> asap::wrap::TextWrapperBuilder {
