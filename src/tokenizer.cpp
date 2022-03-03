@@ -13,7 +13,6 @@
 #include "tokenizer.h"
 
 #include <common/compilers.h>
-#include <common/overload.h>
 #include <fsm/fsm.h>
 
 // fmt causes a bunch of compiler warnings we can't do anything about except
@@ -383,6 +382,22 @@ private:
 };
 
 } // namespace
+
+/*!
+ * \brief The Overload pattern allows to explicitly 'overload' lambdas and is
+ * particularly useful for creating visitors, e.g. for std::variant.
+ *
+ * **Example**
+ *
+ * \snippet overload_test.cpp Example Overload with default
+ */
+template <typename... Ts> // (7)
+struct Overload : Ts... {
+  using Ts::operator()...;
+};
+// Deduction guide only needed for C++17. C++20 can automatically create the
+// template parameters out of the constructor arguments.
+template <class... Ts> Overload(Ts...) -> Overload<Ts...>;
 
 auto asap::wrap::detail::Tokenizer::Tokenize(
     const std::string &text, const TokenConsumer &consume_token) const -> bool {
