@@ -327,10 +327,6 @@ private:
 /*!
  * \brief The Overload pattern allows to explicitly 'overload' lambdas and is
  * particularly useful for creating visitors, e.g. for std::variant.
- *
- * **Example**
- *
- * \snippet overload_test.cpp Example Overload with default
  */
 template <typename... Ts> // (7)
 struct Overload : Ts... {
