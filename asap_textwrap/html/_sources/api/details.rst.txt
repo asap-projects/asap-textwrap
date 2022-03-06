@@ -10,6 +10,10 @@
 Implementation Details
 **********************
 
+.. |date| date::
+
+Last Updated on |date|
+
 Behind the scene, the TextWrapper implementation uses a state machine based
 tokenizer to transform the input text into a stream of tokens (word chunks,
 white spaces and paragraph markers) to be wrapped by the text wrapper algorithm.

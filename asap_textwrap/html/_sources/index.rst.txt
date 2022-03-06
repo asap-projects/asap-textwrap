@@ -10,6 +10,10 @@
 ASAP text wrapper documentation
 ###############################
 
+.. |date| date::
+
+Last Updated on |date|
+
 .. toctree::
    :maxdepth: 2
    :hidden:
