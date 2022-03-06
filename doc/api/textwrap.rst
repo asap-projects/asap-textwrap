@@ -10,6 +10,10 @@
 Public API
 **********
 
+.. |date| date::
+
+Last Updated on |date|
+
 The header <textwrap/textwrap.h> declares the classes
 :class:`asap::wrap::TextWrapper` and :class:`asap::wrap::TextWrapperBuilder`
 which form the core of the text wrapper module public API.
