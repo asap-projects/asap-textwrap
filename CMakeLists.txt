@@ -22,7 +22,7 @@ asap_declare_module(
   VERSION_MINOR
   "0"
   VERSION_PATCH
-  "0")
+  "2")
 
 # ==============================================================================
 # Build instructions
