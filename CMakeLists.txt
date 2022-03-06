@@ -98,9 +98,6 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 
-# Create version file
-file(WRITE "${PROJECT_BINARY_DIR}/VERSION" "${META_NAME_VERSION}")
-
 # ------------------------------------------------------------------------------
 # Additional CMake modules
 # ------------------------------------------------------------------------------
@@ -167,7 +164,6 @@ if(ASAP_BUILD_TESTS)
   asap_add_code_coverage_all_targets(EXCLUDE */test/* *googlemock* *googletest*
                                      /usr/*)
   include(Valgrind)
-
   include(FetchGoogleTest)
   include(GoogleTest)
   include(CTest)
