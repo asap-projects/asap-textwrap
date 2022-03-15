@@ -13,28 +13,26 @@ message("=> [third-party modules]")
 # asap::common
 # ------------------------------------------------------------------------------
 
-FetchContent_Declare(
-  asap_common
-  GIT_REPOSITORY https://github.com/asap-projects/asap-common.git
-  GIT_TAG origin/master)
-FetchContent_MakeAvailable(asap_common)
+cpmaddpackage(NAME asap_common GIT_TAG v2.0.4 GITHUB_REPOSITORY
+              asap-projects/asap-common)
 
 # ------------------------------------------------------------------------------
 # asap::fsm
 # ------------------------------------------------------------------------------
-set(ASAP_FSM_INSTALL ON)
-FetchContent_Declare(
+
+cpmaddpackage(
+  NAME
   asap_fsm
-  GIT_REPOSITORY https://github.com/asap-projects/asap-fsm.git
-  GIT_TAG origin/master)
-FetchContent_MakeAvailable(asap_fsm)
+  GIT_TAG
+  v1.0.5
+  GITHUB_REPOSITORY
+  asap-projects/asap-fsm
+  OPTIONS
+  "ASAP_FSM_INSTALL ON")
 
 # ------------------------------------------------------------------------------
 # magic_enum
 # ------------------------------------------------------------------------------
 
-FetchContent_Declare(
-  magic_enum
-  GIT_REPOSITORY https://github.com/Neargye/magic_enum.git
-  GIT_TAG origin/master)
-FetchContent_MakeAvailable(magic_enum)
+cpmaddpackage(NAME magic_enum GIT_TAG master GITHUB_REPOSITORY
+              Neargye/magic_enum)
