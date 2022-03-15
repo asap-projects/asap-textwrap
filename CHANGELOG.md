@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.3](http://github.com/abdes/asap/compare/v1.0.2...v1.0.3) (2022-03-15)
+
+### Features
+
+- initial commit ([eb814d3](http://github.com/abdes/asap/commit/eb814d363952ea3ef6e78f2a99fb6005d70858c8))
+
+### Bug Fixes
+
+- include <cstring> for strlen ([7f99c0f](http://github.com/abdes/asap/commit/7f99c0fe9079f5ce29429c1cc3c5d7c4f30cd699))
+- only add sanitizers if building tests ([193a437](http://github.com/abdes/asap/commit/193a437c9a86a90fb2746bab47d2c03fe49a22be))
+- some parts of the module were not installed ([5f45bcb](http://github.com/abdes/asap/commit/5f45bcb6a550deff0a1bea9beb20f3abd81cbe97))
+- update required dependencies ([4b3f9d9](http://github.com/abdes/asap/commit/4b3f9d9a17c5649fa477cacbd69324420c62b447))
+
 ## [1.0.2](http://github.com/abdes/asap/compare/v1.0.1...v1.0.2) (2022-03-06)
 
 ### Bug Fixes
