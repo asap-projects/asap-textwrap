@@ -4,7 +4,7 @@
 
 [![Build Matrix](https://github.com/asap-projects/asap-textwrap/actions/workflows/cmake-build.yml/badge.svg?branch=master)](https://github.com/asap-projects/asap-textwrap/actions/workflows/cmake-build.yml)
 
-## [Project Documentation](https://asap-projects.github.io/asap-textwrap/master/html/)
+## [Project Documentation](https://asap-projects.github.io/asap-textwrap/asap_textwrap_master/html/)
 
 ## Overview
 
@@ -59,7 +59,7 @@ option(ASAP_WITH_VALGRIND       "Builds targets with valgrind profilers added"  
 ## Making changes to this project
 
 Read the developer guides in the upstream
-[asap](https://abdes.github.io/asap/master/html/)
+[asap](https://abdes.github.io/asap/asap_master/html/)
 project. If you're in a hurry, at least do the following:
 
 Only one time after the project is cloned, do the following:
