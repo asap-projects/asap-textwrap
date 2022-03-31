@@ -4,11 +4,13 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Public API &#8212; Module: textwrap</title>
     
-  <link href="../_static/css/theme.css" rel="stylesheet">
-  <link href="../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
 
     
   <link rel="stylesheet"
@@ -18,15 +20,12 @@
   <link rel="preload" as="font" type="font/woff2" crossorigin
     href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
-    
-      
-
-    
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-book-theme.css?digest=84ace793992934648b4de8eed757e5a2" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=62ba249389abaaa9ffc34bf36a076bdc1d65ee18" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
     
-  <link rel="preload" as="script" href="../_static/js/index.be7d3bbb2ef33a8344ce.js">
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
 
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
@@ -34,7 +33,7 @@
     <script src="../_static/doctools.js"></script>
     <script src="../_static/clipboard.min.js"></script>
     <script src="../_static/copybutton.js"></script>
-    <script src="../_static/sphinx-book-theme.9d8b4a8b9bb19db25eeaddc40d639ba2.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -47,7 +46,21 @@
     <!-- Google Analytics -->
     
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
     
     <div class="container-fluid" id="banner"></div>
 
@@ -56,14 +69,10 @@
     <div class="container-xl">
       <div class="row">
           
-<!-- Checkboxes to toggle the left sidebar -->
-<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
-<label class="overlay" for="__navigation">
-    <div class="visually-hidden">Toggle navigation sidebar</div>
-</label>
-<div class="col-12 col-md-3 bd-sidebar site-navigation " id="site-navigation">
-    
-        <div class="navbar-brand-box">
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
     <a class="navbar-brand text-wrap" href="../index.html">
       
         <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
@@ -117,86 +126,176 @@
 </ul>
 
     </div>
-</nav> <!-- To handle the deprecated key -->
-
-</div>
-
-
-          
-
-
-          
-<!-- This is an invisible pixel that we watch to see if we've scrolled. -->
-<div class="sbt-scroll-pixel-helper"></div>
-<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
-    
-    <div class="topbar container-xl fixed-top">
-    <div class="topbar-contents row">
-        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
-        <div class="col pl-md-4 topbar-main">
-            <div class="topbar-left">
-                
-                <label class="nav-toggle-button" for="__navigation">
-                    <div class="visually-hidden">Toggle navigation</div>
-                    <i class="fas fa-bars"></i>
-                </label>
-                
-            </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
             
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
-            class="fas fa-download"></i></button>
-
-    <div class="dropdown-buttons">
-        <!-- ipynb file if we had a myst markdown file -->
-        
-        <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/api/textwrap.rst.txt"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
-                data-placement="left">.rst</button></a>
-        <!-- Download PDF via print -->
-        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
-                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
-    </div>
-</div>
-
-            <!-- Source interaction buttons -->
-
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
-    <div class="dropdown-buttons sourcebuttons">
-        <a class="repository-button"
-            href="https://github.com/asap-projects/asap-textwrap"><button type="button" class="btn btn-secondary topbarbtn"
-                data-toggle="tooltip" data-placement="left" title="Source repository"><i
-                    class="fab fa-github"></i>repository</button></a>
-        <a class="issues-button"
-            href="https://github.com/asap-projects/asap-textwrap/issues/new?title=Issue%20on%20page%20%2Fapi/textwrap.html&body=Your%20issue%20content%20here."><button
-                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
-                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
-        
-    </div>
-</div>
-
-            <!-- Full screen (wrap in <a> to have style consistency -->
-
-<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
-        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
-        title="Fullscreen mode"><i
-            class="fas fa-expand"></i></button></a>
-
-            <!-- Launch buttons -->
-
         </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
 
-        <!-- Table of contents -->
-        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
-            
-            <div class="tocsection onthispage pt-5 pb-3">
-                <i class="fas fa-list"></i> Contents
-            </div>
-            <nav id="bd-toc-nav" aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/asap-projects/asap-textwrap"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/asap-projects/asap-textwrap/issues/new?title=Issue%20on%20page%20%2Fapi/textwrap.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../_sources/api/textwrap.rst.txt"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.rst</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#textwrapper">
    TextWrapper
@@ -209,12 +308,11 @@
  </li>
 </ul>
 
-            </nav>
-        </div>
-    </div>
+    </nav>
 </div>
-    <div id="main-content" class="row">
-        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
                 <h1>Public API</h1>
@@ -243,20 +341,21 @@
                     </div>
                 </div>
             </div>
-            
+            <main id="main-content" role="main">
+                
               <div>
                 
-  <div class="section" id="public-api">
-<h1>Public API<a class="headerlink" href="#public-api" title="Permalink to this headline">¶</a></h1>
-<p>Last Updated on 2022-03-16</p>
+  <section id="public-api">
+<h1>Public API<a class="headerlink" href="#public-api" title="Permalink to this headline">#</a></h1>
+<p>Last Updated on 2022-03-31</p>
 <p>The header &lt;textwrap/textwrap.h&gt; declares the classes
 <a class="reference internal" href="#_CPPv4N4asap4wrap11TextWrapperE" title="asap::wrap::TextWrapper"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">asap::wrap::TextWrapper</span></code></a> and <a class="reference internal" href="#_CPPv4N4asap4wrap18TextWrapperBuilderE" title="asap::wrap::TextWrapperBuilder"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">asap::wrap::TextWrapperBuilder</span></code></a>
 which form the core of the text wrapper module public API.</p>
-<div class="section" id="textwrapper">
-<h2>TextWrapper<a class="headerlink" href="#textwrapper" title="Permalink to this headline">¶</a></h2>
+<section id="textwrapper">
+<h2>TextWrapper<a class="headerlink" href="#textwrapper" title="Permalink to this headline">#</a></h2>
 <dl class="cpp class">
 <dt class="sig sig-object cpp" id="_CPPv4N4asap4wrap11TextWrapperE">
-<span id="_CPPv3N4asap4wrap11TextWrapperE"></span><span id="_CPPv2N4asap4wrap11TextWrapperE"></span><span id="asap::wrap::TextWrapper"></span><span class="target" id="classasap_1_1wrap_1_1_text_wrapper"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-prename descclassname"><span class="n"><span class="pre">asap</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">wrap</span></span><span class="p"><span class="pre">::</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">TextWrapper</span></span></span><a class="headerlink" href="#_CPPv4N4asap4wrap11TextWrapperE" title="Permalink to this definition">¶</a><br /></dt>
+<span id="_CPPv3N4asap4wrap11TextWrapperE"></span><span id="_CPPv2N4asap4wrap11TextWrapperE"></span><span id="asap::wrap::TextWrapper"></span><span class="target" id="classasap_1_1wrap_1_1_text_wrapper"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-prename descclassname"><span class="n"><span class="pre">asap</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">wrap</span></span><span class="p"><span class="pre">::</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">TextWrapper</span></span></span><a class="headerlink" href="#_CPPv4N4asap4wrap11TextWrapperE" title="Permalink to this definition">#</a><br /></dt>
 <dd><p>The core class for the text wrapper module. </p>
 <p><a class="reference internal" href="#classasap_1_1wrap_1_1_text_wrapper"><span class="std std-ref">TextWrapper</span></a> offers a simple interface to wrap text to a specific width while supporting multiple configuration options for how white space is handled and when exactly line/word breaking happen.</p>
 <p>Construction of instances of <a class="reference internal" href="#classasap_1_1wrap_1_1_text_wrapper"><span class="std std-ref">TextWrapper</span></a> can only be done via its associated <a class="reference internal" href="#classasap_1_1wrap_1_1_text_wrapper_builder"><span class="std std-ref">TextWrapperBuilder</span></a>, which maintains coherent configuration values and offers an easy to use fluent interface to set them.</p>
@@ -297,7 +396,7 @@ which form the core of the text wrapper module public API.</p>
 <p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
 <dl class="cpp function">
 <dt class="sig sig-object cpp" id="_CPPv4NK4asap4wrap11TextWrapper4WrapERKNSt6stringE">
-<span id="_CPPv3NK4asap4wrap11TextWrapper4WrapERKNSt6stringE"></span><span id="_CPPv2NK4asap4wrap11TextWrapper4WrapERKNSt6stringE"></span><span id="asap::wrap::TextWrapper::Wrap__ssCRC"></span><span class="target" id="classasap_1_1wrap_1_1_text_wrapper_1ab34edffbe57a8af3a2c88c41c99342de"></span><span class="n"><span class="pre">ASAP_TEXTWRAP_API</span></span><span class="w"> </span><span class="k"><span class="pre">auto</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Wrap</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">str</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="o"><span class="pre">-&gt;</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">optional</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="p"><span class="pre">&gt;</span></span><span class="p"><span class="pre">&gt;</span></span><a class="headerlink" href="#_CPPv4NK4asap4wrap11TextWrapper4WrapERKNSt6stringE" title="Permalink to this definition">¶</a><br /></dt>
+<span id="_CPPv3NK4asap4wrap11TextWrapper4WrapERKNSt6stringE"></span><span id="_CPPv2NK4asap4wrap11TextWrapper4WrapERKNSt6stringE"></span><span id="asap::wrap::TextWrapper::Wrap__ssCRC"></span><span class="target" id="classasap_1_1wrap_1_1_text_wrapper_1ab34edffbe57a8af3a2c88c41c99342de"></span><span class="n"><span class="pre">ASAP_TEXTWRAP_API</span></span><span class="w"> </span><span class="k"><span class="pre">auto</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Wrap</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">str</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="o"><span class="pre">-&gt;</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">optional</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="p"><span class="pre">&gt;</span></span><span class="p"><span class="pre">&gt;</span></span><a class="headerlink" href="#_CPPv4NK4asap4wrap11TextWrapper4WrapERKNSt6stringE" title="Permalink to this definition">#</a><br /></dt>
 <dd><p>Wraps text so every line is at most the <a class="reference internal" href="#classasap_1_1wrap_1_1_text_wrapper"><span class="std std-ref">TextWrapper</span></a>’s <code class="docutils literal notranslate"><span class="pre">width</span></code> characters long. </p>
 <p>The wrapping algorithm is an improved algorithm that favors balanced lines vs. greedy filling of lines. A cost is associated with each line, using the extra spaces at the end of the line not filed with words. The goal of the algorithm is to minimize the overall cost.</p>
 <dl class="field-list simple">
@@ -312,7 +411,7 @@ which form the core of the text wrapper module public API.</p>
 
 <dl class="cpp function">
 <dt class="sig sig-object cpp" id="_CPPv4NK4asap4wrap11TextWrapper4FillERKNSt6stringE">
-<span id="_CPPv3NK4asap4wrap11TextWrapper4FillERKNSt6stringE"></span><span id="_CPPv2NK4asap4wrap11TextWrapper4FillERKNSt6stringE"></span><span id="asap::wrap::TextWrapper::Fill__ssCRC"></span><span class="target" id="classasap_1_1wrap_1_1_text_wrapper_1a740e6b672a1c3d207f69d7f08ddd5612"></span><span class="n"><span class="pre">ASAP_TEXTWRAP_API</span></span><span class="w"> </span><span class="k"><span class="pre">auto</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Fill</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">str</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="o"><span class="pre">-&gt;</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">optional</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="p"><span class="pre">&gt;</span></span><a class="headerlink" href="#_CPPv4NK4asap4wrap11TextWrapper4FillERKNSt6stringE" title="Permalink to this definition">¶</a><br /></dt>
+<span id="_CPPv3NK4asap4wrap11TextWrapper4FillERKNSt6stringE"></span><span id="_CPPv2NK4asap4wrap11TextWrapper4FillERKNSt6stringE"></span><span id="asap::wrap::TextWrapper::Fill__ssCRC"></span><span class="target" id="classasap_1_1wrap_1_1_text_wrapper_1a740e6b672a1c3d207f69d7f08ddd5612"></span><span class="n"><span class="pre">ASAP_TEXTWRAP_API</span></span><span class="w"> </span><span class="k"><span class="pre">auto</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Fill</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">str</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="o"><span class="pre">-&gt;</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">optional</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="p"><span class="pre">&gt;</span></span><a class="headerlink" href="#_CPPv4NK4asap4wrap11TextWrapper4FillERKNSt6stringE" title="Permalink to this definition">#</a><br /></dt>
 <dd><p>Wraps text so every line is at most the <a class="reference internal" href="#classasap_1_1wrap_1_1_text_wrapper"><span class="std std-ref">TextWrapper</span></a>’s <code class="docutils literal notranslate"><span class="pre">width</span></code> characters long and returns a single string containing the result. </p>
 <p><code class="docutils literal notranslate"><a class="reference internal" href="#classasap_1_1wrap_1_1_text_wrapper_1a740e6b672a1c3d207f69d7f08ddd5612"><span class="std std-ref"><span class="pre">Fill()</span></span></a></code> is effectively equivalent to joining the result of <code class="docutils literal notranslate"><a class="reference internal" href="#classasap_1_1wrap_1_1_text_wrapper_1ab34edffbe57a8af3a2c88c41c99342de"><span class="std std-ref"><span class="pre">Wrap()</span></span></a></code> using <code class="docutils literal notranslate"><span class="pre">\n</span></code>;</p>
 <dl class="field-list simple">
@@ -330,7 +429,7 @@ which form the core of the text wrapper module public API.</p>
 <p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-static-functions">Public Static Functions</p>
 <dl class="cpp function">
 <dt class="sig sig-object cpp" id="_CPPv4N4asap4wrap11TextWrapper6CreateEv">
-<span id="_CPPv3N4asap4wrap11TextWrapper6CreateEv"></span><span id="_CPPv2N4asap4wrap11TextWrapper6CreateEv"></span><span id="asap::wrap::TextWrapper::Create"></span><span class="target" id="classasap_1_1wrap_1_1_text_wrapper_1ab8ea152405e704b3f9010d8b19114b26"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="n"><span class="pre">ASAP_TEXTWRAP_API</span></span><span class="w"> </span><span class="k"><span class="pre">auto</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Create</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="o"><span class="pre">-&gt;</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N4asap4wrap18TextWrapperBuilderE" title="asap::wrap::TextWrapperBuilder"><span class="n"><span class="pre">TextWrapperBuilder</span></span></a><a class="headerlink" href="#_CPPv4N4asap4wrap11TextWrapper6CreateEv" title="Permalink to this definition">¶</a><br /></dt>
+<span id="_CPPv3N4asap4wrap11TextWrapper6CreateEv"></span><span id="_CPPv2N4asap4wrap11TextWrapper6CreateEv"></span><span id="asap::wrap::TextWrapper::Create"></span><span class="target" id="classasap_1_1wrap_1_1_text_wrapper_1ab8ea152405e704b3f9010d8b19114b26"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="n"><span class="pre">ASAP_TEXTWRAP_API</span></span><span class="w"> </span><span class="k"><span class="pre">auto</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Create</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="o"><span class="pre">-&gt;</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N4asap4wrap18TextWrapperBuilderE" title="asap::wrap::TextWrapperBuilder"><span class="n"><span class="pre">TextWrapperBuilder</span></span></a><a class="headerlink" href="#_CPPv4N4asap4wrap11TextWrapper6CreateEv" title="Permalink to this definition">#</a><br /></dt>
 <dd><p>Create a new <a class="reference internal" href="#classasap_1_1wrap_1_1_text_wrapper_builder"><span class="std std-ref">TextWrapperBuilder</span></a> instance to start building a <a class="reference internal" href="#classasap_1_1wrap_1_1_text_wrapper"><span class="std std-ref">TextWrapper</span></a>. </p>
 </dd></dl>
 
@@ -339,7 +438,7 @@ which form the core of the text wrapper module public API.</p>
 <p class="breathe-sectiondef-title rubric" id="breathe-section-title-friends">Friends</p>
 <dl class="cpp function">
 <dt class="sig sig-object cpp" id="_CPPv4N4asap4wrap11TextWrapperlsERNSt7ostreamERK11TextWrapper">
-<span id="_CPPv3N4asap4wrap11TextWrapperlsERNSt7ostreamERK11TextWrapper"></span><span id="_CPPv2N4asap4wrap11TextWrapperlsERNSt7ostreamERK11TextWrapper"></span><span id="asap::wrap::TextWrapper::lshift-operator__osR.TextWrapperCR"></span><span class="target" id="classasap_1_1wrap_1_1_text_wrapper_1ab174368308cdb18cf050cc2f00fb3f05"></span><span class="k"><span class="pre">friend</span></span><span class="w"> </span><span class="n"><span class="pre">ASAP_TEXTWRAP_API</span></span><span class="w"> </span><span class="k"><span class="pre">auto</span></span><span class="w"> </span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="o"><span class="pre">&lt;&lt;</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ostream</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">out</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N4asap4wrap11TextWrapperE" title="asap::wrap::TextWrapper"><span class="n"><span class="pre">TextWrapper</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">wrapper</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="o"><span class="pre">-&gt;</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ostream</span></span><span class="p"><span class="pre">&amp;</span></span><a class="headerlink" href="#_CPPv4N4asap4wrap11TextWrapperlsERNSt7ostreamERK11TextWrapper" title="Permalink to this definition">¶</a><br /></dt>
+<span id="_CPPv3N4asap4wrap11TextWrapperlsERNSt7ostreamERK11TextWrapper"></span><span id="_CPPv2N4asap4wrap11TextWrapperlsERNSt7ostreamERK11TextWrapper"></span><span id="asap::wrap::TextWrapper::lshift-operator__osR.TextWrapperCR"></span><span class="target" id="classasap_1_1wrap_1_1_text_wrapper_1ab174368308cdb18cf050cc2f00fb3f05"></span><span class="k"><span class="pre">friend</span></span><span class="w"> </span><span class="n"><span class="pre">ASAP_TEXTWRAP_API</span></span><span class="w"> </span><span class="k"><span class="pre">auto</span></span><span class="w"> </span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="o"><span class="pre">&lt;&lt;</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ostream</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">out</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N4asap4wrap11TextWrapperE" title="asap::wrap::TextWrapper"><span class="n"><span class="pre">TextWrapper</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">wrapper</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="o"><span class="pre">-&gt;</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ostream</span></span><span class="p"><span class="pre">&amp;</span></span><a class="headerlink" href="#_CPPv4N4asap4wrap11TextWrapperlsERNSt7ostreamERK11TextWrapper" title="Permalink to this definition">#</a><br /></dt>
 <dd><p>Overloaded output stream operator for pretty printing <a class="reference internal" href="#classasap_1_1wrap_1_1_text_wrapper"><span class="std std-ref">TextWrapper</span></a> configuration parameters. values. </p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -357,12 +456,12 @@ which form the core of the text wrapper module public API.</p>
 </div>
 </dd></dl>
 
-</div>
-<div class="section" id="textwrapperbuilder">
-<h2>TextWrapperBuilder<a class="headerlink" href="#textwrapperbuilder" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="textwrapperbuilder">
+<h2>TextWrapperBuilder<a class="headerlink" href="#textwrapperbuilder" title="Permalink to this headline">#</a></h2>
 <dl class="cpp class">
 <dt class="sig sig-object cpp" id="_CPPv4N4asap4wrap18TextWrapperBuilderE">
-<span id="_CPPv3N4asap4wrap18TextWrapperBuilderE"></span><span id="_CPPv2N4asap4wrap18TextWrapperBuilderE"></span><span id="asap::wrap::TextWrapperBuilder"></span><span class="target" id="classasap_1_1wrap_1_1_text_wrapper_builder"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-prename descclassname"><span class="n"><span class="pre">asap</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">wrap</span></span><span class="p"><span class="pre">::</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">TextWrapperBuilder</span></span></span><a class="headerlink" href="#_CPPv4N4asap4wrap18TextWrapperBuilderE" title="Permalink to this definition">¶</a><br /></dt>
+<span id="_CPPv3N4asap4wrap18TextWrapperBuilderE"></span><span id="_CPPv2N4asap4wrap18TextWrapperBuilderE"></span><span id="asap::wrap::TextWrapperBuilder"></span><span class="target" id="classasap_1_1wrap_1_1_text_wrapper_builder"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-prename descclassname"><span class="n"><span class="pre">asap</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">wrap</span></span><span class="p"><span class="pre">::</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">TextWrapperBuilder</span></span></span><a class="headerlink" href="#_CPPv4N4asap4wrap18TextWrapperBuilderE" title="Permalink to this definition">#</a><br /></dt>
 <dd><p>A fluent interface builder for <a class="reference internal" href="#classasap_1_1wrap_1_1_text_wrapper"><span class="std std-ref">TextWrapper</span></a>. </p>
 <p>This builder simplifies the creation and configuration of <a class="reference internal" href="#classasap_1_1wrap_1_1_text_wrapper"><span class="std std-ref">TextWrapper</span></a> instances through a fluent API.</p>
 <p><strong>Example</strong></p>
@@ -402,7 +501,7 @@ which form the core of the text wrapper module public API.</p>
 <p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
 <dl class="cpp function">
 <dt class="sig sig-object cpp" id="_CPPv4NK4asap4wrap18TextWrapperBuildercv11TextWrapperEv">
-<span id="_CPPv3NK4asap4wrap18TextWrapperBuildercv11TextWrapperEv"></span><span id="_CPPv2NK4asap4wrap18TextWrapperBuildercv11TextWrapperEv"></span><span id="asap::wrap::TextWrapperBuilder::castto-TextWrapper-operatorC"></span><span class="target" id="classasap_1_1wrap_1_1_text_wrapper_builder_1aac34eb2c28a975ce1ccf33a571b97802"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">ASAP_TEXTWRAP_API</span></span><span class="w"> </span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N4asap4wrap11TextWrapperE" title="asap::wrap::TextWrapper"><span class="n"><span class="pre">TextWrapper</span></span></a></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK4asap4wrap18TextWrapperBuildercv11TextWrapperEv" title="Permalink to this definition">¶</a><br /></dt>
+<span id="_CPPv3NK4asap4wrap18TextWrapperBuildercv11TextWrapperEv"></span><span id="_CPPv2NK4asap4wrap18TextWrapperBuildercv11TextWrapperEv"></span><span id="asap::wrap::TextWrapperBuilder::castto-TextWrapper-operatorC"></span><span class="target" id="classasap_1_1wrap_1_1_text_wrapper_builder_1aac34eb2c28a975ce1ccf33a571b97802"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">ASAP_TEXTWRAP_API</span></span><span class="w"> </span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N4asap4wrap11TextWrapperE" title="asap::wrap::TextWrapper"><span class="n"><span class="pre">TextWrapper</span></span></a></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK4asap4wrap18TextWrapperBuildercv11TextWrapperEv" title="Permalink to this definition">#</a><br /></dt>
 <dd><p>converts a <a class="reference internal" href="#classasap_1_1wrap_1_1_text_wrapper_builder"><span class="std std-ref">TextWrapperBuilder</span></a> instance to a <a class="reference internal" href="#classasap_1_1wrap_1_1_text_wrapper"><span class="std std-ref">TextWrapper</span></a> instance at the end of the building. </p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -413,14 +512,14 @@ which form the core of the text wrapper module public API.</p>
 
 <dl class="cpp function">
 <dt class="sig sig-object cpp" id="_CPPv4N4asap4wrap18TextWrapperBuilder5WidthE6size_t">
-<span id="_CPPv3N4asap4wrap18TextWrapperBuilder5WidthE6size_t"></span><span id="_CPPv2N4asap4wrap18TextWrapperBuilder5WidthE6size_t"></span><span id="asap::wrap::TextWrapperBuilder::Width__s"></span><span class="target" id="classasap_1_1wrap_1_1_text_wrapper_builder_1ae82267955e7e2b464b25210cc444fa22"></span><span class="n"><span class="pre">ASAP_TEXTWRAP_API</span></span><span class="w"> </span><span class="k"><span class="pre">auto</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Width</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">width</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="o"><span class="pre">-&gt;</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N4asap4wrap18TextWrapperBuilderE" title="asap::wrap::TextWrapperBuilder"><span class="n"><span class="pre">TextWrapperBuilder</span></span></a><span class="p"><span class="pre">&amp;</span></span><a class="headerlink" href="#_CPPv4N4asap4wrap18TextWrapperBuilder5WidthE6size_t" title="Permalink to this definition">¶</a><br /></dt>
+<span id="_CPPv3N4asap4wrap18TextWrapperBuilder5WidthE6size_t"></span><span id="_CPPv2N4asap4wrap18TextWrapperBuilder5WidthE6size_t"></span><span id="asap::wrap::TextWrapperBuilder::Width__s"></span><span class="target" id="classasap_1_1wrap_1_1_text_wrapper_builder_1ae82267955e7e2b464b25210cc444fa22"></span><span class="n"><span class="pre">ASAP_TEXTWRAP_API</span></span><span class="w"> </span><span class="k"><span class="pre">auto</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Width</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">width</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="o"><span class="pre">-&gt;</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N4asap4wrap18TextWrapperBuilderE" title="asap::wrap::TextWrapperBuilder"><span class="n"><span class="pre">TextWrapperBuilder</span></span></a><span class="p"><span class="pre">&amp;</span></span><a class="headerlink" href="#_CPPv4N4asap4wrap18TextWrapperBuilder5WidthE6size_t" title="Permalink to this definition">#</a><br /></dt>
 <dd><p>The maximum length of wrapped lines. </p>
 <p>(default: 80) As long as there are no individual words in the input text longer than width, <a class="reference internal" href="#classasap_1_1wrap_1_1_text_wrapper"><span class="std std-ref">TextWrapper</span></a> guarantees that no output line will be longer than width characters. </p>
 </dd></dl>
 
 <dl class="cpp function">
 <dt class="sig sig-object cpp" id="_CPPv4N4asap4wrap18TextWrapperBuilder10IndentWithEv">
-<span id="_CPPv3N4asap4wrap18TextWrapperBuilder10IndentWithEv"></span><span id="_CPPv2N4asap4wrap18TextWrapperBuilder10IndentWithEv"></span><span id="asap::wrap::TextWrapperBuilder::IndentWith"></span><span class="target" id="classasap_1_1wrap_1_1_text_wrapper_builder_1ab5515200060f3c002cecc2396c477883"></span><span class="n"><span class="pre">ASAP_TEXTWRAP_API</span></span><span class="w"> </span><span class="k"><span class="pre">auto</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">IndentWith</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="o"><span class="pre">-&gt;</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N4asap4wrap18TextWrapperBuilderE" title="asap::wrap::TextWrapperBuilder"><span class="n"><span class="pre">TextWrapperBuilder</span></span></a><span class="p"><span class="pre">&amp;</span></span><a class="headerlink" href="#_CPPv4N4asap4wrap18TextWrapperBuilder10IndentWithEv" title="Permalink to this definition">¶</a><br /></dt>
+<span id="_CPPv3N4asap4wrap18TextWrapperBuilder10IndentWithEv"></span><span id="_CPPv2N4asap4wrap18TextWrapperBuilder10IndentWithEv"></span><span id="asap::wrap::TextWrapperBuilder::IndentWith"></span><span class="target" id="classasap_1_1wrap_1_1_text_wrapper_builder_1ab5515200060f3c002cecc2396c477883"></span><span class="n"><span class="pre">ASAP_TEXTWRAP_API</span></span><span class="w"> </span><span class="k"><span class="pre">auto</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">IndentWith</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="o"><span class="pre">-&gt;</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N4asap4wrap18TextWrapperBuilderE" title="asap::wrap::TextWrapperBuilder"><span class="n"><span class="pre">TextWrapperBuilder</span></span></a><span class="p"><span class="pre">&amp;</span></span><a class="headerlink" href="#_CPPv4N4asap4wrap18TextWrapperBuilder10IndentWithEv" title="Permalink to this definition">#</a><br /></dt>
 <dd><p>Setup indentation prefixes. </p>
 <p>Starts the fluent API for setting the optional indentation prefixes for the first line and the subsequent lines.</p>
 <p><div class="admonition seealso">
@@ -436,7 +535,7 @@ which form the core of the text wrapper module public API.</p>
 
 <dl class="cpp function">
 <dt class="sig sig-object cpp" id="_CPPv4N4asap4wrap18TextWrapperBuilder9InitiallyENSt6stringE">
-<span id="_CPPv3N4asap4wrap18TextWrapperBuilder9InitiallyENSt6stringE"></span><span id="_CPPv2N4asap4wrap18TextWrapperBuilder9InitiallyENSt6stringE"></span><span id="asap::wrap::TextWrapperBuilder::Initially__ss"></span><span class="target" id="classasap_1_1wrap_1_1_text_wrapper_builder_1a5c26c280ded21d2bc14a1f5ae9d151f3"></span><span class="n"><span class="pre">ASAP_TEXTWRAP_API</span></span><span class="w"> </span><span class="k"><span class="pre">auto</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Initially</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">initial_indent</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="o"><span class="pre">-&gt;</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N4asap4wrap18TextWrapperBuilderE" title="asap::wrap::TextWrapperBuilder"><span class="n"><span class="pre">TextWrapperBuilder</span></span></a><span class="p"><span class="pre">&amp;</span></span><a class="headerlink" href="#_CPPv4N4asap4wrap18TextWrapperBuilder9InitiallyENSt6stringE" title="Permalink to this definition">¶</a><br /></dt>
+<span id="_CPPv3N4asap4wrap18TextWrapperBuilder9InitiallyENSt6stringE"></span><span id="_CPPv2N4asap4wrap18TextWrapperBuilder9InitiallyENSt6stringE"></span><span id="asap::wrap::TextWrapperBuilder::Initially__ss"></span><span class="target" id="classasap_1_1wrap_1_1_text_wrapper_builder_1a5c26c280ded21d2bc14a1f5ae9d151f3"></span><span class="n"><span class="pre">ASAP_TEXTWRAP_API</span></span><span class="w"> </span><span class="k"><span class="pre">auto</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Initially</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">initial_indent</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="o"><span class="pre">-&gt;</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N4asap4wrap18TextWrapperBuilderE" title="asap::wrap::TextWrapperBuilder"><span class="n"><span class="pre">TextWrapperBuilder</span></span></a><span class="p"><span class="pre">&amp;</span></span><a class="headerlink" href="#_CPPv4N4asap4wrap18TextWrapperBuilder9InitiallyENSt6stringE" title="Permalink to this definition">#</a><br /></dt>
 <dd><p>String that will be prepended to the first line of wrapped output. </p>
 <p>(default: ‘’) Counts towards the length of the first line. The empty string is not indented.</p>
 <p><div class="admonition seealso">
@@ -452,7 +551,7 @@ which form the core of the text wrapper module public API.</p>
 
 <dl class="cpp function">
 <dt class="sig sig-object cpp" id="_CPPv4N4asap4wrap18TextWrapperBuilder4ThenENSt6stringE">
-<span id="_CPPv3N4asap4wrap18TextWrapperBuilder4ThenENSt6stringE"></span><span id="_CPPv2N4asap4wrap18TextWrapperBuilder4ThenENSt6stringE"></span><span id="asap::wrap::TextWrapperBuilder::Then__ss"></span><span class="target" id="classasap_1_1wrap_1_1_text_wrapper_builder_1a97df6bc1af1bbc0fc6d6bb1a69b72623"></span><span class="n"><span class="pre">ASAP_TEXTWRAP_API</span></span><span class="w"> </span><span class="k"><span class="pre">auto</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Then</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">indent</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="o"><span class="pre">-&gt;</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N4asap4wrap18TextWrapperBuilderE" title="asap::wrap::TextWrapperBuilder"><span class="n"><span class="pre">TextWrapperBuilder</span></span></a><span class="p"><span class="pre">&amp;</span></span><a class="headerlink" href="#_CPPv4N4asap4wrap18TextWrapperBuilder4ThenENSt6stringE" title="Permalink to this definition">¶</a><br /></dt>
+<span id="_CPPv3N4asap4wrap18TextWrapperBuilder4ThenENSt6stringE"></span><span id="_CPPv2N4asap4wrap18TextWrapperBuilder4ThenENSt6stringE"></span><span id="asap::wrap::TextWrapperBuilder::Then__ss"></span><span class="target" id="classasap_1_1wrap_1_1_text_wrapper_builder_1a97df6bc1af1bbc0fc6d6bb1a69b72623"></span><span class="n"><span class="pre">ASAP_TEXTWRAP_API</span></span><span class="w"> </span><span class="k"><span class="pre">auto</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Then</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">indent</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="o"><span class="pre">-&gt;</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N4asap4wrap18TextWrapperBuilderE" title="asap::wrap::TextWrapperBuilder"><span class="n"><span class="pre">TextWrapperBuilder</span></span></a><span class="p"><span class="pre">&amp;</span></span><a class="headerlink" href="#_CPPv4N4asap4wrap18TextWrapperBuilder4ThenENSt6stringE" title="Permalink to this definition">#</a><br /></dt>
 <dd><p>String that will be prepended to all lines of wrapped output except the first. </p>
 <p>(default: ‘’) Counts towards the length of the first line. The empty string is not indented.</p>
 <p><div class="admonition seealso">
@@ -468,14 +567,14 @@ which form the core of the text wrapper module public API.</p>
 
 <dl class="cpp function">
 <dt class="sig sig-object cpp" id="_CPPv4N4asap4wrap18TextWrapperBuilder10ExpandTabsENSt6stringE">
-<span id="_CPPv3N4asap4wrap18TextWrapperBuilder10ExpandTabsENSt6stringE"></span><span id="_CPPv2N4asap4wrap18TextWrapperBuilder10ExpandTabsENSt6stringE"></span><span id="asap::wrap::TextWrapperBuilder::ExpandTabs__ss"></span><span class="target" id="classasap_1_1wrap_1_1_text_wrapper_builder_1ac8ec091a4de58685e3ef1d158d5f5345"></span><span class="n"><span class="pre">ASAP_TEXTWRAP_API</span></span><span class="w"> </span><span class="k"><span class="pre">auto</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ExpandTabs</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">tab</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="o"><span class="pre">-&gt;</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N4asap4wrap18TextWrapperBuilderE" title="asap::wrap::TextWrapperBuilder"><span class="n"><span class="pre">TextWrapperBuilder</span></span></a><span class="p"><span class="pre">&amp;</span></span><a class="headerlink" href="#_CPPv4N4asap4wrap18TextWrapperBuilder10ExpandTabsENSt6stringE" title="Permalink to this definition">¶</a><br /></dt>
+<span id="_CPPv3N4asap4wrap18TextWrapperBuilder10ExpandTabsENSt6stringE"></span><span id="_CPPv2N4asap4wrap18TextWrapperBuilder10ExpandTabsENSt6stringE"></span><span id="asap::wrap::TextWrapperBuilder::ExpandTabs__ss"></span><span class="target" id="classasap_1_1wrap_1_1_text_wrapper_builder_1ac8ec091a4de58685e3ef1d158d5f5345"></span><span class="n"><span class="pre">ASAP_TEXTWRAP_API</span></span><span class="w"> </span><span class="k"><span class="pre">auto</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ExpandTabs</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">tab</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="o"><span class="pre">-&gt;</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N4asap4wrap18TextWrapperBuilderE" title="asap::wrap::TextWrapperBuilder"><span class="n"><span class="pre">TextWrapperBuilder</span></span></a><span class="p"><span class="pre">&amp;</span></span><a class="headerlink" href="#_CPPv4N4asap4wrap18TextWrapperBuilder10ExpandTabsENSt6stringE" title="Permalink to this definition">#</a><br /></dt>
 <dd><p>All tab characters in text are expanded using the <code class="docutils literal notranslate"><span class="pre">tab</span></code> string. </p>
 <p>(default: “\t”) This is the first transformation that happens before replacing / collapsing white spaces and before wrapping. </p>
 </dd></dl>
 
 <dl class="cpp function">
 <dt class="sig sig-object cpp" id="_CPPv4N4asap4wrap18TextWrapperBuilder17ReplaceWhiteSpaceEv">
-<span id="_CPPv3N4asap4wrap18TextWrapperBuilder17ReplaceWhiteSpaceEv"></span><span id="_CPPv2N4asap4wrap18TextWrapperBuilder17ReplaceWhiteSpaceEv"></span><span id="asap::wrap::TextWrapperBuilder::ReplaceWhiteSpace"></span><span class="target" id="classasap_1_1wrap_1_1_text_wrapper_builder_1ab958b72099cbb1223285c7435bde5346"></span><span class="n"><span class="pre">ASAP_TEXTWRAP_API</span></span><span class="w"> </span><span class="k"><span class="pre">auto</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ReplaceWhiteSpace</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="o"><span class="pre">-&gt;</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N4asap4wrap18TextWrapperBuilderE" title="asap::wrap::TextWrapperBuilder"><span class="n"><span class="pre">TextWrapperBuilder</span></span></a><span class="p"><span class="pre">&amp;</span></span><a class="headerlink" href="#_CPPv4N4asap4wrap18TextWrapperBuilder17ReplaceWhiteSpaceEv" title="Permalink to this definition">¶</a><br /></dt>
+<span id="_CPPv3N4asap4wrap18TextWrapperBuilder17ReplaceWhiteSpaceEv"></span><span id="_CPPv2N4asap4wrap18TextWrapperBuilder17ReplaceWhiteSpaceEv"></span><span id="asap::wrap::TextWrapperBuilder::ReplaceWhiteSpace"></span><span class="target" id="classasap_1_1wrap_1_1_text_wrapper_builder_1ab958b72099cbb1223285c7435bde5346"></span><span class="n"><span class="pre">ASAP_TEXTWRAP_API</span></span><span class="w"> </span><span class="k"><span class="pre">auto</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ReplaceWhiteSpace</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="o"><span class="pre">-&gt;</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N4asap4wrap18TextWrapperBuilderE" title="asap::wrap::TextWrapperBuilder"><span class="n"><span class="pre">TextWrapperBuilder</span></span></a><span class="p"><span class="pre">&amp;</span></span><a class="headerlink" href="#_CPPv4N4asap4wrap18TextWrapperBuilder17ReplaceWhiteSpaceEv" title="Permalink to this definition">#</a><br /></dt>
 <dd><p>Before wrapping and after tab expansion, replace each white space character with a single space. </p>
 <p>(default: false)</p>
 <p>Paragraph markers (two consecutive new lines) will never be replaced with spaces. They will always produce a TokenType::ParagraphMark token.</p>
@@ -491,7 +590,7 @@ which form the core of the text wrapper module public API.</p>
 
 <dl class="cpp function">
 <dt class="sig sig-object cpp" id="_CPPv4N4asap4wrap18TextWrapperBuilder18CollapseWhiteSpaceEv">
-<span id="_CPPv3N4asap4wrap18TextWrapperBuilder18CollapseWhiteSpaceEv"></span><span id="_CPPv2N4asap4wrap18TextWrapperBuilder18CollapseWhiteSpaceEv"></span><span id="asap::wrap::TextWrapperBuilder::CollapseWhiteSpace"></span><span class="target" id="classasap_1_1wrap_1_1_text_wrapper_builder_1a3a4f15cc31a184045825bd9b1d3975cc"></span><span class="n"><span class="pre">ASAP_TEXTWRAP_API</span></span><span class="w"> </span><span class="k"><span class="pre">auto</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">CollapseWhiteSpace</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="o"><span class="pre">-&gt;</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N4asap4wrap18TextWrapperBuilderE" title="asap::wrap::TextWrapperBuilder"><span class="n"><span class="pre">TextWrapperBuilder</span></span></a><span class="p"><span class="pre">&amp;</span></span><a class="headerlink" href="#_CPPv4N4asap4wrap18TextWrapperBuilder18CollapseWhiteSpaceEv" title="Permalink to this definition">¶</a><br /></dt>
+<span id="_CPPv3N4asap4wrap18TextWrapperBuilder18CollapseWhiteSpaceEv"></span><span id="_CPPv2N4asap4wrap18TextWrapperBuilder18CollapseWhiteSpaceEv"></span><span id="asap::wrap::TextWrapperBuilder::CollapseWhiteSpace"></span><span class="target" id="classasap_1_1wrap_1_1_text_wrapper_builder_1a3a4f15cc31a184045825bd9b1d3975cc"></span><span class="n"><span class="pre">ASAP_TEXTWRAP_API</span></span><span class="w"> </span><span class="k"><span class="pre">auto</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">CollapseWhiteSpace</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="o"><span class="pre">-&gt;</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N4asap4wrap18TextWrapperBuilderE" title="asap::wrap::TextWrapperBuilder"><span class="n"><span class="pre">TextWrapperBuilder</span></span></a><span class="p"><span class="pre">&amp;</span></span><a class="headerlink" href="#_CPPv4N4asap4wrap18TextWrapperBuilder18CollapseWhiteSpaceEv" title="Permalink to this definition">#</a><br /></dt>
 <dd><p>Replace contiguous series of white spaces with a single space. </p>
 <p>(default: false)</p>
 <div class="admonition note">
@@ -502,14 +601,14 @@ which form the core of the text wrapper module public API.</p>
 
 <dl class="cpp function">
 <dt class="sig sig-object cpp" id="_CPPv4N4asap4wrap18TextWrapperBuilder9TrimLinesEv">
-<span id="_CPPv3N4asap4wrap18TextWrapperBuilder9TrimLinesEv"></span><span id="_CPPv2N4asap4wrap18TextWrapperBuilder9TrimLinesEv"></span><span id="asap::wrap::TextWrapperBuilder::TrimLines"></span><span class="target" id="classasap_1_1wrap_1_1_text_wrapper_builder_1a72ed468cc3a08256a9bd21a0c2d6edb9"></span><span class="n"><span class="pre">ASAP_TEXTWRAP_API</span></span><span class="w"> </span><span class="k"><span class="pre">auto</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">TrimLines</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="o"><span class="pre">-&gt;</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N4asap4wrap18TextWrapperBuilderE" title="asap::wrap::TextWrapperBuilder"><span class="n"><span class="pre">TextWrapperBuilder</span></span></a><span class="p"><span class="pre">&amp;</span></span><a class="headerlink" href="#_CPPv4N4asap4wrap18TextWrapperBuilder9TrimLinesEv" title="Permalink to this definition">¶</a><br /></dt>
+<span id="_CPPv3N4asap4wrap18TextWrapperBuilder9TrimLinesEv"></span><span id="_CPPv2N4asap4wrap18TextWrapperBuilder9TrimLinesEv"></span><span id="asap::wrap::TextWrapperBuilder::TrimLines"></span><span class="target" id="classasap_1_1wrap_1_1_text_wrapper_builder_1a72ed468cc3a08256a9bd21a0c2d6edb9"></span><span class="n"><span class="pre">ASAP_TEXTWRAP_API</span></span><span class="w"> </span><span class="k"><span class="pre">auto</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">TrimLines</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="o"><span class="pre">-&gt;</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N4asap4wrap18TextWrapperBuilderE" title="asap::wrap::TextWrapperBuilder"><span class="n"><span class="pre">TextWrapperBuilder</span></span></a><span class="p"><span class="pre">&amp;</span></span><a class="headerlink" href="#_CPPv4N4asap4wrap18TextWrapperBuilder9TrimLinesEv" title="Permalink to this definition">#</a><br /></dt>
 <dd><p>Whitespace at the beginning and ending of every line (after wrapping but before indenting) is dropped. </p>
 <p>(default: false) </p>
 </dd></dl>
 
 <dl class="cpp function">
 <dt class="sig sig-object cpp" id="_CPPv4N4asap4wrap18TextWrapperBuilder14BreakOnHyphensEv">
-<span id="_CPPv3N4asap4wrap18TextWrapperBuilder14BreakOnHyphensEv"></span><span id="_CPPv2N4asap4wrap18TextWrapperBuilder14BreakOnHyphensEv"></span><span id="asap::wrap::TextWrapperBuilder::BreakOnHyphens"></span><span class="target" id="classasap_1_1wrap_1_1_text_wrapper_builder_1a60a56ad56d6f642c2e799893ddebccdd"></span><span class="n"><span class="pre">ASAP_TEXTWRAP_API</span></span><span class="w"> </span><span class="k"><span class="pre">auto</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">BreakOnHyphens</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="o"><span class="pre">-&gt;</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N4asap4wrap18TextWrapperBuilderE" title="asap::wrap::TextWrapperBuilder"><span class="n"><span class="pre">TextWrapperBuilder</span></span></a><span class="p"><span class="pre">&amp;</span></span><a class="headerlink" href="#_CPPv4N4asap4wrap18TextWrapperBuilder14BreakOnHyphensEv" title="Permalink to this definition">¶</a><br /></dt>
+<span id="_CPPv3N4asap4wrap18TextWrapperBuilder14BreakOnHyphensEv"></span><span id="_CPPv2N4asap4wrap18TextWrapperBuilder14BreakOnHyphensEv"></span><span id="asap::wrap::TextWrapperBuilder::BreakOnHyphens"></span><span class="target" id="classasap_1_1wrap_1_1_text_wrapper_builder_1a60a56ad56d6f642c2e799893ddebccdd"></span><span class="n"><span class="pre">ASAP_TEXTWRAP_API</span></span><span class="w"> </span><span class="k"><span class="pre">auto</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">BreakOnHyphens</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="o"><span class="pre">-&gt;</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N4asap4wrap18TextWrapperBuilderE" title="asap::wrap::TextWrapperBuilder"><span class="n"><span class="pre">TextWrapperBuilder</span></span></a><span class="p"><span class="pre">&amp;</span></span><a class="headerlink" href="#_CPPv4N4asap4wrap18TextWrapperBuilder14BreakOnHyphensEv" title="Permalink to this definition">#</a><br /></dt>
 <dd><p>Compound words will be broken into separate chunks right after hyphens, as it is customary in English. </p>
 <p>(default: false) </p>
 </dd></dl>
@@ -517,15 +616,17 @@ which form the core of the text wrapper module public API.</p>
 </div>
 </dd></dl>
 
-</div>
-</div>
+</section>
+</section>
 
 
               </div>
               
-            
-                <!-- Previous / next buttons -->
-<div class='prev-next-area'> 
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
     <a class='left-prev' id="prev-link" href="../api.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
@@ -541,22 +642,26 @@ which form the core of the text wrapper module public API.</p>
     <i class="fas fa-angle-right"></i>
     </a>
 </div>
-            
+            </footer>
         </div>
     </div>
-    <footer class="footer">
-  <p>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+      &copy; Copyright 2022, The Authors.<br/>
+</p>
+        </footer>
+    </div>
     
-        &copy; Copyright 2022, The Authors.<br/>
-  </p>
-</footer>
-</main>
+</div>
 
 
       </div>
     </div>
   
-  <script src="../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
 
   </body>
 </html>
