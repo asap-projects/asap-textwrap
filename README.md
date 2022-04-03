@@ -30,8 +30,8 @@ NOTES:
 
 ## Requirements
 
-Make sure you have a C++ compiler with C++-17 capabilities at least. Gnu, Clang
-and MSVC all can do that with a recent version.
+Make sure you have a C++ compiler with C++-17 capabilities at least. Gnu, Clang and MSVC all can do
+that with a recent version.
 
 ## Building
 
@@ -59,7 +59,7 @@ option(ASAP_WITH_VALGRIND       "Builds targets with valgrind profilers added"  
 ## Making changes to this project
 
 Read the developer guides in the upstream
-[asap](https://abdes.github.io/asap/asap_master/html/)
+[asap](https://abdes.github.io/asap/master/html/)
 project. If you're in a hurry, at least do the following:
 
 Only one time after the project is cloned, do the following:
@@ -68,4 +68,15 @@ Only one time after the project is cloned, do the following:
 npx husky install
 npm install -g @commitlint/cli @commitlint/config-conventional
 npm install -g standard-version
+```
+
+## Getting updates from upstream [`asap`](https://github.com/abdes/asap)
+
+In order to pull and merge updates from the upstream project, make sure to add
+it to the repo's remotes and disable pulling/merging tags from the upstream. We
+want tags to be limited to those made in this repo, not in the upstream.
+
+```bash
+git remote add upstream https://github.com/abdes/asap.git
+git config remote.upstream.tagopt --no-tags
 ```
