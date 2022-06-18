@@ -141,14 +141,14 @@ ASAP_TEXTWRAP_API auto operator<<(std::ostream &out, const TextWrapper &wrapper)
  */
 class TextWrapperBuilder {
 public:
-  ASAP_TEXTWRAP_API TextWrapperBuilder() = default;
+  TextWrapperBuilder() = default;
 
   /*! \brief converts a TextWrapperBuilder instance to a TextWrapper instance at
    * the end of the building.
    *
    * @return an instance of TExtWrapper.
    */
-  /* implicit */ ASAP_TEXTWRAP_API operator TextWrapper() const { // NOLINT
+  /* implicit */ operator TextWrapper() const { // NOLINT
     return std::move(wrapper);
   }
 

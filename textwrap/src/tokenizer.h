@@ -158,7 +158,7 @@ public:
    * @param break_on_hyphens controls whether hyphens can be used to break words
    * into multiple chunks.
    */
-  explicit ASAP_TEXTWRAP_API Tokenizer(
+  explicit Tokenizer(
       std::string tab, bool replace_ws, bool collapse_ws, bool break_on_hyphens)
       : tab_(std::move(tab)), replace_ws_{replace_ws},
         collapse_ws_{collapse_ws}, break_on_hyphens_{break_on_hyphens} {
