@@ -192,19 +192,18 @@ struct WordState : public Will<On<InputEnd, TransitionTo<FinalState>>,
                        On<WhiteSpaceChar, TransitionTo<WhiteSpaceState>>> {
   using Will::Handle;
 
-  WordState( TokenConsumer callback, bool break_on_hyphens)
-      : consume_token_{std::move(callback)},
-        break_on_hyphens_{break_on_hyphens} {
+  WordState(TokenConsumer callback, bool break_on_hyphens)
+      : consume_token_{std::move(callback)}, break_on_hyphens_{
+                                                 break_on_hyphens} {
   }
 
-  static auto OnEnter(const NonWhiteSpaceChar &/*event*/) -> Status {
+  static auto OnEnter(const NonWhiteSpaceChar & /*event*/) -> Status {
     return ReissueEvent{};
   }
 
-  template <typename Event> auto OnLeave(const Event &/*event*/) -> Status {
+  template <typename Event> auto OnLeave(const Event & /*event*/) -> Status {
     if (!token_.empty()) {
-      DispatchTokenToConsumer(
-          consume_token_, TokenType::Chunk, token_);
+      DispatchTokenToConsumer(consume_token_, TokenType::Chunk, token_);
     }
     return Continue{};
   }
@@ -213,8 +212,7 @@ struct WordState : public Will<On<InputEnd, TransitionTo<FinalState>>,
     if (break_on_hyphens_ && event.value == '-' && !token_.empty() &&
         (std::isalpha(token_.back()) != 0)) {
       token_.push_back(event.value);
-      DispatchTokenToConsumer(
-          consume_token_, TokenType::Chunk, token_);
+      DispatchTokenToConsumer(consume_token_, TokenType::Chunk, token_);
     } else {
       token_.push_back(event.value);
     }
@@ -242,17 +240,17 @@ struct WhiteSpaceState : public Will<On<InputEnd, TransitionTo<FinalState>>,
                              On<NonWhiteSpaceChar, TransitionTo<WordState>>> {
   using Will::Handle;
 
-  explicit WhiteSpaceState(TokenConsumer callback,
-      const std::string &tab, bool replace_ws, bool collapse_ws)
-      : consume_token_{std::move(callback)}, tab_{tab},
-        replace_ws_{replace_ws}, collapse_ws_{collapse_ws} {
+  explicit WhiteSpaceState(TokenConsumer callback, const std::string &tab,
+      bool replace_ws, bool collapse_ws)
+      : consume_token_{std::move(callback)}, tab_{tab}, replace_ws_{replace_ws},
+        collapse_ws_{collapse_ws} {
   }
 
-  static auto OnEnter(const WhiteSpaceChar &/*event*/) -> Status {
+  static auto OnEnter(const WhiteSpaceChar & /*event*/) -> Status {
     return ReissueEvent{};
   }
 
-  template <typename Event> auto OnLeave(const Event &/*event*/) -> Status {
+  template <typename Event> auto OnLeave(const Event & /*event*/) -> Status {
     if (!token_.empty()) {
       // This is not a paragraph mark so dispatch as white space token
       DispatchToConsumer(TokenType::WhiteSpace);
@@ -306,11 +304,9 @@ private:
               return (std::isspace(a_char) != 0) ? ' ' : a_char;
             });
       }
-      DispatchTokenToConsumer(
-          consume_token_, TokenType::WhiteSpace, token_);
+      DispatchTokenToConsumer(consume_token_, TokenType::WhiteSpace, token_);
     } else {
-      DispatchTokenToConsumer(
-          consume_token_, TokenType::ParagraphMark, token_);
+      DispatchTokenToConsumer(consume_token_, TokenType::ParagraphMark, token_);
     }
   }
 
@@ -341,8 +337,7 @@ auto asap::wrap::detail::Tokenizer::Tokenize(
 
   using Machine =
       StateMachine<InitialState, WordState, WhiteSpaceState, FinalState>;
-  Machine machine{InitialState(),
-      WordState(consume_token, break_on_hyphens_),
+  Machine machine{InitialState(), WordState(consume_token, break_on_hyphens_),
       WhiteSpaceState(consume_token, tab_, replace_ws_, collapse_ws_),
       FinalState(consume_token)};
 
@@ -368,7 +363,7 @@ auto asap::wrap::detail::Tokenizer::Tokenize(
                      continue_running = false;
                    },
                    [&continue_running, &no_errors](
-                       const TerminateWithError &/*status*/) noexcept {
+                       const TerminateWithError & /*status*/) noexcept {
                      continue_running = false;
                      no_errors = false;
                    },

@@ -108,8 +108,7 @@ using ParamType = std::tuple<
     // expected tokens
     std::vector<Token>>;
 
-class TokenizerScenariosTest : public ::testing::TestWithParam<ParamType> {
-};
+class TokenizerScenariosTest : public ::testing::TestWithParam<ParamType> {};
 
 // NOLINTNEXTLINE
 TEST_P(TokenizerScenariosTest, Tokenize) {
