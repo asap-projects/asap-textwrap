@@ -36,7 +36,7 @@ set(META_PROJECT_NAME        "asap-textwrap")
 set(META_PROJECT_DESCRIPTION "Instantly start with a fully loaded CMake project")
 set(META_AUTHOR_ORGANIZATION "The Authors")
 set(META_GITHUB_REPO         "https://github.com/asap-projects/asap-textwrap")
-set(META_AUTHOR_DOMAIN       "https://github.com/asap-projects")
+set(META_AUTHOR_DOMAIN       "https://github.com/abdes")
 set(META_AUTHOR_MAINTAINER   "Abdessattar Sassi")
 set(META_VERSION_MAJOR       "1")
 set(META_VERSION_MINOR       "0")
@@ -97,6 +97,10 @@ project(
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+
+# Define the following alias variables used by the common cmake functions
+set(${PROJECT_NAME}_BUILD_TESTS ${ASAP_BUILD_TESTS})
+set(${PROJECT_NAME}_BUILD_EXAMPLES ${ASAP_BUILD_EXAMPLES})
 
 # ------------------------------------------------------------------------------
 # Additional CMake modules
@@ -186,8 +190,7 @@ if(ASAP_BUILD_TESTS)
   include(GoogleSanitizers)
   include(CodeCoverage)
   # Enable this target when the project has test cases
-  asap_add_code_coverage_all_targets(EXCLUDE */test/* *googlemock* *googletest*
-                                     /usr/*)
+  # asap_add_code_coverage_all_targets()
   include(Valgrind)
 
   cpmaddpackage(
