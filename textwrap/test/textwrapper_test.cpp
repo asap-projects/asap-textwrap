@@ -6,23 +6,10 @@
 
 #include "textwrap/textwrap.h"
 
-#include <common/compilers.h>
+#include <cstring>
 
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
-
-#include <cstring>
-
-// Disable compiler and linter warnings originating from the unit test framework
-// and for which we cannot do anything. Additionally, every TEST or TEST_X macro
-// usage must be preceded by a '// NOLINTNEXTLINE'.
-ASAP_DIAGNOSTIC_PUSH
-#if defined(__clang__) && ASAP_HAS_WARNING("-Wused-but-marked-unused")
-#pragma clang diagnostic ignored "-Wused-but-marked-unused"
-#pragma clang diagnostic ignored "-Wglobal-constructors"
-#pragma clang diagnostic ignored "-Wunused-member-function"
-#endif
-// NOLINTBEGIN(used-but-marked-unused)
 
 using ::testing::Eq;
 
@@ -34,7 +21,7 @@ namespace {
 TEST(TextWrapperTest, ShortString) {
   constexpr size_t column_width = 30;
   const auto *text = "short string";
-  TextWrapper wrapper = TextWrapper::Create().Width(column_width);
+  const TextWrapper wrapper = TextWrapper::Create().Width(column_width);
   EXPECT_THAT(wrapper.Fill(text).value(), Eq("short string"));
 }
 
@@ -42,7 +29,7 @@ TEST(TextWrapperTest, ShortString) {
 TEST(TextWrapperTest, ExactString) {
   const auto *text = "short string";
   const size_t column_width = std::strlen(text);
-  TextWrapper wrapper = TextWrapper::Create().Width(column_width);
+  const TextWrapper wrapper = TextWrapper::Create().Width(column_width);
   EXPECT_THAT(wrapper.Fill(text).value(), Eq("short string"));
 }
 
@@ -75,7 +62,7 @@ TEST_P(LongStringTest, Fill) {
     builder.TrimLines();
   }
   builder.IndentWith().Initially(initial_indent).Then(subsequent_indents);
-  TextWrapper wrapper = builder;
+  const TextWrapper wrapper = builder;
   EXPECT_THAT(wrapper.Fill(text).value(), Eq(expected));
 }
 
@@ -172,7 +159,7 @@ INSTANTIATE_TEST_SUITE_P(NoTrimLines, LongStringTest,
 TEST(TextWrapperTest, EmptyString) {
   constexpr size_t column_width = 30;
   const auto *text = "";
-  TextWrapper wrapper = TextWrapper::Create().Width(column_width);
+  const TextWrapper wrapper = TextWrapper::Create().Width(column_width);
   EXPECT_THAT(wrapper.Fill(text).value(), Eq(""));
 }
 
@@ -180,7 +167,7 @@ TEST(TextWrapperTest, EmptyString) {
 TEST(TextWrapperTest, Space) {
   constexpr size_t column_width = 30;
   const auto *text = " ";
-  TextWrapper wrapper = TextWrapper::Create().Width(column_width);
+  const TextWrapper wrapper = TextWrapper::Create().Width(column_width);
   EXPECT_THAT(wrapper.Fill(text).value(), Eq(" "));
 }
 
@@ -188,7 +175,7 @@ TEST(TextWrapperTest, Space) {
 TEST(TextWrapperTest, EmptyLine) {
   constexpr size_t column_width = 30;
   const auto *text = "\n";
-  TextWrapper wrapper = TextWrapper::Create().Width(column_width);
+  const TextWrapper wrapper = TextWrapper::Create().Width(column_width);
   EXPECT_THAT(wrapper.Fill(text).value(), Eq("\n"));
 }
 
@@ -196,7 +183,7 @@ TEST(TextWrapperTest, EmptyLine) {
 TEST(TextWrapperTest, OneShortWord) {
   constexpr size_t column_width = 30;
   const auto *text = "hello";
-  TextWrapper wrapper = TextWrapper::Create().Width(column_width);
+  const TextWrapper wrapper = TextWrapper::Create().Width(column_width);
   EXPECT_THAT(wrapper.Fill(text).value(), Eq("hello"));
 }
 
@@ -204,7 +191,7 @@ TEST(TextWrapperTest, OneShortWord) {
 TEST(TextWrapperTest, OneLongWord) {
   constexpr size_t column_width = 5;
   const auto *text = "unequivocally";
-  TextWrapper wrapper = TextWrapper::Create().Width(column_width);
+  const TextWrapper wrapper = TextWrapper::Create().Width(column_width);
   EXPECT_THAT(wrapper.Fill(text).value(), Eq("unequivocally"));
 }
 
@@ -212,11 +199,11 @@ TEST(TextWrapperTest, OneLongWord) {
 TEST(TextWrapperTest, IndentInitialOnly) {
   constexpr size_t column_width = 6;
   const auto *text = "hello world!";
-  TextWrapper wrapper = TextWrapper::Create()
-                            .Width(column_width)
-                            .TrimLines()
-                            .IndentWith()
-                            .Initially("--- ");
+  const TextWrapper wrapper = TextWrapper::Create()
+                                  .Width(column_width)
+                                  .TrimLines()
+                                  .IndentWith()
+                                  .Initially("--- ");
   EXPECT_THAT(wrapper.Fill(text).value(), Eq("--- hello\nworld!"));
 }
 
@@ -224,12 +211,12 @@ TEST(TextWrapperTest, IndentInitialOnly) {
 TEST(TextWrapperTest, IndentNoInitial) {
   constexpr size_t column_width = 6;
   const auto *text = "hello world!";
-  TextWrapper wrapper = TextWrapper::Create()
-                            .Width(column_width)
-                            .TrimLines()
-                            .IndentWith()
-                            .Initially("")
-                            .Then("--- ");
+  const TextWrapper wrapper = TextWrapper::Create()
+                                  .Width(column_width)
+                                  .TrimLines()
+                                  .IndentWith()
+                                  .Initially("")
+                                  .Then("--- ");
   EXPECT_THAT(wrapper.Fill(text).value(), Eq("hello\n--- world!"));
 }
 
@@ -237,12 +224,12 @@ TEST(TextWrapperTest, IndentNoInitial) {
 TEST(TextWrapperTest, IndentAll) {
   constexpr size_t column_width = 6;
   const auto *text = "hello world!";
-  TextWrapper wrapper = TextWrapper::Create()
-                            .Width(column_width)
-                            .TrimLines()
-                            .IndentWith()
-                            .Initially("== ")
-                            .Then("---- ");
+  const TextWrapper wrapper = TextWrapper::Create()
+                                  .Width(column_width)
+                                  .TrimLines()
+                                  .IndentWith()
+                                  .Initially("== ")
+                                  .Then("---- ");
   EXPECT_THAT(wrapper.Fill(text).value(), Eq("== hello\n---- world!"));
 }
 
@@ -250,12 +237,12 @@ TEST(TextWrapperTest, IndentAll) {
 TEST(TextWrapperTest, IndentOneWord) {
   constexpr size_t column_width = 3;
   const auto *text = "hello";
-  TextWrapper wrapper = TextWrapper::Create()
-                            .Width(column_width)
-                            .TrimLines()
-                            .IndentWith()
-                            .Initially("== ")
-                            .Then("---- ");
+  const TextWrapper wrapper = TextWrapper::Create()
+                                  .Width(column_width)
+                                  .TrimLines()
+                                  .IndentWith()
+                                  .Initially("== ")
+                                  .Then("---- ");
   EXPECT_THAT(wrapper.Fill(text).value(), Eq("== hello"));
 }
 
@@ -263,12 +250,12 @@ TEST(TextWrapperTest, IndentOneWord) {
 TEST(TextWrapperTest, IndentExactWidth) {
   constexpr size_t column_width = 17;
   const auto *text = "hello world!";
-  TextWrapper wrapper = TextWrapper::Create()
-                            .Width(column_width)
-                            .TrimLines()
-                            .IndentWith()
-                            .Initially("==== ")
-                            .Then("---- ");
+  const TextWrapper wrapper = TextWrapper::Create()
+                                  .Width(column_width)
+                                  .TrimLines()
+                                  .IndentWith()
+                                  .Initially("==== ")
+                                  .Then("---- ");
   EXPECT_THAT(wrapper.Fill(text).value(), Eq("==== hello world!"));
 }
 
@@ -276,12 +263,12 @@ TEST(TextWrapperTest, IndentExactWidth) {
 TEST(TextWrapperTest, IndentMultipleLines) {
   constexpr size_t column_width = 10;
   const auto *text = "bye world - welcome universe!";
-  TextWrapper wrapper = TextWrapper::Create()
-                            .Width(column_width)
-                            .TrimLines()
-                            .IndentWith()
-                            .Initially("==== ")
-                            .Then("---- ");
+  const TextWrapper wrapper = TextWrapper::Create()
+                                  .Width(column_width)
+                                  .TrimLines()
+                                  .IndentWith()
+                                  .Initially("==== ")
+                                  .Then("---- ");
   EXPECT_THAT(wrapper.Fill(text).value(), Eq("==== bye\n"
                                              "---- world\n"
                                              "---- -\n"
@@ -293,11 +280,11 @@ TEST(TextWrapperTest, IndentMultipleLines) {
 TEST(TextWrapperTest, IndentEmptyStringNotIndented) {
   constexpr size_t column_width = 17;
   const auto *text = "";
-  TextWrapper wrapper = TextWrapper::Create()
-                            .Width(column_width)
-                            .IndentWith()
-                            .Initially("==== ")
-                            .Then("---- ");
+  const TextWrapper wrapper = TextWrapper::Create()
+                                  .Width(column_width)
+                                  .IndentWith()
+                                  .Initially("==== ")
+                                  .Then("---- ");
   EXPECT_THAT(wrapper.Fill(text).value(), Eq(""));
 }
 
@@ -305,17 +292,14 @@ TEST(TextWrapperTest, IndentEmptyStringNotIndented) {
 TEST(TextWrapperTest, IndentEmptyLineNotIndented) {
   constexpr size_t column_width = 17;
   const auto *text = "hello\n\n\nworld!";
-  TextWrapper wrapper = TextWrapper::Create()
-                            .Width(column_width)
-                            .IndentWith()
-                            .Initially("==== ")
-                            .Then("---- ");
+  const TextWrapper wrapper = TextWrapper::Create()
+                                  .Width(column_width)
+                                  .IndentWith()
+                                  .Initially("==== ")
+                                  .Then("---- ");
   EXPECT_THAT(wrapper.Fill(text).value(), Eq("==== hello\n\n==== \nworld!"));
 }
 
 } // namespace
 
 } // namespace asap::wrap
-
-// NOLINTEND(used-but-marked-unused)
-ASAP_DIAGNOSTIC_POP

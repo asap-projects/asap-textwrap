@@ -6,24 +6,11 @@
 
 #include "tokenizer.h"
 
-#include <common/compilers.h>
-
-#include <gmock/gmock-more-matchers.h>
-#include <gtest/gtest.h>
-
 #include <type_traits>
 #include <utility>
 
-// Disable compiler and linter warnings originating from the unit test framework
-// and for which we cannot do anything. Additionally, every TEST or TEST_X macro
-// usage must be preceded by a '// NOLINTNEXTLINE'.
-ASAP_DIAGNOSTIC_PUSH
-#if defined(__clang__) && ASAP_HAS_WARNING("-Wused-but-marked-unused")
-#pragma clang diagnostic ignored "-Wused-but-marked-unused"
-#pragma clang diagnostic ignored "-Wglobal-constructors"
-#pragma clang diagnostic ignored "-Wunused-member-function"
-#endif
-// NOLINTBEGIN(used-but-marked-unused)
+#include <gmock/gmock.h>
+#include <gtest/gtest.h>
 
 using ::testing::Eq;
 using ::testing::IsTrue;
@@ -40,11 +27,11 @@ TEST(TokenizerTest, Example) {
   constexpr bool collapse_ws = true;
   constexpr bool break_on_hyphens = true;
 
-  Tokenizer tokenizer{tab, replace_ws, collapse_ws, break_on_hyphens};
+  const Tokenizer tokenizer{tab, replace_ws, collapse_ws, break_on_hyphens};
 
   constexpr const char *text = "Why? \nJust plain \tfinger-licking good!";
   std::vector<Token> tokens;
-  auto status = tokenizer.Tokenize(
+  const auto status = tokenizer.Tokenize(
       text, [&tokens](TokenType token_type, std::string token) {
         if (token_type != detail::TokenType::EndOfInput) {
           tokens.emplace_back(token_type, std::move(token));
@@ -56,7 +43,7 @@ TEST(TokenizerTest, Example) {
   //     "finger-", "licking", " ", "good!"
   //! [Tokenizer example]
 
-  auto expected = std::vector<Token>{Token{TokenType::Chunk, "Why?"},
+  const auto expected = std::vector<Token>{Token{TokenType::Chunk, "Why?"},
       Token{TokenType::WhiteSpace, " "}, Token{TokenType::Chunk, "Just"},
       Token{TokenType::WhiteSpace, " "}, Token{TokenType::Chunk, "plain"},
       Token{TokenType::WhiteSpace, " "}, Token{TokenType::Chunk, "finger-"},
@@ -67,21 +54,21 @@ TEST(TokenizerTest, Example) {
   EXPECT_THAT(tokens.size(), Eq(10));
   auto expected_token = expected.cbegin();
   auto token = tokens.cbegin();
-  auto end = tokens.cend();
+  const auto end = tokens.cend();
   while (token != end) {
     EXPECT_THAT(*token, Eq(*expected_token));
-    token++;
-    expected_token++;
+    ++token;
+    ++expected_token;
   }
 }
 
 // NOLINTNEXTLINE
 TEST(TokenizerTest, CallsTokenConsumerWhenTokenIsReady) {
-  Tokenizer tokenizer{"\t", false, false, false};
+  const Tokenizer tokenizer{"\t", false, false, false};
 
   //! [Example token consumer]
   std::vector<Token> tokens;
-  auto status = tokenizer.Tokenize(
+  const auto status = tokenizer.Tokenize(
       "Hello", [&tokens](TokenType token_type, std::string token) {
         if (token_type != detail::TokenType::EndOfInput) {
           tokens.emplace_back(token_type, std::move(token));
@@ -114,10 +101,10 @@ class TokenizerScenariosTest : public ::testing::TestWithParam<ParamType> {};
 TEST_P(TokenizerScenariosTest, Tokenize) {
   const auto &[text, tab, replace_ws, collapse_ws, break_on_hyphens, expected] =
       GetParam();
-  Tokenizer tokenizer{tab, replace_ws, collapse_ws, break_on_hyphens};
+  const Tokenizer tokenizer{tab, replace_ws, collapse_ws, break_on_hyphens};
 
   std::vector<Token> tokens;
-  auto status = tokenizer.Tokenize(
+  const auto status = tokenizer.Tokenize(
       text, [&tokens](TokenType token_type, std::string token) {
         if (token_type != detail::TokenType::EndOfInput) {
           tokens.emplace_back(token_type, std::move(token));
@@ -128,11 +115,11 @@ TEST_P(TokenizerScenariosTest, Tokenize) {
   EXPECT_THAT(tokens.size(), Eq(expected.size()));
   auto expected_token = expected.cbegin();
   auto token = tokens.cbegin();
-  auto end = tokens.cend();
+  const auto end = tokens.cend();
   while (token != end) {
     EXPECT_THAT(*token, Eq(*expected_token));
-    token++;
-    expected_token++;
+    ++token;
+    ++expected_token;
   }
 }
 
@@ -352,6 +339,3 @@ INSTANTIATE_TEST_SUITE_P(BreakOnHyphensOn, TokenizerScenariosTest,
 } // namespace
 
 } // namespace asap::wrap::detail
-
-// NOLINTEND(used-but-marked-unused)
-ASAP_DIAGNOSTIC_POP

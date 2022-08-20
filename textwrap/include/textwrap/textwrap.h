@@ -12,11 +12,11 @@
 
 #pragma once
 
-#include <textwrap/asap_textwrap_export.h>
-
 #include <optional>
 #include <string>
 #include <vector>
+
+#include <textwrap/asap_textwrap_export.h>
 
 /// Text wrapper public interface.
 namespace asap::wrap {

@@ -11,7 +11,6 @@
  */
 
 #include "textwrap/textwrap.h"
-#include "tokenizer.h"
 
 #include <cstddef>
 #include <iostream>
@@ -19,6 +18,8 @@
 #include <numeric>
 #include <optional>
 #include <utility>
+
+#include "tokenizer.h"
 
 auto asap::wrap::operator<<(std::ostream &out,
     const asap::wrap::TextWrapper &wrapper) -> std::ostream & {
@@ -36,18 +37,12 @@ auto WrapChunks(const std::vector<asap::wrap::detail::Token> &chunks,
 
   // https://www.geeksforgeeks.org/word-wrap-problem-space-optimized-solution/
 
-  auto num_chunks = chunks.size();
-  auto first_line_width = width - initial_indent.size();
-  auto other_line_witdh = width - indent.size();
+  const auto num_chunks = chunks.size();
+  const auto first_line_width = width - initial_indent.size();
+  const auto other_line_width = width - indent.size();
 
-  size_t cur_chunk = 0;
-  size_t cur_chunk_in_line = 0;
-
-  // Variable to store number of characters in given line.
-  size_t currlen = 0;
-
-  // Variable to store possible minimum cost of line.
-  size_t cost = 0;
+  size_t cur_chunk{0};
+  size_t cur_chunk_in_line{0};
 
   // Table in which costs[index] represents cost of line starting with word
   // chunks[index].
@@ -64,14 +59,21 @@ auto WrapChunks(const std::vector<asap::wrap::detail::Token> &chunks,
   optimized[num_chunks - 1] = num_chunks - 1;
 
   if (num_chunks > 1) {
+
+    // Variable to store possible minimum cost of line.
+    size_t cost{0};
+
     // Make each word first word of line by iterating over each index in arr.
     cur_chunk = num_chunks - 1;
     do {
       cur_chunk--;
-      currlen = 0;
+
+      // Variable to store number of characters in given line.
+      size_t currlen{0};
+
       costs[cur_chunk] = std::numeric_limits<size_t>::max();
-      auto adjusted_width =
-          (cur_chunk == 0 ? first_line_width : other_line_witdh);
+      const auto adjusted_width =
+          (cur_chunk == 0 ? first_line_width : other_line_width);
 
       cur_chunk_in_line = cur_chunk;
       if (trim_lines) {
@@ -81,7 +83,7 @@ auto WrapChunks(const std::vector<asap::wrap::detail::Token> &chunks,
           cur_chunk_in_line++;
         }
       }
-      auto first_chunk_in_line = cur_chunk_in_line;
+      const auto first_chunk_in_line = cur_chunk_in_line;
       // Keep on adding words in current line by iterating from starting word
       // up to last word in arr.
       while (cur_chunk_in_line < num_chunks) {
@@ -175,14 +177,14 @@ void MoveAppend(std::vector<std::string> src, std::vector<std::string> &dst) {
 
 [[nodiscard]] auto asap::wrap::TextWrapper::Wrap(const std::string &str) const
     -> std::optional<std::vector<std::string>> {
-  auto tokenizer =
+  const auto tokenizer =
       detail::Tokenizer(tab_, replace_ws_, collapse_ws_, break_on_hyphens_);
 
   std::vector<std::string> result;
   std::vector<detail::Token> chunks;
-  detail::TokenConsumer consume_token = [&chunks, this, &result](
-                                            detail::TokenType token_type,
-                                            std::string token) -> void {
+  const detail::TokenConsumer consume_token = [&chunks, this, &result](
+                                                  detail::TokenType token_type,
+                                                  std::string token) -> void {
     if ((token_type == detail::TokenType::ParagraphMark ||
             token_type == detail::TokenType::EndOfInput) &&
         !chunks.empty()) {
@@ -207,11 +209,11 @@ void MoveAppend(std::vector<std::string> src, std::vector<std::string> &dst) {
 [[nodiscard]] auto asap::wrap::TextWrapper::Fill(const std::string &str) const
     -> std::optional<std::string> {
 
-  auto wrap_opt = Wrap(str);
+  const auto wrap_opt = Wrap(str);
   if (!wrap_opt) {
     return {};
   }
-  auto wrap = wrap_opt.value();
+  const auto &wrap = wrap_opt.value();
   std::string result;
   auto size = std::accumulate(wrap.cbegin(), wrap.cend(),
       static_cast<size_t>(0), [](size_t acc, const std::string &line) {

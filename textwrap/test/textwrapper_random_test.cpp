@@ -6,24 +6,13 @@
 
 #include "textwrap/textwrap.h"
 
-#include <common/compilers.h>
+#include <array>
+#include <random>
 
 #include "gmock/gmock.h"
 #include <gtest/gtest.h>
 
-#include <array>
-#include <random>
-
-// Disable compiler and linter warnings originating from the unit test framework
-// and for which we cannot do anything. Additionally, every TEST or TEST_X macro
-// usage must be preceded by a '// NOLINTNEXTLINE'.
-ASAP_DIAGNOSTIC_PUSH
-#if defined(__clang__) && ASAP_HAS_WARNING("-Wused-but-marked-unused")
-#pragma clang diagnostic ignored "-Wused-but-marked-unused"
-#pragma clang diagnostic ignored "-Wglobal-constructors"
-#pragma clang diagnostic ignored "-Wunused-member-function"
-#endif
-// NOLINTBEGIN(used-but-marked-unused)
+#include <common/compilers.h>
 
 using ::testing::IsTrue;
 
@@ -43,8 +32,8 @@ auto RandomWordChar() -> char {
   return static_cast<char>(word_char_generator(rng));
 }
 auto RandomWhiteSpace() -> char {
-  static const auto white_space = std::array<const char, 14>{' ', ' ', ' ', ' ',
-      ' ', ' ', ' ', ' ', ' ', '\t', '\v', '\f', '\r', '\n'};
+  static constexpr auto white_space = std::array<const char, 14>{{' ', ' ', ' ',
+      ' ', ' ', ' ', ' ', ' ', ' ', '\t', '\v', '\f', '\r', '\n'}};
   return (white_space.at(ws_generator(rng)));
 }
 auto GenerateWord(size_t length) -> std::string {
@@ -77,6 +66,8 @@ auto GenerateText(size_t words) -> std::string {
     case 4:
       text += ".";
       break;
+    default:
+      ASAP_UNREACHABLE();
     }
     text += GenerateWhiteSpace(ws_size_generator(rng));
   }
@@ -113,7 +104,7 @@ TEST(TextWrapper, RandomTests) {
   clock.tick();
   for (size_t i = 1; i < maximum_text_length; ++i) {
     auto text = GenerateText(i);
-    auto size = text.size();
+    const auto size = text.size();
     for (size_t column_width = 3; column_width < size; ++column_width) {
       TextWrapper text_wrapper = TextWrapper::Create()
                                      .Width(column_width)
@@ -131,6 +122,3 @@ TEST(TextWrapper, RandomTests) {
 } // namespace
 
 } // namespace asap::wrap
-
-// NOLINTEND(used-but-marked-unused)
-ASAP_DIAGNOSTIC_POP

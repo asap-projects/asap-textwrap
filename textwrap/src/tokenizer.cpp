@@ -12,14 +12,13 @@
 
 #include "tokenizer.h"
 
-#include <common/compilers.h>
-#include <fsm/fsm.h>
-
-#include <magic_enum.hpp>
-
 #include <algorithm>
 #include <numeric>
 #include <utility>
+
+#include <magic_enum.hpp>
+
+#include <fsm/fsm.h>
 
 using asap::fsm::ByDefault;
 using asap::fsm::Continue;
@@ -156,7 +155,7 @@ struct FinalState : public Will<ByDefault<DoNothing>> {
       : consume_token_{std::move(callback)} {
   }
 
-  auto OnEnter(const InputEnd & /*event*/) -> Status {
+  [[maybe_unused]] auto OnEnter(const InputEnd & /*event*/) -> Status {
     consume_token_(TokenType::EndOfInput, "");
     return Terminate{};
   }
@@ -197,7 +196,8 @@ struct WordState : public Will<On<InputEnd, TransitionTo<FinalState>>,
                                                  break_on_hyphens} {
   }
 
-  static auto OnEnter(const NonWhiteSpaceChar & /*event*/) -> Status {
+  [[maybe_unused]] static auto OnEnter(const NonWhiteSpaceChar & /*event*/)
+      -> Status {
     return ReissueEvent{};
   }
 
@@ -208,7 +208,7 @@ struct WordState : public Will<On<InputEnd, TransitionTo<FinalState>>,
     return Continue{};
   }
 
-  auto Handle(const NonWhiteSpaceChar &event) -> DoNothing {
+  [[maybe_unused]] auto Handle(const NonWhiteSpaceChar &event) -> DoNothing {
     if (break_on_hyphens_ && event.value == '-' && !token_.empty() &&
         (std::isalpha(token_.back()) != 0)) {
       token_.push_back(event.value);
@@ -246,7 +246,8 @@ struct WhiteSpaceState : public Will<On<InputEnd, TransitionTo<FinalState>>,
         collapse_ws_{collapse_ws} {
   }
 
-  static auto OnEnter(const WhiteSpaceChar & /*event*/) -> Status {
+  [[maybe_unused]] static auto OnEnter(const WhiteSpaceChar & /*event*/)
+      -> Status {
     return ReissueEvent{};
   }
 
@@ -259,7 +260,7 @@ struct WhiteSpaceState : public Will<On<InputEnd, TransitionTo<FinalState>>,
     return Continue{};
   }
 
-  auto Handle(const WhiteSpaceChar &event) -> DoNothing {
+  [[maybe_unused]] auto Handle(const WhiteSpaceChar &event) -> DoNothing {
     if (event.value == '\n') {
       if (last_was_newline_) {
         token_.pop_back();
@@ -379,7 +380,7 @@ auto asap::wrap::detail::Tokenizer::Tokenize(
         reissue = false;
         // reuse the same token again
       } else {
-        cursor++;
+        ++cursor;
       }
     }
   }
