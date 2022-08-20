@@ -12,7 +12,7 @@
 
 #pragma once
 
-#include <textwrap/asap_textwrap_api.h>
+#include <textwrap/asap_textwrap_export.h>
 
 #include <optional>
 #include <string>
