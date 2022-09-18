@@ -1,12 +1,11 @@
-prefix=@ASAP_INSTALL_PREFIX_FULL_PATH@
-libdir=${prefix}/@ASAP_INSTALL_LIB@
-includedir=${prefix}/@ASAP_INSTALL_INCLUDE@
+libdir=@ASAP_INSTALL_LIB@
+includedir=@ASAP_INSTALL_INCLUDE@
 
 Name: @MODULE_TARGET_NAME@
 URL: @META_MODULE_GITHUB_REPO@
 Description: @META_MODULE_DESCRIPTION@
 Version: @META_MODULE_VERSION@
-Requires: asap_fsm
-Requires.private: asap_common magic_enum
+Requires.private: asap_common magic_enum asap_fsm
+
 Cflags: -I${includedir}
 Libs: -L${libdir} @MODULE_LINK_LIBS@
