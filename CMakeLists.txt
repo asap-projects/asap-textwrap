@@ -15,14 +15,13 @@ cmake_minimum_required(VERSION 3.14)
 # List of directories specifying a search path for CMake modules to be loaded by
 # the the include() or find_package() commands before checking the default
 # modules that come with CMake.
-list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
 # ------------------------------------------------------------------------------
 # Project description and (meta) information
 # ------------------------------------------------------------------------------
 
 # Get git revision
-find_package(Git REQUIRED)
 include(GetGitRevisionDescription)
 get_git_head_revision(GIT_REFSPEC GIT_SHA1)
 string(SUBSTRING "${GIT_SHA1}" 0 12 GIT_REV)
@@ -134,19 +133,15 @@ endif()
 # If no contract mode is specified, we set the contract mode based on the build
 # type.
 if(NOT OPTION_CONTRACT_MODE)
-  if(CMAKE_BUILD_TYPE STREQUAL "Debug")
-    set(OPTION_CONTRACT_MODE
-        "AUDIT"
-        CACHE STRING "Contract mode for assertions (common module).")
-  elseif(CMAKE_BUILD_TYPE STREQUAL RelWithDebInfo)
-    set(OPTION_CONTRACT_MODE
-        "DEFAULT"
-        CACHE STRING "Contract mode for assertions (common module).")
-  else()
-    set(OPTION_CONTRACT_MODE
-        "OFF"
-        CACHE STRING "Contract mode for assertions (common module).")
-  endif()
+  set(OPTION_CONTRACT_MODE
+      "OFF"
+      CACHE STRING "Contract mode for assertions (common module).")
+  set(OPTION_CONTRACT_MODE
+      $<$<CONFIG:Debug>:AUDIT>
+      CACHE STRING "Contract mode for assertions (common module).")
+  set(OPTION_CONTRACT_MODE
+      $<$<CONFIG:RelWithDebInfo>:DEFAULT>
+      CACHE STRING "Contract mode for assertions (common module).")
 endif()
 message(
   "-- Building for ${CMAKE_BUILD_TYPE} with OPTION_CONTRACT_MODE : ${OPTION_CONTRACT_MODE}"
