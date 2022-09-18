@@ -13,15 +13,31 @@ message("=> [third-party modules]")
 # asap::common
 # ------------------------------------------------------------------------------
 
-cpmaddpackage(NAME asap_common GIT_TAG master GITHUB_REPOSITORY
-              asap-projects/asap-common)
+cpmaddpackage(
+  NAME
+  asap_common
+  GIT_TAG
+  master
+  GITHUB_REPOSITORY
+  asap-projects/asap-common
+  "ASAP_COMMON_INSTALL OFF"
+  "ASAP_BUILD_TESTS OFF"
+  "ASAP_BUILD_EXAMPLES OFF")
 
 # ------------------------------------------------------------------------------
 # asap::fsm
 # ------------------------------------------------------------------------------
 
-cpmaddpackage(NAME asap_fsm GIT_TAG master GITHUB_REPOSITORY
-              asap-projects/asap-fsm)
+cpmaddpackage(
+  NAME
+  asap_fsm
+  GIT_TAG
+  master
+  GITHUB_REPOSITORY
+  asap-projects/asap-fsm
+  "ASAP_COMMON_INSTALL OFF"
+  "ASAP_BUILD_TESTS OFF"
+  "ASAP_BUILD_EXAMPLES OFF")
 
 # ------------------------------------------------------------------------------
 # magic_enum
