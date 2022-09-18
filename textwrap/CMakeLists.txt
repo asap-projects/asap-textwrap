@@ -49,10 +49,8 @@ asap_add_library(
   "src/tokenizer.cpp"
   "src/textwrap.cpp")
 
-target_link_libraries(
-  ${MODULE_TARGET_NAME}
-  PRIVATE asap::common magic_enum::magic_enum
-  PUBLIC asap::fsm)
+target_link_libraries(${MODULE_TARGET_NAME}
+                      PRIVATE asap::common magic_enum::magic_enum asap::fsm)
 
 target_include_directories(
   ${MODULE_TARGET_NAME}

@@ -20,15 +20,8 @@ cpmaddpackage(NAME asap_common GIT_TAG master GITHUB_REPOSITORY
 # asap::fsm
 # ------------------------------------------------------------------------------
 
-cpmaddpackage(
-  NAME
-  asap_fsm
-  GIT_TAG
-  master
-  GITHUB_REPOSITORY
-  asap-projects/asap-fsm
-  OPTIONS
-  "ASAP_FSM_INSTALL ON")
+cpmaddpackage(NAME asap_fsm GIT_TAG master GITHUB_REPOSITORY
+              asap-projects/asap-fsm)
 
 # ------------------------------------------------------------------------------
 # magic_enum
