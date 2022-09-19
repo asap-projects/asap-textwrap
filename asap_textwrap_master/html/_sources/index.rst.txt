@@ -19,6 +19,7 @@ Last Updated on |date|
    :titlesonly:
    :hidden:
 
+   tools/index
    license
    changelog.md
    version
@@ -44,6 +45,13 @@ Parts of the documentation
 --------------------------------------------------------------------------------------------------
   *head over to the `asap` project documentation for detailed guides on how to
   build and maintain the different targets in this project.*
+
+:doc:`Project Tools <tools/index>`
+----------------------------------
+*get an introduction to the programs and scripts under the `tools` folder,
+specifically made for the `asap` project. These can simplify recurring tasks and
+provide additional insights into the project, and sometimes examples of how to
+use the project artifacts.*
 
 Acknowledgements
 ================
