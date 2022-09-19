@@ -4,13 +4,16 @@
 # SPDX-License-Identifier: BSD-3-Clause
 # ===-----------------------------------------------------------------------===#
 
+set(my_name "textwrap")
+asap_push_module("${my_name}")
+
 # ------------------------------------------------------------------------------
 # Meta information about the this module
 # ------------------------------------------------------------------------------
 
 asap_declare_module(
   MODULE_NAME
-  "textwrap"
+  "${my_name}"
   DESCRIPTION
   "Text wrapping and column layout utilities"
   GITHUB_REPO
@@ -32,9 +35,7 @@ asap_declare_module(
 # Main module target
 # ------------------------------------------------------------------------------
 
-# Hardcode `asap` in the module name as we do not want this prefix to change
-# with the forked project name.
-set(MODULE_TARGET_NAME "asap_${META_MODULE_NAME}")
+set(MODULE_TARGET_NAME "asap_textwrap")
 
 asap_add_library(
   ${MODULE_TARGET_NAME}
@@ -149,3 +150,5 @@ if(${META_PROJECT_ID}_INSTALL)
       COMPONENT ${MODULE_TARGET_NAME}_docs)
   endif()
 endif()
+
+asap_pop_module("${my_name}")
