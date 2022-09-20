@@ -38,6 +38,7 @@ asap_add_package(
   master
   GITHUB_REPOSITORY
   asap-projects/asap-common
+  OPTIONS
   "ASAP_COMMON_INSTALL OFF"
   "ASAP_BUILD_TESTS OFF"
   "ASAP_BUILD_EXAMPLES OFF")
@@ -53,6 +54,7 @@ asap_add_package(
   master
   GITHUB_REPOSITORY
   asap-projects/asap-fsm
+  OPTIONS
   "ASAP_COMMON_INSTALL OFF"
   "ASAP_BUILD_TESTS OFF"
   "ASAP_BUILD_EXAMPLES OFF")

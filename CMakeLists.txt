@@ -52,7 +52,6 @@ set(META_VERSION_PATCH       "5")
 set(META_VERSION_REVISION    "${GIT_REV}")
 set(META_VERSION             "${META_VERSION_MAJOR}.${META_VERSION_MINOR}.${META_VERSION_PATCH}")
 set(META_NAME_VERSION        "${META_PROJECT_NAME} v${META_VERSION} (${META_VERSION_REVISION})")
-set(META_CMAKE_INIT_SHA      "${GIT_REV}")
 # cmake-format: on
 
 string(MAKE_C_IDENTIFIER ${META_PROJECT_NAME} META_PROJECT_ID)
@@ -84,6 +83,7 @@ option(ASAP_WITH_GOOGLE_ASAN    "Instrument code with address sanitizer"        
 option(ASAP_WITH_GOOGLE_UBSAN   "Instrument code with undefined behavior sanitizer"      OFF)
 option(ASAP_WITH_GOOGLE_TSAN    "Instrument code with thread sanitizer"                  OFF)
 option(ASAP_WITH_VALGRIND       "Builds targets with valgrind profilers added"           OFF)
+option(USE_CCACHE               "Enable caching of compiled artifacts using ccache"      OFF)
 # cmake-format: on
 
 # ------------------------------------------------------------------------------
@@ -151,6 +151,32 @@ set(SPHINX_BUILD_DIR "${CMAKE_BINARY_DIR}/sphinx")
 include(SphinxGeneration)
 
 # ------------------------------------------------------------------------------
+# Testing
+# ------------------------------------------------------------------------------
+
+if(ASAP_BUILD_TESTS)
+  include(GoogleSanitizers)
+  include(CodeCoverage)
+  # Enable this target when the project has test cases
+  asap_add_code_coverage_all_targets()
+  include(Valgrind)
+
+  cpmaddpackage(
+    NAME
+    googletest
+    GIT_TAG
+    main
+    GITHUB_REPOSITORY
+    google/googletest
+    OPTIONS
+    "gtest_force_shared_crt ON"
+    "INSTALL_GTEST OFF")
+
+  include(GoogleTest)
+  include(CTest)
+endif()
+
+# ------------------------------------------------------------------------------
 # Third party modules
 #
 # Call after documentation but before project modules and before adding common
@@ -204,32 +230,6 @@ set(CMAKE_INSTALL_RPATH_USE_LINK_PATH FALSE)
 
 if(NOT SYSTEM_DIR_INSTALL)
   set(CMAKE_INSTALL_RPATH "$ORIGIN/${ASAP_INSTALL_LIB}")
-endif()
-
-# ------------------------------------------------------------------------------
-# Testing
-# ------------------------------------------------------------------------------
-
-if(ASAP_BUILD_TESTS)
-  include(GoogleSanitizers)
-  include(CodeCoverage)
-  # Enable this target when the project has test cases
-  asap_add_code_coverage_all_targets()
-  include(Valgrind)
-
-  cpmaddpackage(
-    NAME
-    googletest
-    GIT_TAG
-    main
-    GITHUB_REPOSITORY
-    google/googletest
-    OPTIONS
-    "gtest_force_shared_crt ON"
-    "INSTALL_GTEST OFF")
-
-  include(GoogleTest)
-  include(CTest)
 endif()
 
 # ------------------------------------------------------------------------------
