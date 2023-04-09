@@ -26,8 +26,11 @@ namespace asap::wrap::detail {
 enum class TokenType {
   /// A chunk of text with no white space in it.
   Chunk,
-  /// A series of white spaces (`<SPACE>`, `\n`, `\t`, `\f`, `\r`, `\v`)
+  /// A series of white spaces (`<SPACE>`, `\t`, `\f`, `\r`)
   WhiteSpace,
+  /// New line is marked by either `\n` or `\v` while `\r` and `\f` are always
+  /// replaced with a single space ' '.
+  NewLine,
   /// Marks a paragraph boundary (two consecutive new lines `\n\n`).
   ParagraphMark,
   /// The last token emitted by the tokenizer marking the end of input.
@@ -168,7 +171,7 @@ public:
    *
    * Tokens produced by the Tokenizer are consumed via the TokenConsumer passed
    * as an argument to this method.
-   * @param text the input text to be tokenized.
+   * @param text the input text to be split into tokens.
    * @param consume_token the token consumer which will be called each time a
    * token is produced.
    * @return \b true if the tokenization completed successfully; \b false

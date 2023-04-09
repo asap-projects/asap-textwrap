@@ -89,7 +89,17 @@ auto WrapChunks(const std::vector<asap::wrap::detail::Token> &chunks,
       while (cur_chunk_in_line < num_chunks) {
 
         // Update number of characters in current line.
-        currlen += (chunks[cur_chunk_in_line].second.size());
+        // The new line token can either have a size that will break the maximum
+        // width or a size of zero depending on whether it is the first chunk,
+        // the first in the line or just part of a next line.
+        if (chunks[cur_chunk_in_line].first ==
+            asap::wrap::detail::TokenType::NewLine) {
+          if (currlen != 0 || cur_chunk == 0) {
+            currlen = adjusted_width + 1;
+          }
+        } else {
+          currlen += (chunks[cur_chunk_in_line].second.size());
+        }
 
         // If limit of characters is violated then no more words can be added to
         // current line, unless what we are adding is white space and we've been

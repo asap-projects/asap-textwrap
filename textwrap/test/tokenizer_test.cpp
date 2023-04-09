@@ -44,14 +44,14 @@ TEST(TokenizerTest, Example) {
   //! [Tokenizer example]
 
   const auto expected = std::vector<Token>{Token{TokenType::Chunk, "Why?"},
-      Token{TokenType::WhiteSpace, " "}, Token{TokenType::Chunk, "Just"},
-      Token{TokenType::WhiteSpace, " "}, Token{TokenType::Chunk, "plain"},
-      Token{TokenType::WhiteSpace, " "}, Token{TokenType::Chunk, "finger-"},
-      Token{TokenType::Chunk, "licking"}, Token{TokenType::WhiteSpace, " "},
-      Token{TokenType::Chunk, "good!"}};
+      Token{TokenType::WhiteSpace, " "}, Token{TokenType::NewLine, ""},
+      Token{TokenType::Chunk, "Just"}, Token{TokenType::WhiteSpace, " "},
+      Token{TokenType::Chunk, "plain"}, Token{TokenType::WhiteSpace, " "},
+      Token{TokenType::Chunk, "finger-"}, Token{TokenType::Chunk, "licking"},
+      Token{TokenType::WhiteSpace, " "}, Token{TokenType::Chunk, "good!"}};
 
   EXPECT_THAT(status, IsTrue());
-  EXPECT_THAT(tokens.size(), Eq(10));
+  EXPECT_THAT(tokens.size(), Eq(expected.size()));
   auto expected_token = expected.cbegin();
   auto token = tokens.cbegin();
   const auto end = tokens.cend();
@@ -134,7 +134,38 @@ INSTANTIATE_TEST_SUITE_P(AllOff, TokenizerScenariosTest,
       ParamType{"\n",
         "\t", false, false, false,
         {
-          {TokenType::WhiteSpace, "\n"}
+          {TokenType::NewLine, ""}
+        }},
+      ParamType{" \n",
+        "\t", false, false, false,
+        {
+          {TokenType::WhiteSpace, " "},
+          {TokenType::NewLine, ""}
+        }},
+      ParamType{"\t\n",
+        "\t", false, false, false,
+        {
+          {TokenType::WhiteSpace, "\t"},
+          {TokenType::NewLine, ""}
+        }},
+      ParamType{"\r\n",
+        "\t", false, false, false,
+        {
+          {TokenType::WhiteSpace, " "},
+          {TokenType::NewLine, ""}
+        }},
+      ParamType{" \t\n",
+        "\t", false, false, false,
+        {
+          {TokenType::WhiteSpace, " \t"},
+          {TokenType::NewLine, ""}
+        }},
+      ParamType{" \t\n ",
+        "\t", false, false, false,
+        {
+          {TokenType::WhiteSpace, " \t"},
+          {TokenType::NewLine, ""},
+          {TokenType::WhiteSpace, " "}
         }},
       ParamType{"\n\n",
         "\t", false, false, false,
@@ -150,15 +181,20 @@ INSTANTIATE_TEST_SUITE_P(AllOff, TokenizerScenariosTest,
       ParamType{" \t\n \n\n \t\n \n",
         "\t", false, false, false,
         {
-          {TokenType::WhiteSpace, " \t\n "},
+          {TokenType::WhiteSpace, " \t"},
+          {TokenType::NewLine, ""},
+          {TokenType::WhiteSpace, " "},
           {TokenType::ParagraphMark, ""},
-          {TokenType::WhiteSpace, " \t\n \n"}
+          {TokenType::WhiteSpace, " \t"},
+          {TokenType::NewLine, ""},
+          {TokenType::WhiteSpace, " "},
+          {TokenType::NewLine, ""}
         }},
       ParamType{"\n\n\n",
         "\t", false, false, false,
         {
           {TokenType::ParagraphMark, ""},
-          {TokenType::WhiteSpace, "\n"},
+          {TokenType::NewLine, ""},
         }},
       ParamType{"\n\n\n\n",
         "\t", false, false, false,
@@ -180,7 +216,7 @@ INSTANTIATE_TEST_SUITE_P(AllOff, TokenizerScenariosTest,
           {TokenType::WhiteSpace, "\t"},
           {TokenType::Chunk, "a-a-a"},
           {TokenType::ParagraphMark, ""},
-          {TokenType::WhiteSpace, "\n"},
+          {TokenType::NewLine, ""},
           {TokenType::Chunk, "2."},
           {TokenType::WhiteSpace, "\t"},
           {TokenType::Chunk, "bbb"},
@@ -200,10 +236,11 @@ INSTANTIATE_TEST_SUITE_P(TabExpansionOn, TokenizerScenariosTest,
         {{TokenType::WhiteSpace, "    "}}},
       ParamType{"\t\taaa \t \tbbb", "__", false, false, false,
         {
-          {TokenType::WhiteSpace, "____"},
-          {TokenType::Chunk, "aaa"},
-          {TokenType::WhiteSpace, " __ __"},
-          {TokenType::Chunk, "bbb"}
+          {TokenType::Chunk, "____aaa"},
+          {TokenType::WhiteSpace, " "},
+          {TokenType::Chunk, "__"},
+          {TokenType::WhiteSpace, " "},
+          {TokenType::Chunk, "__bbb"}
         }}
     )
 );
@@ -220,10 +257,10 @@ INSTANTIATE_TEST_SUITE_P(ReplaceWhiteSpaceOn, TokenizerScenariosTest,
         {{TokenType::WhiteSpace, "  "}}},
       ParamType{"\t",
         "....", true, false, false,
-        {{TokenType::WhiteSpace, "...."}}},
+        {{TokenType::Chunk, "...."}}},
       ParamType{"\t",
         "-\n-", true, false, false,
-        {{TokenType::WhiteSpace, "- -"}}},
+        {{TokenType::Chunk, "-"},{TokenType::NewLine, ""},{TokenType::Chunk, "-"}}},
       ParamType{"hello\fworld!\n\nbye\rbye\ncruel\vworld! \r\n ",
         "..", true, false, false,
         {
@@ -234,11 +271,13 @@ INSTANTIATE_TEST_SUITE_P(ReplaceWhiteSpaceOn, TokenizerScenariosTest,
           {TokenType::Chunk, "bye"},
           {TokenType::WhiteSpace, " "},
           {TokenType::Chunk, "bye"},
-          {TokenType::WhiteSpace, " "},
+          {TokenType::NewLine, ""},
           {TokenType::Chunk, "cruel"},
-          {TokenType::WhiteSpace, " "},
+          {TokenType::NewLine, ""},
           {TokenType::Chunk, "world!"},
-          {TokenType::WhiteSpace, "    "}
+          {TokenType::WhiteSpace, "  "},
+          {TokenType::NewLine, ""},
+          {TokenType::WhiteSpace, " "}
         }}
     )
 );
@@ -255,10 +294,14 @@ INSTANTIATE_TEST_SUITE_P(CollapseWhiteSpaceOn, TokenizerScenariosTest,
         {{TokenType::WhiteSpace, " "}}},
       ParamType{"\t",
         "....", false, true, false,
-        {{TokenType::WhiteSpace, " "}}},
+        {{TokenType::Chunk, "...."}}},
       ParamType{"\t",
         "-\n-", true, true, false,
-        {{TokenType::WhiteSpace, " "}}},
+        {
+          {TokenType::Chunk, "-"},
+          {TokenType::NewLine, ""},
+          {TokenType::Chunk, "-"}
+        }},
       ParamType{"hello\f   world!\n\nbye\t\rbye \ncruel\v \t world! \r\n ",
         "..", false, true, false,
         {
@@ -266,13 +309,19 @@ INSTANTIATE_TEST_SUITE_P(CollapseWhiteSpaceOn, TokenizerScenariosTest,
           {TokenType::WhiteSpace, " "},
           {TokenType::Chunk, "world!"},
           {TokenType::ParagraphMark, ""},
-          {TokenType::Chunk, "bye"},
+          {TokenType::Chunk, "bye.."},
           {TokenType::WhiteSpace, " "},
           {TokenType::Chunk, "bye"},
           {TokenType::WhiteSpace, " "},
+          {TokenType::NewLine, ""},
           {TokenType::Chunk, "cruel"},
+          {TokenType::NewLine, ""},
+          {TokenType::WhiteSpace, " "},
+          {TokenType::Chunk, ".."},
           {TokenType::WhiteSpace, " "},
           {TokenType::Chunk, "world!"},
+          {TokenType::WhiteSpace, " "},
+          {TokenType::NewLine, ""},
           {TokenType::WhiteSpace, " "}
         }}
     )

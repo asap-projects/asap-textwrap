@@ -176,7 +176,7 @@ TEST(TextWrapperTest, EmptyLine) {
   constexpr size_t column_width = 30;
   const auto *text = "\n";
   const TextWrapper wrapper = TextWrapper::Create().Width(column_width);
-  EXPECT_THAT(wrapper.Fill(text).value(), Eq("\n"));
+  EXPECT_THAT(wrapper.Fill(text).value(), Eq(""));
 }
 
 // NOLINTNEXTLINE
@@ -291,13 +291,37 @@ TEST(TextWrapperTest, IndentEmptyStringNotIndented) {
 // NOLINTNEXTLINE
 TEST(TextWrapperTest, IndentEmptyLineNotIndented) {
   constexpr size_t column_width = 17;
-  const auto *text = "hello\n\n\nworld!";
+  const auto *text = "\nworld!";
   const TextWrapper wrapper = TextWrapper::Create()
                                   .Width(column_width)
                                   .IndentWith()
                                   .Initially("==== ")
                                   .Then("---- ");
-  EXPECT_THAT(wrapper.Fill(text).value(), Eq("==== hello\n\n==== \nworld!"));
+  EXPECT_THAT(wrapper.Fill(text).value(), Eq("==== \n---- world!"));
+}
+
+// NOLINTNEXTLINE
+TEST(TextWrapperTest, IndentOnlyNewLineProducesTwoIndentedLines) {
+  constexpr size_t column_width = 17;
+  const auto *text = "\n";
+  const TextWrapper wrapper = TextWrapper::Create()
+                                  .Width(column_width)
+                                  .IndentWith()
+                                  .Initially("==== ")
+                                  .Then("---- ");
+  EXPECT_THAT(wrapper.Fill(text).value(), Eq("==== "));
+}
+
+// NOLINTNEXTLINE
+TEST(TextWrapperTest, IndentNewLineIsIndented) {
+  constexpr size_t column_width = 17;
+  const auto *text = "hello\nworld!";
+  const TextWrapper wrapper = TextWrapper::Create()
+                                  .Width(column_width)
+                                  .IndentWith()
+                                  .Initially("==== ")
+                                  .Then("---- ");
+  EXPECT_THAT(wrapper.Fill(text).value(), Eq("==== hello\n---- world!"));
 }
 
 } // namespace

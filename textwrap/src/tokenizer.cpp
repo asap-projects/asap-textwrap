@@ -253,15 +253,24 @@ struct WhiteSpaceState : public Will<On<InputEnd, TransitionTo<FinalState>>,
 
   template <typename Event> auto OnLeave(const Event & /*event*/) -> Status {
     if (!token_.empty()) {
-      // This is not a paragraph mark so dispatch as white space token
-      DispatchToConsumer(TokenType::WhiteSpace);
+      // This is not a paragraph mark so dispatch as white space or new line
+      // token based on the last seen character
+      if (last_was_newline_) {
+        token_.pop_back();
+        if (!token_.empty()) {
+          DispatchToConsumer(TokenType::WhiteSpace);
+        }
+        DispatchToConsumer(TokenType::NewLine);
+      } else {
+        DispatchToConsumer(TokenType::WhiteSpace);
+      }
     }
     last_was_newline_ = false;
     return Continue{};
   }
 
   [[maybe_unused]] auto Handle(const WhiteSpaceChar &event) -> DoNothing {
-    if (event.value == '\n') {
+    if (event.value == '\n' || event.value == '\v') {
       if (last_was_newline_) {
         token_.pop_back();
         if (!token_.empty()) {
@@ -273,18 +282,23 @@ struct WhiteSpaceState : public Will<On<InputEnd, TransitionTo<FinalState>>,
         return DoNothing{};
       }
       last_was_newline_ = true;
+      token_.push_back('\n');
     } else {
-      last_was_newline_ = false;
-    }
-    if (event.value == '\t') {
-      if (tab_ == "\t" && replace_ws_) {
+      if (last_was_newline_) {
+        last_was_newline_ = false;
+        token_.pop_back();
+        if (!token_.empty()) {
+          DispatchToConsumer(TokenType::WhiteSpace);
+        }
+        DispatchToConsumer(TokenType::NewLine);
+      }
+
+      if (event.value == '\r' || event.value == '\f') {
         token_.push_back(' ');
       } else {
-        token_.append(tab_);
+        token_.push_back(event.value);
       }
-      return DoNothing{};
     }
-    token_.push_back(event.value);
     return DoNothing{};
   }
 
@@ -295,19 +309,10 @@ private:
     if (token_type == TokenType::WhiteSpace) {
       if (collapse_ws_) {
         token_ = " ";
-      } else if (replace_ws_) {
-        // Tab expansion may produce non-white-space characters, that are still
-        // par of a white space token. When replace white space, we still stick
-        // to the pure definition of white space characters and only replace
-        // those.
-        std::transform(token_.begin(), token_.end(), token_.begin(),
-            [](char a_char) -> char {
-              return (std::isspace(a_char) != 0) ? ' ' : a_char;
-            });
       }
       DispatchTokenToConsumer(consume_token_, TokenType::WhiteSpace, token_);
     } else {
-      DispatchTokenToConsumer(consume_token_, TokenType::ParagraphMark, token_);
+      DispatchTokenToConsumer(consume_token_, token_type, token_);
     }
   }
 
@@ -350,31 +355,62 @@ auto asap::wrap::detail::Tokenizer::Tokenize(
   while (cursor != text.end()) {
     Status execution_status;
 
-    if (std::isspace(*cursor) != 0) {
-      execution_status = machine.Handle(WhiteSpaceChar{*cursor});
-    } else {
-      execution_status = machine.Handle(NonWhiteSpaceChar{*cursor});
+    std::string transformed{(*cursor)};
+    // Expand tabs
+    if (*cursor == '\t') {
+      transformed = tab_;
     }
-    // https://en.cppreference.com/w/cpp/utility/variant/visit
-    std::visit(Overload{
-                   [&continue_running](const Continue & /*status*/) noexcept {
-                     continue_running = true;
-                   },
-                   [&continue_running](const Terminate & /*status*/) noexcept {
-                     continue_running = false;
-                   },
-                   [&continue_running, &no_errors](
-                       const TerminateWithError & /*status*/) noexcept {
-                     continue_running = false;
-                     no_errors = false;
-                   },
-                   [&continue_running, &reissue](
-                       const ReissueEvent & /*status*/) noexcept {
-                     reissue = true;
-                     continue_running = true;
-                   },
-               },
-        execution_status);
+
+    // Replace white space
+    if (replace_ws_) {
+      std::transform(transformed.begin(), transformed.end(),
+          transformed.begin(), [](char a_char) -> char {
+            return (std::isspace(a_char) != 0 &&
+                       (a_char != '\v' && a_char != '\n'))
+                       ? ' '
+                       : a_char;
+          });
+    }
+
+    auto transformed_cursor = transformed.begin();
+    while (transformed_cursor != transformed.end()) {
+
+      if (std::isspace(*transformed_cursor) != 0) {
+        execution_status = machine.Handle(WhiteSpaceChar{*transformed_cursor});
+      } else {
+        execution_status =
+            machine.Handle(NonWhiteSpaceChar{*transformed_cursor});
+      }
+      // https://en.cppreference.com/w/cpp/utility/variant/visit
+      std::visit(
+          Overload{
+              [&continue_running](const Continue & /*status*/) noexcept {
+                continue_running = true;
+              },
+              [&continue_running](const Terminate & /*status*/) noexcept {
+                continue_running = false;
+              },
+              [&continue_running, &no_errors](
+                  const TerminateWithError & /*status*/) noexcept {
+                continue_running = false;
+                no_errors = false;
+              },
+              [&continue_running, &reissue](
+                  const ReissueEvent & /*status*/) noexcept {
+                reissue = true;
+                continue_running = true;
+              },
+          },
+          execution_status);
+      if (continue_running) {
+        if (reissue) {
+          reissue = false;
+          // reuse the same token again
+        } else {
+          ++transformed_cursor;
+        }
+      }
+    }
     if (continue_running) {
       if (reissue) {
         reissue = false;
