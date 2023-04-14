@@ -15,10 +15,13 @@ asap_add_test(
   UNIT_TEST
   VALGRIND_MEMCHECK
   SRCS
-  "tokenizer_test.cpp"
-  "textwrapper_example.cpp"
-  "textwrapper_test.cpp"
   "main.cpp"
+  "textwrapper_example.cpp"
+  "textwrapper_indent_test.cpp"
+  "textwrapper_special_cases_test.cpp"
+  "textwrapper_test.cpp"
+  "textwrapper_trim_test.cpp"
+  "tokenizer_test.cpp"
   LINK
   asap::common
   asap::textwrap
