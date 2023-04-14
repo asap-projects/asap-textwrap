@@ -59,7 +59,7 @@ breathe_default_project = "asap_@META_MODULE_NAME@"
 primary_domain = 'cpp'
 
 # Tell sphinx what the pygments highlight language should be.
-highlight_language = 'cpp'
+highlight_language = 'none'
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
