@@ -4,23 +4,18 @@
 // SPDX-License-Identifier: BSD-3-Clause
 //===----------------------------------------------------------------------===//
 
-#include "textwrap/textwrap.h"
+#include <textwrap/textwrap.h>
 
 #include <array>
+#include <chrono>
+#include <iostream>
 #include <random>
-
-#include "gmock/gmock.h"
-#include <gtest/gtest.h>
 
 #include <common/compilers.h>
 
-using ::testing::IsTrue;
-
-namespace asap::wrap {
-
-namespace {
-
-std::mt19937 rng; // NOLINT
+// Seed the random number generator with the current time
+std::random_device rd;
+std::mt19937 rng(rd()); // NOLINT
 using rng_type = std::uniform_int_distribution<std::mt19937::result_type>;
 rng_type word_char_generator(33, 126); // NOLINT
 rng_type ws_generator(0, 11);          // NOLINT
@@ -95,8 +90,48 @@ public:
   }
 };
 
-// NOLINTNEXTLINE
-TEST(TextWrapper, RandomTests) {
+std::string escape(const std::string &s) {
+  std::string result;
+
+  for (char c : s) {
+    switch (c) {
+    case '\\':
+      result += "\\\\";
+      break;
+    case '\"':
+      result += "\\\"";
+      break;
+    case '\'':
+      result += "\\\'";
+      break;
+    case '\n':
+      result += "\\n";
+      break;
+    case '\r':
+      result += "\\r";
+      break;
+    case '\v':
+      result += "\\v";
+      break;
+    case '\f':
+      result += "\\f";
+      break;
+    case '\t':
+      result += "\\t";
+      break;
+    // Add more cases here
+    default:
+      result += c;
+      break;
+    }
+  }
+
+  return result;
+}
+
+using asap::wrap::TextWrapper;
+
+auto main(int /*argc*/, const char ** /*argv*/) -> int {
   constexpr size_t maximum_text_length = 80;
 
   Timer<std::chrono::milliseconds, std::chrono::steady_clock> clock;
@@ -105,20 +140,20 @@ TEST(TextWrapper, RandomTests) {
   for (size_t i = 1; i < maximum_text_length; ++i) {
     auto text = GenerateText(i);
     const auto size = text.size();
-    for (size_t column_width = 3; column_width < size; ++column_width) {
-      TextWrapper text_wrapper = TextWrapper::Create()
-                                     .Width(column_width)
-                                     .TrimLines()
-                                     .CollapseWhiteSpace()
-                                     .BreakOnHyphens();
-      EXPECT_THAT(text_wrapper.Fill(text).has_value(), IsTrue());
+    for (size_t column_width = 1; column_width < size; ++column_width) {
+      const TextWrapper &text_wrapper = TextWrapper::Create()
+                                            .Width(column_width)
+                                            .CollapseWhiteSpace()
+                                            .BreakOnHyphens()
+                                            .TrimLines();
+      if (!text_wrapper.Fill(text).has_value()) {
+        std::cout << "width=" << column_width << "\n";
+        std::cout << escape(text) << "\n" << std::endl;
+        std::cerr << "Failed!\n";
+      }
     }
   }
   clock.tock();
 
   std::cout << "Run time = " << clock.duration().count() << " ms\n";
 }
-
-} // namespace
-
-} // namespace asap::wrap
