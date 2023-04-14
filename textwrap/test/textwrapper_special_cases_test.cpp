@@ -12,6 +12,7 @@
 #include <gtest/gtest.h>
 
 using ::testing::Eq;
+using ::testing::IsTrue;
 
 namespace asap::wrap {
 
@@ -55,6 +56,17 @@ TEST(TextWrapperSpecialCasesTest, OneLongWord) {
   const auto *text = "unequivocally";
   const TextWrapper wrapper = TextWrapper::Create().Width(column_width);
   EXPECT_THAT(wrapper.Fill(text).value(), Eq("unequivocally"));
+}
+// NOLINTNEXTLINE
+TEST(TextWrapperSpecialCasesTest, EndingWithNewLineAndSpace) {
+  constexpr size_t column_width = 10;
+  const auto *text = "q\'4\"k4AqFX.  |kWPF{Yh>,\v\t";
+  const TextWrapper wrapper = TextWrapper::Create()
+                                  .Width(column_width)
+                                  .CollapseWhiteSpace()
+                                  .BreakOnHyphens()
+                                  .TrimLines();
+  EXPECT_THAT(wrapper.Fill(text).has_value(), IsTrue());
 }
 
 } // namespace
