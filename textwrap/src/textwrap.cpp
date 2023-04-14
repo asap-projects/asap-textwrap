@@ -76,14 +76,30 @@ auto WrapChunks(const std::vector<asap::wrap::detail::Token> &chunks,
           (cur_chunk == 0 ? first_line_width : other_line_width);
 
       cur_chunk_in_line = cur_chunk;
+      auto first_chunk_in_line = cur_chunk_in_line;
+
+      // The new line token can either have a size that will break the maximum
+      // width or a size of zero depending on whether it is the first chunk,
+      // the first in the line or just part of a next line.
+      if (chunks[cur_chunk_in_line].first ==
+          asap::wrap::detail::TokenType::NewLine) {
+        if (cur_chunk_in_line != first_chunk_in_line) {
+          currlen = adjusted_width + 1;
+        } else {
+          first_chunk_in_line++;
+          cur_chunk_in_line++;
+        }
+      }
+
       if (trim_lines) {
+        // Skip all white space chunks at start as they will be trimmed later
         while (cur_chunk_in_line < num_chunks &&
                (chunks[cur_chunk_in_line].first ==
                    asap::wrap::detail::TokenType::WhiteSpace)) {
           cur_chunk_in_line++;
+          first_chunk_in_line++;
         }
       }
-      const auto first_chunk_in_line = cur_chunk_in_line;
       // Keep on adding words in current line by iterating from starting word
       // up to last word in arr.
       while (cur_chunk_in_line < num_chunks) {
@@ -94,7 +110,7 @@ auto WrapChunks(const std::vector<asap::wrap::detail::Token> &chunks,
         // the first in the line or just part of a next line.
         if (chunks[cur_chunk_in_line].first ==
             asap::wrap::detail::TokenType::NewLine) {
-          if (currlen != 0 || cur_chunk == 0) {
+          if (cur_chunk_in_line != first_chunk_in_line) {
             currlen = adjusted_width + 1;
           }
         } else {
@@ -108,7 +124,7 @@ auto WrapChunks(const std::vector<asap::wrap::detail::Token> &chunks,
           if (chunks[cur_chunk_in_line].first ==
                   asap::wrap::detail::TokenType::WhiteSpace &&
               trim_lines) {
-            // Will be trimmed
+            // Will be trimmed later so don't count it
             currlen -= (chunks[cur_chunk_in_line].second.size());
           }
           // Abort adding the current chunk to the current line, unless it is
@@ -137,6 +153,9 @@ auto WrapChunks(const std::vector<asap::wrap::detail::Token> &chunks,
           optimized[cur_chunk] = cur_chunk_in_line;
         }
 
+        // if (currlen > adjusted_width) {
+        //   break;
+        // }
         cur_chunk_in_line++;
       }
     } while (cur_chunk > 0);
@@ -145,30 +164,61 @@ auto WrapChunks(const std::vector<asap::wrap::detail::Token> &chunks,
   // Print starting index and ending index of words present in each line.
   std::vector<std::string> result;
   cur_chunk = 0;
+  auto first_line{true};
   while (cur_chunk < num_chunks) {
     // std::cout << cur_chunk + 1 << " " << optimized[cur_chunk] + 1 << " : ";
     std::string line = cur_chunk == 0 ? initial_indent : indent;
     size_t start = cur_chunk;
-    size_t end = optimized[cur_chunk];
-    if (trim_lines) {
-      while (
-          (start < optimized[cur_chunk] + 1) &&
-          (chunks[start].first == asap::wrap::detail::TokenType::WhiteSpace)) {
+    size_t end = optimized[cur_chunk] + 1;
+    // Always trim new lines (eventually creating an empty line if needed), and
+    // if TrimLines is true, then also trim whitespaces
+    while (start < end) {
+      if (chunks[start].first == asap::wrap::detail::TokenType::NewLine) {
+        if (first_line) {
+          // Add an empty line and continue
+          result.emplace_back(line);
+          line = indent;
+        }
         start++;
+        if (start == end) {
+          break;
+        }
+      } else if (trim_lines && (chunks[start].first ==
+                                   asap::wrap::detail::TokenType::WhiteSpace)) {
+        start++;
+        if (start == end) {
+          // Add an empty line and continue
+          result.emplace_back(line);
+          line = indent;
+        }
+      } else {
+        break;
       }
-      while ((end > cur_chunk) &&
-             (chunks[end].first == asap::wrap::detail::TokenType::WhiteSpace)) {
+    }
+    while ((end - 1) > start) {
+      if ((trim_lines && (chunks[end - 1].first ==
+                             asap::wrap::detail::TokenType::WhiteSpace))) {
         end--;
+        if (start == end) {
+          // Add an empty line and continue
+          result.emplace_back(line);
+          line = indent;
+        }
+      } else {
+        break;
       }
     }
-    for (cur_chunk_in_line = start; cur_chunk_in_line <= end;
-         cur_chunk_in_line++) {
-      // std::cout << chunks[cur_chunk_in_line].second;
-      line.append(chunks[cur_chunk_in_line].second);
+    if (end > start) {
+      for (cur_chunk_in_line = start; cur_chunk_in_line < end;
+           cur_chunk_in_line++) {
+        // std::cout << chunks[cur_chunk_in_line].second;
+        line.append(chunks[cur_chunk_in_line].second);
+      }
+      result.push_back(std::move(line));
+      // std::cout << std::endl;
     }
-    result.push_back(std::move(line));
-    // std::cout << std::endl;
     cur_chunk = optimized[cur_chunk] + 1;
+    first_line = false;
   }
 
   return result;
