@@ -132,7 +132,13 @@
         <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         <ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active has-children"><a class="reference internal" href="../api.html">API</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../usage.html">Usage</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../usage/typical.html">Typical Scenario</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/indent.html">Advanced indentation control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/spaces.html">Cleaning-up spaces in text</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../api.html">API</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">Public API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="details.html">Implementation details</a></li>
 </ul>
@@ -347,7 +353,7 @@ document.write(`
                   
   <section id="public-api">
 <h1>Public API<a class="headerlink" href="#public-api" title="Permalink to this heading">#</a></h1>
-<p>Last Updated on 2023-04-09</p>
+<p>Last Updated on 2023-04-14</p>
 <p>The header &lt;textwrap/textwrap.h&gt; declares the classes
 <a class="reference internal" href="#_CPPv4N4asap4wrap11TextWrapperE" title="asap::wrap::TextWrapper"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">asap::wrap::TextWrapper</span></code></a> and <a class="reference internal" href="#_CPPv4N4asap4wrap18TextWrapperBuilderE" title="asap::wrap::TextWrapperBuilder"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">asap::wrap::TextWrapperBuilder</span></code></a>
 which form the core of the text wrapper module public API.</p>
@@ -360,24 +366,24 @@ which form the core of the text wrapper module public API.</p>
 <p><a class="reference internal" href="#classasap_1_1wrap_1_1_text_wrapper"><span class="std std-ref">TextWrapper</span></a> offers a simple interface to wrap text to a specific width while supporting multiple configuration options for how white space is handled and when exactly line/word breaking happen.</p>
 <p>Construction of instances of <a class="reference internal" href="#classasap_1_1wrap_1_1_text_wrapper"><span class="std std-ref">TextWrapper</span></a> can only be done via its associated <a class="reference internal" href="#classasap_1_1wrap_1_1_text_wrapper_builder"><span class="std std-ref">TextWrapperBuilder</span></a>, which maintains coherent configuration values and offers an easy to use fluent interface to set them.</p>
 <p>Following is an example of how to initialize and use a <a class="reference internal" href="#classasap_1_1wrap_1_1_text_wrapper"><span class="std std-ref">TextWrapper</span></a>:</p>
-<p><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="k">auto</span><span class="w"> </span><span class="o">*</span><span class="n">book</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Pride and Prejudice:&quot;</span><span class="p">;</span>
-<span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="k">auto</span><span class="w"> </span><span class="o">*</span><span class="n">passage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;It is a truth universally acknowledged, that a single &quot;</span>
-<span class="w">                        </span><span class="s">&quot;man in possession of a good fortune, must be in want &quot;</span>
-<span class="w">                        </span><span class="s">&quot;of a wife.&quot;</span><span class="p">;</span>
+<p><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="k">auto</span><span class="w"> </span><span class="o">*</span><span class="n">passage</span><span class="w"> </span><span class="o">=</span>
+<span class="w">      </span><span class="s">&quot;  Pride and Prejudice:</span><span class="se">\n</span><span class="s">    It is a truth universally   &quot;</span>
+<span class="w">      </span><span class="s">&quot;acknowledged, that a single man in possession of a &quot;</span>
+<span class="w">      </span><span class="s">&quot;good fortune, must be in want &quot;</span>
+<span class="w">      </span><span class="s">&quot;of a wife.   &quot;</span><span class="p">;</span>
 
 <span class="w">  </span><span class="k">constexpr</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="n">column_width</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">28</span><span class="p">;</span>
-<span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="n">TextWrapper</span><span class="w"> </span><span class="n">title_wrapper</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TextWrapper</span><span class="o">::</span><span class="n">Create</span><span class="p">().</span><span class="n">Width</span><span class="p">(</span><span class="n">column_width</span><span class="p">);</span>
-<span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="n">TextWrapper</span><span class="w"> </span><span class="n">text_wrapper</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TextWrapper</span><span class="o">::</span><span class="n">Create</span><span class="p">()</span>
-<span class="w">                                       </span><span class="p">.</span><span class="n">Width</span><span class="p">(</span><span class="n">column_width</span><span class="p">)</span>
-<span class="w">                                       </span><span class="p">.</span><span class="n">TrimLines</span><span class="p">()</span>
-<span class="w">                                       </span><span class="p">.</span><span class="n">ReplaceWhiteSpace</span><span class="p">()</span>
-<span class="w">                                       </span><span class="p">.</span><span class="n">CollapseWhiteSpace</span><span class="p">()</span>
-<span class="w">                                       </span><span class="p">.</span><span class="n">IndentWith</span><span class="p">()</span>
-<span class="w">                                       </span><span class="p">.</span><span class="n">Initially</span><span class="p">(</span><span class="s">&quot;   &quot;</span><span class="p">)</span>
-<span class="w">                                       </span><span class="p">.</span><span class="n">Then</span><span class="p">(</span><span class="s">&quot;   &quot;</span><span class="p">);</span>
+<span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="n">TextWrapper</span><span class="w"> </span><span class="n">wrapper</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TextWrapper</span><span class="o">::</span><span class="n">Create</span><span class="p">()</span>
+<span class="w">                                  </span><span class="p">.</span><span class="n">Width</span><span class="p">(</span><span class="n">column_width</span><span class="p">)</span>
+<span class="w">                                  </span><span class="p">.</span><span class="n">TrimLines</span><span class="p">()</span>
+<span class="w">                                  </span><span class="p">.</span><span class="n">ReplaceWhiteSpace</span><span class="p">()</span>
+<span class="w">                                  </span><span class="p">.</span><span class="n">CollapseWhiteSpace</span><span class="p">()</span>
+<span class="w">                                  </span><span class="p">.</span><span class="n">IndentWith</span><span class="p">()</span>
+<span class="w">                                  </span><span class="p">.</span><span class="n">Initially</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span>
+<span class="w">                                  </span><span class="p">.</span><span class="n">Then</span><span class="p">(</span><span class="s">&quot;...&quot;</span><span class="p">);</span>
 
-<span class="w">  </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">title_wrapper</span><span class="p">.</span><span class="n">Fill</span><span class="p">(</span><span class="n">book</span><span class="p">).</span><span class="n">value_or</span><span class="p">(</span><span class="s">&quot;error&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-<span class="w">  </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">text_wrapper</span><span class="p">.</span><span class="n">Fill</span><span class="p">(</span><span class="n">passage</span><span class="p">).</span><span class="n">value_or</span><span class="p">(</span><span class="s">&quot;error&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="w">  </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;|&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">wrapper</span><span class="p">.</span><span class="n">Fill</span><span class="p">(</span><span class="n">passage</span><span class="p">).</span><span class="n">value_or</span><span class="p">(</span><span class="s">&quot;error&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;|&quot;</span>
+<span class="w">            </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
 
 <span class="w">  </span><span class="c1">// Pride and Prejudice:</span>
 <span class="w">  </span><span class="c1">//    It is a truth universally</span>
@@ -465,24 +471,24 @@ which form the core of the text wrapper module public API.</p>
 <dd><p>A fluent interface builder for <a class="reference internal" href="#classasap_1_1wrap_1_1_text_wrapper"><span class="std std-ref">TextWrapper</span></a>. </p>
 <p>This builder simplifies the creation and configuration of <a class="reference internal" href="#classasap_1_1wrap_1_1_text_wrapper"><span class="std std-ref">TextWrapper</span></a> instances through a fluent API.</p>
 <p><strong>Example</strong></p>
-<p><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="k">auto</span><span class="w"> </span><span class="o">*</span><span class="n">book</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Pride and Prejudice:&quot;</span><span class="p">;</span>
-<span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="k">auto</span><span class="w"> </span><span class="o">*</span><span class="n">passage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;It is a truth universally acknowledged, that a single &quot;</span>
-<span class="w">                        </span><span class="s">&quot;man in possession of a good fortune, must be in want &quot;</span>
-<span class="w">                        </span><span class="s">&quot;of a wife.&quot;</span><span class="p">;</span>
+<p><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="k">auto</span><span class="w"> </span><span class="o">*</span><span class="n">passage</span><span class="w"> </span><span class="o">=</span>
+<span class="w">      </span><span class="s">&quot;  Pride and Prejudice:</span><span class="se">\n</span><span class="s">    It is a truth universally   &quot;</span>
+<span class="w">      </span><span class="s">&quot;acknowledged, that a single man in possession of a &quot;</span>
+<span class="w">      </span><span class="s">&quot;good fortune, must be in want &quot;</span>
+<span class="w">      </span><span class="s">&quot;of a wife.   &quot;</span><span class="p">;</span>
 
 <span class="w">  </span><span class="k">constexpr</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="n">column_width</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">28</span><span class="p">;</span>
-<span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="n">TextWrapper</span><span class="w"> </span><span class="n">title_wrapper</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TextWrapper</span><span class="o">::</span><span class="n">Create</span><span class="p">().</span><span class="n">Width</span><span class="p">(</span><span class="n">column_width</span><span class="p">);</span>
-<span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="n">TextWrapper</span><span class="w"> </span><span class="n">text_wrapper</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TextWrapper</span><span class="o">::</span><span class="n">Create</span><span class="p">()</span>
-<span class="w">                                       </span><span class="p">.</span><span class="n">Width</span><span class="p">(</span><span class="n">column_width</span><span class="p">)</span>
-<span class="w">                                       </span><span class="p">.</span><span class="n">TrimLines</span><span class="p">()</span>
-<span class="w">                                       </span><span class="p">.</span><span class="n">ReplaceWhiteSpace</span><span class="p">()</span>
-<span class="w">                                       </span><span class="p">.</span><span class="n">CollapseWhiteSpace</span><span class="p">()</span>
-<span class="w">                                       </span><span class="p">.</span><span class="n">IndentWith</span><span class="p">()</span>
-<span class="w">                                       </span><span class="p">.</span><span class="n">Initially</span><span class="p">(</span><span class="s">&quot;   &quot;</span><span class="p">)</span>
-<span class="w">                                       </span><span class="p">.</span><span class="n">Then</span><span class="p">(</span><span class="s">&quot;   &quot;</span><span class="p">);</span>
+<span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="n">TextWrapper</span><span class="w"> </span><span class="n">wrapper</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TextWrapper</span><span class="o">::</span><span class="n">Create</span><span class="p">()</span>
+<span class="w">                                  </span><span class="p">.</span><span class="n">Width</span><span class="p">(</span><span class="n">column_width</span><span class="p">)</span>
+<span class="w">                                  </span><span class="p">.</span><span class="n">TrimLines</span><span class="p">()</span>
+<span class="w">                                  </span><span class="p">.</span><span class="n">ReplaceWhiteSpace</span><span class="p">()</span>
+<span class="w">                                  </span><span class="p">.</span><span class="n">CollapseWhiteSpace</span><span class="p">()</span>
+<span class="w">                                  </span><span class="p">.</span><span class="n">IndentWith</span><span class="p">()</span>
+<span class="w">                                  </span><span class="p">.</span><span class="n">Initially</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span>
+<span class="w">                                  </span><span class="p">.</span><span class="n">Then</span><span class="p">(</span><span class="s">&quot;...&quot;</span><span class="p">);</span>
 
-<span class="w">  </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">title_wrapper</span><span class="p">.</span><span class="n">Fill</span><span class="p">(</span><span class="n">book</span><span class="p">).</span><span class="n">value_or</span><span class="p">(</span><span class="s">&quot;error&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-<span class="w">  </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">text_wrapper</span><span class="p">.</span><span class="n">Fill</span><span class="p">(</span><span class="n">passage</span><span class="p">).</span><span class="n">value_or</span><span class="p">(</span><span class="s">&quot;error&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="w">  </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;|&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">wrapper</span><span class="p">.</span><span class="n">Fill</span><span class="p">(</span><span class="n">passage</span><span class="p">).</span><span class="n">value_or</span><span class="p">(</span><span class="s">&quot;error&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;|&quot;</span>
+<span class="w">            </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
 
 <span class="w">  </span><span class="c1">// Pride and Prejudice:</span>
 <span class="w">  </span><span class="c1">//    It is a truth universally</span>

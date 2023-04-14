@@ -47,7 +47,7 @@
     <link rel="icon" href="_static/favicon.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="API reference" href="api.html" />
+    <link rel="next" title="How to use the library" href="usage.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -131,7 +131,13 @@
         <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         <ul class="nav bd-sidenav">
-<li class="toctree-l1 has-children"><a class="reference internal" href="api.html">API</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="usage.html">Usage</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="usage/typical.html">Typical Scenario</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/indent.html">Advanced indentation control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/spaces.html">Cleaning-up spaces in text</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="api.html">API</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="api/textwrap.html">Public API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/details.html">Implementation details</a></li>
 </ul>
@@ -332,6 +338,7 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#parts-of-the-documentation">Parts of the documentation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#detailed-usage"><span class="xref std std-doc">Detailed usage</span></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#api-reference"><span class="xref std std-doc">API reference</span></a></li>
 </ul>
 </li>
@@ -348,19 +355,54 @@ document.write(`
                   
   <section id="asap-text-wrapper-documentation">
 <h1>ASAP text wrapper documentation<a class="headerlink" href="#asap-text-wrapper-documentation" title="Permalink to this heading">#</a></h1>
-<p>Last Updated on 2023-04-09</p>
+<p>Last Updated on 2023-04-14</p>
 <div class="toctree-wrapper compound">
 </div>
 <p>Welcome! This is the documentation for the <em>textwrap</em> module, part of the <em>asap</em>
-project. This modules provides helpers to format text in columns with a maximum
-width. When a line of text is longer than its column’s maximum width, the text
-is automatically wrapped. A number of other features are also supported, such as
-adding an initial indent, indenting all lines, etc… Refer to the API
-documentation for more details.</p>
-<p>Text can also be laid out by composing columns together in a multi-column
-layout, suitable for tabular data, definitions, etc.</p>
+project.</p>
+<p>This module simplifies the task of formatting text in fixed width columns and
+indenting it properly. Often, applications that needs to pretty print text or
+display data in tabular format end up doing the alignment, indentation and
+wrapping of each line manually by hardcoding spaces, tabs and line breaks or by
+just assuming that display width is unlimited (which is not true).</p>
+<p>With this library, wrapping long lines of text while maintaining indentation
+requirements and proper line breaks management is straightforward.</p>
+<p>Here is a simple example: the following text unwrapped would be presented as a
+single very long line:</p>
+<blockquote>
+<div><p>There were doors all round the hall, but they were all locked; and when Alice
+had been all the way down one side and up the other, trying every door, she
+walked sadly down the middle, wondering how she was ever to get out again.</p>
+</div></blockquote>
+<p>But when wrapped at 50 characters per line, it will display nicely within the
+limited available width:</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="_images/simple-wrapped-text.png"><img alt="Text wrapped at 50 characters maximum width." src="_images/simple-wrapped-text.png" style="width: 500px;" /></a>
+</div></blockquote>
+<p>The capabilities of the library go much further with the following additional
+features:</p>
+<ul class="simple">
+<li><p><strong>Indentation</strong> using any prefix string, which can be different for the first
+line of each paragraph.</p></li>
+<li><p><strong>Tab expansion</strong>, where each <cite>tab</cite> character is expanded to a replacement
+string (can be spaces or anything else).</p></li>
+<li><p><strong>Space replacement</strong>, where each spacing character (including <cite>&lt;SPACE&gt;</cite>,
+<cite>t</cite>, <cite>f</cite>, <cite>r</cite>) is replaced by a single space (’ ‘).</p></li>
+<li><p><strong>Space collapsing</strong>, where multiple consecutive spacing characters are
+replaced with a single space (’ ‘).</p></li>
+<li><p><strong>Line trimming</strong>, where spaces at the start or end of a line are eliminated.</p></li>
+<li><p><strong>Breaking on hyphens</strong>, where compound words will be broken into separate
+chunks right after hyphens, as it is customary in English.</p></li>
+</ul>
 <section id="parts-of-the-documentation">
 <h2>Parts of the documentation<a class="headerlink" href="#parts-of-the-documentation" title="Permalink to this heading">#</a></h2>
+<section id="detailed-usage">
+<h3><a class="reference internal" href="usage.html"><span class="doc">Detailed usage</span></a><a class="headerlink" href="#detailed-usage" title="Permalink to this heading">#</a></h3>
+<blockquote>
+<div><p><em>start here to understand how to build wrappers and see examples of different
+wrapper configurations in action.</em></p>
+</div></blockquote>
+</section>
 <section id="api-reference">
 <h3><a class="reference internal" href="api.html"><span class="doc">API reference</span></a><a class="headerlink" href="#api-reference" title="Permalink to this heading">#</a></h3>
 <blockquote>
@@ -384,11 +426,11 @@ this module</em></p>
     <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="right-next"
-       href="api.html"
+       href="usage.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">API reference</p>
+        <p class="prev-next-title">How to use the library</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -411,6 +453,7 @@ this module</em></p>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#parts-of-the-documentation">Parts of the documentation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#detailed-usage"><span class="xref std std-doc">Detailed usage</span></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#api-reference"><span class="xref std std-doc">API reference</span></a></li>
 </ul>
 </li>

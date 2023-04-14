@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>Project Tools &#8212; Project: textwrap</title>
+    <title>Cleaning-up spaces in text &#8212; Module: textwrap</title>
   
   
   
@@ -43,12 +43,12 @@
     <script src="../_static/clipboard.min.js"></script>
     <script src="../_static/copybutton.js"></script>
     <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'tools/index';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'usage/spaces';</script>
     <link rel="icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="License" href="../license.html" />
-    <link rel="prev" title="ASAP Text Wrapper documentation" href="../index.html" />
+    <link rel="next" title="API reference" href="../api.html" />
+    <link rel="prev" title="Advanced indentation control" href="indent.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -132,11 +132,18 @@
         <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         <ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">Project Tools</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul class="simple">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../usage.html">Usage</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="typical.html">Typical Scenario</a></li>
+<li class="toctree-l2"><a class="reference internal" href="indent.html">Advanced indentation control</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Cleaning-up spaces in text</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../api.html">API</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../api/textwrap.html">Public API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/details.html">Implementation details</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../license.html">License</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../version.html">Version</a></li>
 </ul>
 
@@ -209,7 +216,7 @@
       
       
       
-      <li><a href="https://github.com/asap-projects/asap-textwrap/issues/new?title=Issue%20on%20page%20%2Ftools/index.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/asap-projects/asap-textwrap/issues/new?title=Issue%20on%20page%20%2Fusage/spaces.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -239,7 +246,7 @@
       
       
       
-      <li><a href="../_sources/tools/index.rst" target="_blank"
+      <li><a href="../_sources/usage/spaces.rst" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -319,7 +326,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Project Tools</h1>
+    <h1>Cleaning-up spaces in text</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -333,20 +340,62 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section id="project-tools">
-<h1>Project Tools<a class="headerlink" href="#project-tools" title="Permalink to this heading">#</a></h1>
+  <section id="cleaning-up-spaces-in-text">
+<h1>Cleaning-up spaces in text<a class="headerlink" href="#cleaning-up-spaces-in-text" title="Permalink to this heading">#</a></h1>
 <p>Last Updated on 2023-04-14</p>
-<div class="toctree-wrapper compound">
+<p>Sometimes the text contains tabs and spacing is not consistent with places where
+multiple spacing characters are used while we only need a single space. In that
+case, we can use the tab substitution and space collapsing features to cleanup
+the text formatting while wrapping it.</p>
+<p>Here is an example:</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;textwrap/textwrap.h&gt;</span>
+
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span>
+
+<span class="k">using</span><span class="w"> </span><span class="n">asap</span><span class="o">::</span><span class="n">wrap</span><span class="o">::</span><span class="n">TextWrapper</span><span class="p">;</span>
+
+<span class="k">auto</span><span class="w"> </span><span class="n">main</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="cm">/*argc*/</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">**</span><span class="w"> </span><span class="cm">/*argv*/</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="k">auto</span><span class="w"> </span><span class="o">*</span><span class="n">passage</span><span class="w"> </span><span class="o">=</span>
+<span class="w">      </span><span class="s">&quot;Miranda said:</span><span class="se">\n\t</span><span class="s">&#39;It seems to me like the recollection of a dream.   &quot;</span>
+<span class="w">      </span><span class="s">&quot;But had I not once four or five women who attended upon &quot;</span>
+<span class="w">      </span><span class="s">&quot;me?&#39;</span><span class="se">\n\n</span><span class="s">Prospero answered:</span><span class="se">\n\t</span><span class="s">&#39;You had, and more. How is it that this &quot;</span>
+<span class="w">      </span><span class="s">&quot;still lives in your mind?  Do you remember how you came here?&#39;&quot;</span><span class="p">;</span>
+
+<span class="w">  </span><span class="k">constexpr</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="n">column_width</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">70</span><span class="p">;</span>
+<span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="n">TextWrapper</span><span class="w"> </span><span class="n">wrapper</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TextWrapper</span><span class="o">::</span><span class="n">Create</span><span class="p">()</span>
+<span class="w">                                  </span><span class="p">.</span><span class="n">Width</span><span class="p">(</span><span class="n">column_width</span><span class="p">)</span>
+<span class="w">                                  </span><span class="p">.</span><span class="n">ExpandTabs</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span>
+<span class="w">                                  </span><span class="p">.</span><span class="n">CollapseWhiteSpace</span><span class="p">()</span>
+<span class="w">                                  </span><span class="p">.</span><span class="n">IndentWith</span><span class="p">()</span>
+<span class="w">                                  </span><span class="p">.</span><span class="n">Initially</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span>
+<span class="w">                                  </span><span class="p">.</span><span class="n">Then</span><span class="p">(</span><span class="s">&quot; &gt; &quot;</span><span class="p">);</span>
+
+<span class="w">  </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">wrapper</span><span class="p">.</span><span class="n">Fill</span><span class="p">(</span><span class="n">passage</span><span class="p">).</span><span class="n">value_or</span><span class="p">(</span><span class="s">&quot;error&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
 </div>
-<p>The <cite>tools</cite> directory under the project root holds project-specific tools.
-Currently we have:</p>
-<blockquote>
-<div><ul class="simple">
-<li><p>Project version info tool: a simple executable written as a C++ program,
-using the generated <cite>version.h</cite> include file to print the project meta-data
-defined in the project’s cmake file.</p></li>
-</ul>
-</div></blockquote>
+<p>Without the processing of spaces and tabs, the text looks like this:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Miranda said:
+        &#39;It seems to me like the recollection of a dream.   But had I not once four or five women who attended upon me?&#39;
+
+Prospero answered:
+        &#39;You had, and more. How is it that this still lives in your mind?  Do you remember how you came here?&#39;
+</pre></div>
+</div>
+<p>But once we eliminate tabs by expanding them to an empty string, we collapse
+multiple spaces into a single space and wrap and indent the quotes with a
+special prefix, the text looks completely different and in the format we want.</p>
+<p>The result of this wrapping is a nicely formatted dictionary output for the
+definitions of the word ‘gorgeous’.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Miranda said:
+ &gt; &#39;It seems to me like the recollection of a dream. But had I not
+ &gt; once four or five women who attended upon me?&#39;
+
+Prospero answered:
+ &gt; &#39;You had, and more. How is it that this still lives in your mind?
+ &gt; Do you remember how you came here?&#39;
+</pre></div>
+</div>
 </section>
 
 
@@ -362,20 +411,20 @@ defined in the project’s cmake file.</p></li>
     <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
-       href="../index.html"
+       href="indent.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">ASAP Text Wrapper documentation</p>
+        <p class="prev-next-title">Advanced indentation control</p>
       </div>
     </a>
     <a class="right-next"
-       href="../license.html"
+       href="../api.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">License</p>
+        <p class="prev-next-title">API reference</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
