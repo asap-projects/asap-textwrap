@@ -1,6 +1,6 @@
 {
-  "esbonio.sphinx.confDir": "${workspaceFolder}/textwrap/doc",
-  "esbonio.sphinx.buildDir": "${workspaceFolder}/out/html",
+  "esbonio.sphinx.confDir": "${workspaceFolder}/doc",
+  "esbonio.sphinx.buildDir": "${workspaceFolder}/out/esbonio",
   "editor.rulers": [
     80,
     100

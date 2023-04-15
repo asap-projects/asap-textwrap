@@ -22,4 +22,5 @@ Tokenizer
 =========
 
 .. doxygenclass:: asap::wrap::detail::Tokenizer
+   :project: textwrap
    :members:

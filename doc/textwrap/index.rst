@@ -6,9 +6,9 @@
      ^ for sub-subsections
      " for paragraphs
 
-###############################
-ASAP text wrapper documentation
-###############################
+####################
+Module: Text Wrapper
+####################
 
 .. |date| date::
 
@@ -18,13 +18,8 @@ Last Updated on |date|
    :maxdepth: 2
    :hidden:
 
-   Usage <usage>
-   API <api>
-   License <license>
-   Version <version>
-
-Welcome! This is the documentation for the *textwrap* module, part of the *asap*
-project.
+   Usage <./usage>
+   API <./api>
 
 This module simplifies the task of formatting text in fixed width columns and
 indenting it properly. Often, applications that needs to pretty print text or
@@ -45,7 +40,7 @@ single very long line:
 But when wrapped at 50 characters per line, it will display nicely within the
 limited available width:
 
-  .. image:: /_static/simple-wrapped-text.png
+  .. image:: /_static/textwrap/simple-wrapped-text.png
     :width: 500
     :alt: Text wrapped at 50 characters maximum width.
 

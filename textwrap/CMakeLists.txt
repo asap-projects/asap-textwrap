@@ -102,8 +102,6 @@ asap_with_doxygen(
   INPUT_PATH
   "${CMAKE_CURRENT_SOURCE_DIR}/src ${CMAKE_CURRENT_SOURCE_DIR}/include")
 
-asap_with_sphinx(${MODULE_TARGET_NAME})
-
 # ==============================================================================
 # Deployment instructions
 # ==============================================================================

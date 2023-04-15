@@ -6,9 +6,9 @@
      ^ for sub-subsections
      " for paragraphs
 
-###############################
-ASAP Text Wrapper documentation
-###############################
+##########################
+Project: ASAP Text Wrapper
+##########################
 
 .. |date| date::
 
@@ -19,27 +19,25 @@ Last Updated on |date|
    :titlesonly:
    :hidden:
 
+   textwrap/index
    tools/index
    license
    changelog.md
    version
 
-Welcome! This is the documentation for the
-`asap-textwrap <https://github.com/asap-projects/asap-textwrap>`_ |version|
-project.
-
-This is a build container for the
-`textwrap <https://github.com/asap-projects/textwrap>`_
-module. It uses the `asap <https://github.com/abdes/asap>`_ integrated build
-system and follows its development workflow.
+Welcome! This is the documentation for the `asap-textwrap
+<https://github.com/asap-projects/asap-textwrap>`_ |version| project. This
+project uses the `asap <https://github.com/abdes/asap>`_ integrated build system
+and follows its documentation frameowork and development workflow.
 
 Parts of the documentation
 ==========================
 
-:doc:`textwrap <textwrap:api>`
-------------------------------
-  *start here to understand the classes provided by the library and how to use
-  them.*
+:doc:`Module: textwrap <textwrap/index>`
+----------------------------------------
+  *start here to understand the Text Wrapper module design, its public APIs and
+  the different ways you can use it. Several detailed examples are also provided
+  illustrating the typical and more advanced usage scenarios.*
 
 `Developer Guides <https://abdes.github.io/asap/asap_master/html/project-development/index.html>`_
 --------------------------------------------------------------------------------------------------
