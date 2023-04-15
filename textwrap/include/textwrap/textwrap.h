@@ -94,7 +94,6 @@ private:
 
   std::string tab_{DEFAULT_TAB_EXPANSION};
 
-  bool replace_ws_{false};
   bool collapse_ws_{false};
   bool trim_lines_{false};
 
@@ -124,19 +123,6 @@ ASAP_TEXTWRAP_API auto operator<<(std::ostream &out, const TextWrapper &wrapper)
  * **Example**
  *
  * \snippet textwrapper_example.cpp Example usage
- *
- * **width** (default: 80)
- *
- * The maximum length of wrapped lines. As long as there are no individual words
- * in the input text longer than width, TextWrapper guarantees that no output
- * line will be longer than width characters.
- *
- * **tab** (default: "\t")
- *
- * All tab characters in text are expanded using the `tab` string. This is the
- * first transformation that happens before wrapping.
- *
- * **
  */
 class TextWrapperBuilder {
 public:

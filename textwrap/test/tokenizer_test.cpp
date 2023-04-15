@@ -23,11 +23,10 @@ namespace {
 TEST(TokenizerTest, Example) {
   //! [Tokenizer example]
   constexpr const char *tab = " ";
-  constexpr bool replace_ws = true;
   constexpr bool collapse_ws = true;
   constexpr bool break_on_hyphens = true;
 
-  const Tokenizer tokenizer{tab, replace_ws, collapse_ws, break_on_hyphens};
+  const Tokenizer tokenizer{tab, collapse_ws, break_on_hyphens};
 
   constexpr const char *text = "Why? \nJust plain \tfinger-licking good!";
   std::vector<Token> tokens;
@@ -64,7 +63,7 @@ TEST(TokenizerTest, Example) {
 
 // NOLINTNEXTLINE
 TEST(TokenizerTest, CallsTokenConsumerWhenTokenIsReady) {
-  const Tokenizer tokenizer{"\t", false, false, false};
+  const Tokenizer tokenizer{"\t", false, false};
 
   //! [Example token consumer]
   std::vector<Token> tokens;
@@ -86,8 +85,6 @@ using ParamType = std::tuple<
     std::string,
     // `tab` expansion
     std::string,
-    // replace white space
-    bool,
     // collapse white space
     bool,
     // break on hyphens
@@ -99,9 +96,8 @@ class TokenizerScenariosTest : public ::testing::TestWithParam<ParamType> {};
 
 // NOLINTNEXTLINE
 TEST_P(TokenizerScenariosTest, Tokenize) {
-  const auto &[text, tab, replace_ws, collapse_ws, break_on_hyphens, expected] =
-      GetParam();
-  const Tokenizer tokenizer{tab, replace_ws, collapse_ws, break_on_hyphens};
+  const auto &[text, tab, collapse_ws, break_on_hyphens, expected] = GetParam();
+  const Tokenizer tokenizer{tab, collapse_ws, break_on_hyphens};
 
   std::vector<Token> tokens;
   const auto status = tokenizer.Tokenize(
@@ -128,58 +124,57 @@ INSTANTIATE_TEST_SUITE_P(AllOff, TokenizerScenariosTest,
     // clang-format off
     testing::Values(
       ParamType{"",
-        "\t", false, false, false,
+        "\t", false, false,
         {
         }},
       ParamType{"\n",
-        "\t", false, false, false,
+        "\t", false, false,
         {
           {TokenType::NewLine, ""}
         }},
       ParamType{" \n",
-        "\t", false, false, false,
+        "\t", false, false,
         {
           {TokenType::WhiteSpace, " "},
           {TokenType::NewLine, ""}
         }},
       ParamType{"\t\n",
-        "\t", false, false, false,
+        "\t", false, false,
         {
           {TokenType::WhiteSpace, "\t"},
           {TokenType::NewLine, ""}
         }},
       ParamType{"\r\n",
-        "\t", false, false, false,
+        "\t", false, false,
         {
-          {TokenType::WhiteSpace, " "},
           {TokenType::NewLine, ""}
         }},
       ParamType{" \t\n",
-        "\t", false, false, false,
+        "\t", false, false,
         {
           {TokenType::WhiteSpace, " \t"},
           {TokenType::NewLine, ""}
         }},
       ParamType{" \t\n ",
-        "\t", false, false, false,
+        "\t", false, false,
         {
           {TokenType::WhiteSpace, " \t"},
           {TokenType::NewLine, ""},
           {TokenType::WhiteSpace, " "}
         }},
       ParamType{"\n\n",
-        "\t", false, false, false,
+        "\t", false, false,
         {
           {TokenType::ParagraphMark, ""}
         }},
       ParamType{" \n\n",
-        "\t", false, false, false,
+        "\t", false, false,
         {
           {TokenType::WhiteSpace, " "},
           {TokenType::ParagraphMark, ""}
         }},
       ParamType{" \t\n \n\n \t\n \n",
-        "\t", false, false, false,
+        "\t", false, false,
         {
           {TokenType::WhiteSpace, " \t"},
           {TokenType::NewLine, ""},
@@ -191,24 +186,24 @@ INSTANTIATE_TEST_SUITE_P(AllOff, TokenizerScenariosTest,
           {TokenType::NewLine, ""}
         }},
       ParamType{"\n\n\n",
-        "\t", false, false, false,
+        "\t", false, false,
         {
           {TokenType::ParagraphMark, ""},
           {TokenType::NewLine, ""},
         }},
       ParamType{"\n\n\n\n",
-        "\t", false, false, false,
+        "\t", false, false,
         {
           {TokenType::ParagraphMark, ""},
           {TokenType::ParagraphMark, ""}
         }},
       ParamType{"very-very-long-word",
-        "\t", false, false, false,
+        "\t", false, false,
         {
           {TokenType::Chunk, "very-very-long-word"}
         }},
       ParamType{"Items\n\n1.\ta-a-a\n\n\n2.\tbbb or ccc",
-        "\t", false, false, false,
+        "\t", false, false,
         {
           {TokenType::Chunk, "Items"},
           {TokenType::ParagraphMark, ""},
@@ -232,9 +227,9 @@ INSTANTIATE_TEST_SUITE_P(AllOff, TokenizerScenariosTest,
 INSTANTIATE_TEST_SUITE_P(TabExpansionOn, TokenizerScenariosTest,
     // clang-format off
     testing::Values(
-      ParamType{"\t", "    ", false, false, false,
+      ParamType{"\t", "    ", false, false,
         {{TokenType::WhiteSpace, "    "}}},
-      ParamType{"\t\taaa \t \tbbb", "__", false, false, false,
+      ParamType{"\t\taaa \t \tbbb", "__", false, false,
         {
           {TokenType::Chunk, "____aaa"},
           {TokenType::WhiteSpace, " "},
@@ -246,72 +241,33 @@ INSTANTIATE_TEST_SUITE_P(TabExpansionOn, TokenizerScenariosTest,
 );
 
 // NOLINTNEXTLINE
-INSTANTIATE_TEST_SUITE_P(ReplaceWhiteSpaceOn, TokenizerScenariosTest,
-    // clang-format off
-    testing::Values(
-      ParamType{"\t",
-        "\t", true, false, false,
-        {{TokenType::WhiteSpace, " "}}},
-      ParamType{"\t",
-        "  ", true, false, false,
-        {{TokenType::WhiteSpace, "  "}}},
-      ParamType{"\t",
-        "....", true, false, false,
-        {{TokenType::Chunk, "...."}}},
-      ParamType{"\t",
-        "-\n-", true, false, false,
-        {{TokenType::Chunk, "-"},{TokenType::NewLine, ""},{TokenType::Chunk, "-"}}},
-      ParamType{"hello\fworld!\n\nbye\rbye\ncruel\vworld! \r\n ",
-        "..", true, false, false,
-        {
-          {TokenType::Chunk, "hello"},
-          {TokenType::WhiteSpace, " "},
-          {TokenType::Chunk, "world!"},
-          {TokenType::ParagraphMark, ""},
-          {TokenType::Chunk, "bye"},
-          {TokenType::WhiteSpace, " "},
-          {TokenType::Chunk, "bye"},
-          {TokenType::NewLine, ""},
-          {TokenType::Chunk, "cruel"},
-          {TokenType::NewLine, ""},
-          {TokenType::Chunk, "world!"},
-          {TokenType::WhiteSpace, "  "},
-          {TokenType::NewLine, ""},
-          {TokenType::WhiteSpace, " "}
-        }}
-    )
-);
-
-// NOLINTNEXTLINE
 INSTANTIATE_TEST_SUITE_P(CollapseWhiteSpaceOn, TokenizerScenariosTest,
     // clang-format off
     testing::Values(
       ParamType{"\t",
-        "\t", false, true, false,
+        "\t", true, false,
         {{TokenType::WhiteSpace, " "}}},
       ParamType{"\t",
-        "  ", false, true, false,
+        "  ", true, false,
         {{TokenType::WhiteSpace, " "}}},
       ParamType{"\t",
-        "....", false, true, false,
+        "....", true, false,
         {{TokenType::Chunk, "...."}}},
       ParamType{"\t",
-        "-\n-", true, true, false,
+        "-\n-", true, false,
         {
           {TokenType::Chunk, "-"},
           {TokenType::NewLine, ""},
           {TokenType::Chunk, "-"}
         }},
       ParamType{"hello\f   world!\n\nbye\t\rbye \ncruel\v \t world! \r\n ",
-        "..", false, true, false,
+        "..", true, false,
         {
           {TokenType::Chunk, "hello"},
           {TokenType::WhiteSpace, " "},
           {TokenType::Chunk, "world!"},
           {TokenType::ParagraphMark, ""},
-          {TokenType::Chunk, "bye.."},
-          {TokenType::WhiteSpace, " "},
-          {TokenType::Chunk, "bye"},
+          {TokenType::Chunk, "bye..bye"},
           {TokenType::WhiteSpace, " "},
           {TokenType::NewLine, ""},
           {TokenType::Chunk, "cruel"},
@@ -332,19 +288,19 @@ INSTANTIATE_TEST_SUITE_P(BreakOnHyphensOn, TokenizerScenariosTest,
     // clang-format off
     testing::Values(
       ParamType{"a-b",
-        "  ", false, false, true,
+        "  ", false, true,
         {
           {TokenType::Chunk, "a-"},
           {TokenType::Chunk, "b"}
         }},
       ParamType{"universally-true",
-        "  ", false, false, true,
+        "  ", false, true,
         {
           {TokenType::Chunk, "universally-"},
           {TokenType::Chunk, "true"}
         }},
       ParamType{"some things-never-change",
-        "  ", false, false, true,
+        "  ", false, true,
         {
           {TokenType::Chunk, "some"},
           {TokenType::WhiteSpace, " "},
@@ -353,28 +309,28 @@ INSTANTIATE_TEST_SUITE_P(BreakOnHyphensOn, TokenizerScenariosTest,
           {TokenType::Chunk, "change"}
         }},
       ParamType{"a-",
-        "  ", false, false, true,
+        "  ", false, true,
         {
           {TokenType::Chunk, "a-"}
         }},
       ParamType{"a--",
-        "  ", false, false, true,
+        "  ", false, true,
         {
           {TokenType::Chunk, "a-"},
           {TokenType::Chunk, "-"}
         }},
       ParamType{"--",
-        "  ", false, false, true,
+        "  ", false, true,
         {
           {TokenType::Chunk, "--"}
         }},
       ParamType{"---",
-        "  ", false, false, true,
+        "  ", false, true,
         {
           {TokenType::Chunk, "---"}
         }},
       ParamType{"-a-b-c---d-ef",
-        "  ", false, false, true,
+        "  ", false, true,
         {
           {TokenType::Chunk, "-a-"},
           {TokenType::Chunk, "b-"},

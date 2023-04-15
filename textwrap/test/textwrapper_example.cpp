@@ -25,7 +25,6 @@ TEST(TextWrapperExamples, TypicalWrapWithLineBreaksAndCollapsedSpaces) {
   const TextWrapper wrapper = TextWrapper::Create()
                                   .Width(column_width)
                                   .TrimLines()
-                                  .ReplaceWhiteSpace()
                                   .CollapseWhiteSpace()
                                   .IndentWith()
                                   .Initially("")

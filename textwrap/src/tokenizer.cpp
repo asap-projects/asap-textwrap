@@ -240,10 +240,8 @@ struct WhiteSpaceState : public Will<On<InputEnd, TransitionTo<FinalState>>,
                              On<NonWhiteSpaceChar, TransitionTo<WordState>>> {
   using Will::Handle;
 
-  explicit WhiteSpaceState(TokenConsumer callback, const std::string &tab,
-      bool replace_ws, bool collapse_ws)
-      : consume_token_{std::move(callback)}, tab_{tab}, replace_ws_{replace_ws},
-        collapse_ws_{collapse_ws} {
+  explicit WhiteSpaceState(TokenConsumer callback, bool collapse_ws)
+      : consume_token_{std::move(callback)}, collapse_ws_{collapse_ws} {
   }
 
   [[maybe_unused]] static auto OnEnter(const WhiteSpaceChar & /*event*/)
@@ -314,8 +312,6 @@ private:
   bool last_was_newline_{false};
   std::string token_;
   TokenConsumer consume_token_;
-  const std::string &tab_;
-  const bool replace_ws_;
   const bool collapse_ws_;
 };
 
@@ -339,8 +335,7 @@ auto asap::wrap::detail::Tokenizer::Tokenize(
   using Machine =
       StateMachine<InitialState, WordState, WhiteSpaceState, FinalState>;
   Machine machine{InitialState(), WordState(consume_token, break_on_hyphens_),
-      WhiteSpaceState(consume_token, tab_, replace_ws_, collapse_ws_),
-      FinalState(consume_token)};
+      WhiteSpaceState(consume_token, collapse_ws_), FinalState(consume_token)};
 
   bool continue_running{true};
   bool no_errors{true};
@@ -361,17 +356,6 @@ auto asap::wrap::detail::Tokenizer::Tokenize(
     // Expand tabs
     if (*cursor == '\t') {
       transformed = tab_;
-    }
-
-    // Replace white space
-    if (replace_ws_) {
-      std::transform(transformed.begin(), transformed.end(),
-          transformed.begin(), [](char a_char) -> char {
-            return (std::isspace(a_char) != 0 &&
-                       (a_char != '\v' && a_char != '\n'))
-                       ? ' '
-                       : a_char;
-          });
     }
 
     auto transformed_cursor = transformed.begin();

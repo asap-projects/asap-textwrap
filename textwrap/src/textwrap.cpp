@@ -24,8 +24,8 @@
 auto asap::wrap::operator<<(std::ostream &out,
     const asap::wrap::TextWrapper &wrapper) -> std::ostream & {
   out << "{w:" << wrapper.width_ << ",t:'" << wrapper.tab_
-      << "',rw:" << wrapper.replace_ws_ << ",tl:" << wrapper.trim_lines_
-      << ",boh:" << wrapper.break_on_hyphens_ << "}";
+      << ",tl:" << wrapper.trim_lines_ << ",boh:" << wrapper.break_on_hyphens_
+      << "}";
   return out;
 }
 
@@ -246,7 +246,7 @@ void MoveAppend(std::vector<std::string> src, std::vector<std::string> &dst) {
 [[nodiscard]] auto asap::wrap::TextWrapper::Wrap(const std::string &str) const
     -> std::optional<std::vector<std::string>> {
   const auto tokenizer =
-      detail::Tokenizer(tab_, replace_ws_, collapse_ws_, break_on_hyphens_);
+      detail::Tokenizer(tab_, collapse_ws_, break_on_hyphens_);
 
   std::vector<std::string> result;
   std::vector<detail::Token> chunks;
@@ -334,12 +334,6 @@ auto asap::wrap::TextWrapperBuilder::Then(std::string indent)
 auto asap::wrap::TextWrapperBuilder::ExpandTabs(std::string tab)
     -> asap::wrap::TextWrapperBuilder & {
   wrapper.tab_ = std::move(tab);
-  return *this;
-}
-
-auto asap::wrap::TextWrapperBuilder::ReplaceWhiteSpace()
-    -> asap::wrap::TextWrapperBuilder & {
-  wrapper.replace_ws_ = true;
   return *this;
 }
 

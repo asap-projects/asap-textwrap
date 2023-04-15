@@ -112,20 +112,12 @@ using TokenConsumer =
  *    spaces as a tab character should expand to. To keep tabs as they are,
  *    simply specify a `tab` value of `"\t"`.
  *
- * 2. **Replace white space**:
+ * 2. **Special characters**:
  *
- *    controlled with the `replace_ws` configuration parameter. If `true`, after
- *    tab expansion, each white space character will be replaced with a single
- *    `<SPACE>`. However, paragraph markers (two consecutive new lines) will
- *    never be replaced with spaces. They will always produce a
- *    TokenType::ParagraphMark token.
+ *    The special characters '\r' and '\f' are always ignored as they do not add
+ *    value to the proper formatting and wrapping of the text.
  *
- *    \note If tabs are not expanded and `replace_ws` is `true`, each tab
- *    character will be replaced by a single space, which is not the same as tab
- *    expansion.
- *
- *    \note If `replace_ws` is `false`, newlines may appear in the middle of a
- *    line and cause strange output.
+ *    Both '\n' and '\v' are considering as line breaks.
  *
  * 3. **Collapse white space**:
  *
@@ -154,16 +146,14 @@ public:
    * configuration parameters and the associated behaviors.
    *
    * @param tab string to which tab character should be expanded.
-   * @param replace_ws controls white space character replacement.
    * @param collapse_ws controls collapsing of multiple white spaces into a
    * single space.
    * @param break_on_hyphens controls whether hyphens can be used to break words
    * into multiple chunks.
    */
-  explicit Tokenizer(
-      std::string tab, bool replace_ws, bool collapse_ws, bool break_on_hyphens)
-      : tab_(std::move(tab)), replace_ws_{replace_ws},
-        collapse_ws_{collapse_ws}, break_on_hyphens_{break_on_hyphens} {
+  explicit Tokenizer(std::string tab, bool collapse_ws, bool break_on_hyphens)
+      : tab_(std::move(tab)), collapse_ws_{collapse_ws}, break_on_hyphens_{
+                                                             break_on_hyphens} {
   }
 
   /*!
@@ -182,7 +172,6 @@ public:
 
 private:
   const std::string tab_;
-  const bool replace_ws_;
   const bool collapse_ws_;
   const bool break_on_hyphens_;
 };
