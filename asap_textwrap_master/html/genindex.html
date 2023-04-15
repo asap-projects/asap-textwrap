@@ -129,7 +129,21 @@
         <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         <ul class="nav bd-sidenav">
-<li class="toctree-l1 has-children"><a class="reference internal" href="tools/index.html">Project Tools</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul class="simple">
+<li class="toctree-l1 has-children"><a class="reference internal" href="textwrap/index.html">Module: Text Wrapper</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="textwrap/usage.html">Usage</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="textwrap/usage/typical.html">Typical Scenario</a></li>
+<li class="toctree-l3"><a class="reference internal" href="textwrap/usage/indent.html">Advanced indentation control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="textwrap/usage/spaces.html">Cleaning-up spaces in text</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="textwrap/api.html">API</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="textwrap/api/textwrap.html">Public API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="textwrap/api/details.html">Implementation details</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="tools/index.html">Project Tools</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul class="simple">
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
@@ -286,8 +300,53 @@ document.write(`
 <h1 id="index">Index</h1>
 
 <div class="genindex-jumpbox">
+ <a href="#A"><strong>A</strong></a>
  
 </div>
+<h2 id="A">A</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="textwrap/api/details.html#_CPPv4N4asap4wrap6detail9TokenizerE">asap::wrap::detail::Tokenizer (C++ class)</a>
+</li>
+      <li><a href="textwrap/api/details.html#_CPPv4NK4asap4wrap6detail9Tokenizer8TokenizeERKNSt6stringERK13TokenConsumer">asap::wrap::detail::Tokenizer::Tokenize (C++ function)</a>
+</li>
+      <li><a href="textwrap/api/details.html#_CPPv4N4asap4wrap6detail9Tokenizer9TokenizerENSt6stringEbb">asap::wrap::detail::Tokenizer::Tokenizer (C++ function)</a>
+</li>
+      <li><a href="textwrap/api/textwrap.html#_CPPv4N4asap4wrap11TextWrapperE">asap::wrap::TextWrapper (C++ class)</a>
+</li>
+      <li><a href="textwrap/api/textwrap.html#_CPPv4N4asap4wrap11TextWrapper6CreateEv">asap::wrap::TextWrapper::Create (C++ function)</a>
+</li>
+      <li><a href="textwrap/api/textwrap.html#_CPPv4NK4asap4wrap11TextWrapper4FillERKNSt6stringE">asap::wrap::TextWrapper::Fill (C++ function)</a>
+</li>
+      <li><a href="textwrap/api/textwrap.html#_CPPv4N4asap4wrap11TextWrapperlsERNSt7ostreamERK11TextWrapper">asap::wrap::TextWrapper::operator&lt;&lt; (C++ function)</a>
+</li>
+      <li><a href="textwrap/api/textwrap.html#_CPPv4NK4asap4wrap11TextWrapper4WrapERKNSt6stringE">asap::wrap::TextWrapper::Wrap (C++ function)</a>
+</li>
+      <li><a href="textwrap/api/textwrap.html#_CPPv4N4asap4wrap18TextWrapperBuilderE">asap::wrap::TextWrapperBuilder (C++ class)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="textwrap/api/textwrap.html#_CPPv4N4asap4wrap18TextWrapperBuilder14BreakOnHyphensEv">asap::wrap::TextWrapperBuilder::BreakOnHyphens (C++ function)</a>
+</li>
+      <li><a href="textwrap/api/textwrap.html#_CPPv4N4asap4wrap18TextWrapperBuilder18CollapseWhiteSpaceEv">asap::wrap::TextWrapperBuilder::CollapseWhiteSpace (C++ function)</a>
+</li>
+      <li><a href="textwrap/api/textwrap.html#_CPPv4N4asap4wrap18TextWrapperBuilder10ExpandTabsENSt6stringE">asap::wrap::TextWrapperBuilder::ExpandTabs (C++ function)</a>
+</li>
+      <li><a href="textwrap/api/textwrap.html#_CPPv4N4asap4wrap18TextWrapperBuilder10IndentWithEv">asap::wrap::TextWrapperBuilder::IndentWith (C++ function)</a>
+</li>
+      <li><a href="textwrap/api/textwrap.html#_CPPv4N4asap4wrap18TextWrapperBuilder9InitiallyENSt6stringE">asap::wrap::TextWrapperBuilder::Initially (C++ function)</a>
+</li>
+      <li><a href="textwrap/api/textwrap.html#_CPPv4NK4asap4wrap18TextWrapperBuildercv11TextWrapperEv">asap::wrap::TextWrapperBuilder::operator TextWrapper (C++ function)</a>
+</li>
+      <li><a href="textwrap/api/textwrap.html#_CPPv4N4asap4wrap18TextWrapperBuilder4ThenENSt6stringE">asap::wrap::TextWrapperBuilder::Then (C++ function)</a>
+</li>
+      <li><a href="textwrap/api/textwrap.html#_CPPv4N4asap4wrap18TextWrapperBuilder9TrimLinesEv">asap::wrap::TextWrapperBuilder::TrimLines (C++ function)</a>
+</li>
+      <li><a href="textwrap/api/textwrap.html#_CPPv4N4asap4wrap18TextWrapperBuilder5WidthE6size_t">asap::wrap::TextWrapperBuilder::Width (C++ function)</a>
+</li>
+  </ul></td>
+</tr></table>
+
 
 
                 </article>
