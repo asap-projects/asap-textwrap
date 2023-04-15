@@ -158,6 +158,14 @@ auto WrapChunks(const std::vector<asap::wrap::detail::Token> &chunks,
         // }
         cur_chunk_in_line++;
       }
+
+      // If we reach the end, having skipped white spaces all the way, then this
+      // is a line that can take all available chunks starting from cur_chunk.
+      if (cur_chunk_in_line == num_chunks &&
+          first_chunk_in_line == cur_chunk_in_line) {
+        costs[cur_chunk] = 0;
+        optimized[cur_chunk] = num_chunks - 1;
+      }
     } while (cur_chunk > 0);
   }
 
