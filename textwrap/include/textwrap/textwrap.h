@@ -34,7 +34,7 @@ class TextWrapperBuilder;
  * TextWrapperBuilder, which maintains coherent configuration values and offers
  * an easy to use fluent interface to set them.
  *
- * Following is an example of how to initialize and use a TextWrapper:
+ * **Example**
  *
  * \snippet textwrapper_example.cpp Example usage
  *
@@ -81,7 +81,6 @@ public:
   static ASAP_TEXTWRAP_API auto Create() -> TextWrapperBuilder;
 
   friend class TextWrapperBuilder;
-
   friend ASAP_TEXTWRAP_API auto operator<<(
       std::ostream &out, const TextWrapper &wrapper) -> std::ostream &;
 
@@ -205,30 +204,12 @@ public:
   ASAP_TEXTWRAP_API auto ExpandTabs(std::string tab) -> TextWrapperBuilder &;
 
   /*!
-   * \brief Before wrapping and after tab expansion, replace each white space
-   * character with a single space.
-   *
-   * (default: false)
-   *
-   * Paragraph markers (two consecutive new lines) will never be replaced with
-   * spaces. They will always produce a TokenType::ParagraphMark token.
-   *
-   * \note If tabs are not expanded and `ReplaceWhiteSpace` is true, each tab
-   * character will be replaced by a single space, which is not the same as tab
-   * expansion.
-   *
-   * \note If `ReplaceWhiteSpace` is `false`, newlines may appear in the middle
-   * of a line and cause strange output.
-   */
-  ASAP_TEXTWRAP_API auto ReplaceWhiteSpace() -> TextWrapperBuilder &;
-
-  /*!
    * \brief Replace contiguous series of white spaces with a single space.
    *
    * (default: false)
    *
-   * \note `CollapseWhiteSpace()` supersedes `ReplaceWhiteSpace()` and unless
-   * tab expansion is made with non white space characters, it also superseded.
+   * \note White space collapsing is done after tab expansion, therefore unless
+   * tab expansion is done with non white space characters, it is superseded.
    */
   ASAP_TEXTWRAP_API auto CollapseWhiteSpace() -> TextWrapperBuilder &;
 
