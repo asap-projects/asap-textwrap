@@ -292,12 +292,7 @@ struct WhiteSpaceState : public Will<On<InputEnd, TransitionTo<FinalState>>,
         }
         DispatchToConsumer(TokenType::NewLine);
       }
-
-      if (event.value == '\r' || event.value == '\f') {
-        token_.push_back(' ');
-      } else {
-        token_.push_back(event.value);
-      }
+      token_.push_back(event.value);
     }
     return DoNothing{};
   }
@@ -353,6 +348,13 @@ auto asap::wrap::detail::Tokenizer::Tokenize(
 
   auto cursor = text.begin();
   while (cursor != text.end()) {
+    // '\r' amd '\f' are mot helpful or useful in proper formatting of the
+    // wrapped text. They are simply ignored.
+    if (*cursor == '\r' || *cursor == '\f') {
+      ++cursor;
+      continue;
+    }
+
     Status execution_status;
 
     std::string transformed{(*cursor)};
