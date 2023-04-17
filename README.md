@@ -4,12 +4,6 @@
 
 -+- Build Status -+-
 
-_develop_
-
-[![Build status - develop][build-status-develop-badge]][build-matrix]
-
-_master_
-
 [![Build status - master][build-status-master-badge]][build-matrix]
 
 -+-
@@ -25,23 +19,63 @@ _master_
 </div>
 
 <p align="center">
-  <a href="#key-features">Key Features</a> •
   <a href="#project-documentation">Project Documentation</a> •
   <a href="#getting-started">Getting Started</a> •
   <a href="#Contributing">Contributing</a> •
   <a href="#credits">Credits</a> •
 </p>
 
-## Key Features
+This C++ library simplifies the task of formatting text in fixed width columns
+and indenting it properly. Often, applications that needs to pretty print text
+or display data in tabular format end up doing the alignment, indentation and
+wrapping of each line manually by hardcoding spaces, tabs and line breaks or by
+just assuming that display width is unlimited (which is not true).
 
-This is a C++ library to format text in columns with a maximum width. When a
-line of text is longer than its column's maximum width, the text is
-automatically wrapped. A number of other features are also supported, such as
-adding an initial indent, indenting all lines, etc... Refer to the API
-documentation for more details.
+With this library, wrapping long lines of text while maintaining indentation
+requirements and proper line breaks management is straightforward.
 
-Text can also be laid out by composing columns together in a multi-column
-layout, suitable for tabular data, definitions, etc.
+Here is a simple example: the following text unwrapped would be presented as a
+single very long line:
+
+> There were doors all round the hall, but they were all locked; and when Alice
+> had been all the way down one side and up the other, trying every door, she
+> walked sadly down the middle, wondering how she was ever to get out again.
+
+But when wrapped at `50` characters per line, it will display nicely within the
+limited available width:
+
+```text
+There were doors all round the hall, but they were all
+locked; and when Alice had been all the way down one
+side and up the other, trying every door, she walked
+sadly down the middle, wondering how she was ever to
+get out again.
+```
+
+And the code to get that done is as simple as:
+
+```c++
+  const auto *passage = "There were doors all round the hall, but they ...";
+  const TextWrapper wrapper =
+      TextWrapper::Create().Width(50).TrimLines();
+
+  std::cout << wrapper.Fill(passage).value_or("error") << std::endl;
+```
+
+The capabilities of the library go much further with the following additional
+features:
+
+- **Indentation** using any prefix string, which can be different for the first
+  line of each paragraph.
+- **Tab expansion**, where each `tab` character is expanded to a replacement
+  string (can be spaces or anything else).
+- **Space replacement**, where each spacing character (including `<SPACE>`,
+  `\t`, `\f`, `\r`) is replaced by a single space (' ').
+- **Space collapsing**, where multiple consecutive spacing characters are
+  replaced with a single space (' ').
+- **Line trimming**, where spaces at the start or end of a line are eliminated.
+- **Breaking on hyphens**, where compound words will be broken into separate
+  chunks right after hyphens, as it is customary in English.
 
 ## Project Documentation
 
@@ -125,7 +159,6 @@ git config remote.upstream.tagopt --no-tags
   appropriate
 
 [build-matrix]: https://github.com/asap-projects/asap-textwrap/actions/workflows/cmake-build.yml?branch=master
-[build-status-develop-badge]: https://github.com/asap-projects/asap-textwrap/actions/workflows/cmake-build.yml/badge.svg?branch=develop
 [build-status-master-badge]: https://github.com/asap-projects/asap-textwrap/actions/workflows/cmake-build.yml/badge.svg?branch=master
 [cleanup-thumb]: https://asciinema.org/a/JOXq0l9CLZMolNcGhOnc84tNO.svg
 [cleanup-video]: https://asciinema.org/a/JOXq0l9CLZMolNcGhOnc84tNO?autoplay=1
