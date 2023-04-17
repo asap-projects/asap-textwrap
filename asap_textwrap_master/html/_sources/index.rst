@@ -35,14 +35,14 @@ Parts of the documentation
 
 :doc:`Module: textwrap <textwrap/index>`
 ----------------------------------------
-  *start here to understand the Text Wrapper module design, its public APIs and
-  the different ways you can use it. Several detailed examples are also provided
-  illustrating the typical and more advanced usage scenarios.*
+*start here to understand the Text Wrapper module design, its public APIs and
+the different ways you can use it. Several detailed examples are also provided
+illustrating the typical and more advanced usage scenarios.*
 
 `Developer Guides <https://abdes.github.io/asap/asap_master/html/project-development/index.html>`_
 --------------------------------------------------------------------------------------------------
-  *head over to the `asap` project documentation for detailed guides on how to
-  build and maintain the different targets in this project.*
+*head over to the `asap` project documentation for detailed guides on how to
+build and maintain the different targets in this project.*
 
 :doc:`Project Tools <tools/index>`
 ----------------------------------
