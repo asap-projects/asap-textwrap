@@ -192,8 +192,8 @@ struct WordState : public Will<On<InputEnd, TransitionTo<FinalState>>,
   using Will::Handle;
 
   WordState(TokenConsumer callback, bool break_on_hyphens)
-      : consume_token_{std::move(callback)}, break_on_hyphens_{
-                                                 break_on_hyphens} {
+      : consume_token_{std::move(callback)},
+        break_on_hyphens_{break_on_hyphens} {
   }
 
   [[maybe_unused]] static auto OnEnter(const NonWhiteSpaceChar & /*event*/)

@@ -304,10 +304,6 @@ void MoveAppend(std::vector<std::string> src, std::vector<std::string> &dst) {
   return std::make_optional(result);
 }
 
-auto asap::wrap::TextWrapper::Create() -> asap::wrap::TextWrapperBuilder {
-  return {};
-}
-
 auto asap::wrap::TextWrapperBuilder::Width(size_t width)
     -> asap::wrap::TextWrapperBuilder & {
   wrapper.width_ = width;

@@ -20,7 +20,7 @@ TEST(TextWrapperTrimLinesTest, NoSpaces) {
   constexpr size_t column_width = 30;
   const auto *text = "text";
   const TextWrapper wrapper =
-      TextWrapper::Create().Width(column_width).TrimLines();
+      asap::wrap::MakeWrapper().Width(column_width).TrimLines();
   EXPECT_THAT(wrapper.Fill(text).value(), Eq("text"));
 }
 
@@ -29,7 +29,7 @@ TEST(TextWrapperTrimLinesTest, SpacesInTheMiddle) {
   constexpr size_t column_width = 30;
   const auto *text = "text with spaces inside";
   const TextWrapper wrapper =
-      TextWrapper::Create().Width(column_width).TrimLines();
+      asap::wrap::MakeWrapper().Width(column_width).TrimLines();
   EXPECT_THAT(wrapper.Fill(text).value(), Eq("text with spaces inside"));
 }
 
@@ -38,7 +38,7 @@ TEST(TextWrapperTrimLinesTest, SpacesAtStart) {
   constexpr size_t column_width = 30;
   const auto *text = "   spaces_at_start";
   const TextWrapper wrapper =
-      TextWrapper::Create().Width(column_width).TrimLines();
+      asap::wrap::MakeWrapper().Width(column_width).TrimLines();
   EXPECT_THAT(wrapper.Fill(text).value(), Eq("spaces_at_start"));
 }
 
@@ -47,7 +47,7 @@ TEST(TextWrapperTrimLinesTest, SpacesAtEnd) {
   constexpr size_t column_width = 5;
   const auto *text = "spaces_at_end   ";
   const TextWrapper wrapper =
-      TextWrapper::Create().Width(column_width).TrimLines();
+      asap::wrap::MakeWrapper().Width(column_width).TrimLines();
   EXPECT_THAT(wrapper.Fill(text).value(), Eq("spaces_at_end"));
 }
 
@@ -56,7 +56,7 @@ TEST(TextWrapperTrimLinesTest, ManySpacesAtEndTrimmed) {
   constexpr size_t column_width = 5;
   const auto *text = "spaces_at_end            ";
   const TextWrapper wrapper =
-      TextWrapper::Create().Width(column_width).TrimLines();
+      asap::wrap::MakeWrapper().Width(column_width).TrimLines();
   EXPECT_THAT(wrapper.Fill(text).value(), Eq("spaces_at_end"));
 }
 
@@ -65,7 +65,7 @@ TEST(TextWrapperTrimLinesTest, SpacesAtEveryWhere) {
   constexpr size_t column_width = 30;
   const auto *text = "    spaces\t\teverywhere \f\t   ";
   const TextWrapper wrapper =
-      TextWrapper::Create().Width(column_width).TrimLines();
+      asap::wrap::MakeWrapper().Width(column_width).TrimLines();
   EXPECT_THAT(wrapper.Fill(text).value(), Eq("spaces\t\teverywhere"));
 }
 
@@ -74,7 +74,7 @@ TEST(TextWrapperTrimLinesTest, OnlySpaces) {
   constexpr size_t column_width = 30;
   const auto *text = "    \t \f\t   ";
   const TextWrapper wrapper =
-      TextWrapper::Create().Width(column_width).TrimLines();
+      asap::wrap::MakeWrapper().Width(column_width).TrimLines();
   EXPECT_THAT(wrapper.Fill(text).value(), Eq(""));
 }
 
@@ -83,7 +83,7 @@ TEST(TextWrapperTrimLinesTest, SpacesBeforeNewLine) {
   constexpr size_t column_width = 30;
   const auto *text = "first   \nsecond";
   const TextWrapper wrapper =
-      TextWrapper::Create().Width(column_width).TrimLines();
+      asap::wrap::MakeWrapper().Width(column_width).TrimLines();
   EXPECT_THAT(wrapper.Fill(text).value(), Eq("first\nsecond"));
 }
 
@@ -92,7 +92,7 @@ TEST(TextWrapperTrimLinesTest, SpacesAfterNewLine) {
   constexpr size_t column_width = 30;
   const auto *text = "first\n   second";
   const TextWrapper wrapper =
-      TextWrapper::Create().Width(column_width).TrimLines();
+      asap::wrap::MakeWrapper().Width(column_width).TrimLines();
   EXPECT_THAT(wrapper.Fill(text).value(), Eq("first\nsecond"));
 }
 
@@ -101,7 +101,7 @@ TEST(TextWrapperTrimLinesTest, SpacesAroundNewLine) {
   constexpr size_t column_width = 4;
   const auto *text = "first   \n   second";
   const TextWrapper wrapper =
-      TextWrapper::Create().Width(column_width).TrimLines();
+      asap::wrap::MakeWrapper().Width(column_width).TrimLines();
   EXPECT_THAT(wrapper.Fill(text).value(), Eq("first\nsecond"));
 }
 
@@ -110,7 +110,7 @@ TEST(TextWrapperTrimLinesTest, MultipleLines) {
   constexpr size_t column_width = 10;
   const auto *text = "first   \n   second   \n   third";
   const TextWrapper wrapper =
-      TextWrapper::Create().Width(column_width).TrimLines();
+      asap::wrap::MakeWrapper().Width(column_width).TrimLines();
   EXPECT_THAT(wrapper.Fill(text).value(), Eq("first\nsecond\nthird"));
 }
 
@@ -119,7 +119,7 @@ TEST(TextWrapperTrimLinesTest, OnlySpacesMultipleLines) {
   constexpr size_t column_width = 30;
   const auto *text = "\t  \n   \f \n    ";
   const TextWrapper wrapper =
-      TextWrapper::Create().Width(column_width).TrimLines();
+      asap::wrap::MakeWrapper().Width(column_width).TrimLines();
   EXPECT_THAT(wrapper.Fill(text).value(), Eq("\n\n"));
 }
 

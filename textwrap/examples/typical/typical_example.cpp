@@ -41,7 +41,7 @@ auto main(int /*argc*/, const char ** /*argv*/) -> int {
 
   constexpr size_t column_width = 70;
   const TextWrapper wrapper =
-      TextWrapper::Create().Width(column_width).TrimLines();
+      asap::wrap::MakeWrapper().Width(column_width).TrimLines();
 
   std::cout << wrapper.Fill(passage).value_or("error") << std::endl;
 

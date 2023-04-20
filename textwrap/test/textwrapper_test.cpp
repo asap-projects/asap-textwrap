@@ -21,7 +21,7 @@ namespace {
 TEST(TextWrapperTest, ShortString) {
   constexpr size_t column_width = 30;
   const auto *text = "short string";
-  const TextWrapper wrapper = TextWrapper::Create().Width(column_width);
+  const TextWrapper wrapper = asap::wrap::MakeWrapper().Width(column_width);
   EXPECT_THAT(wrapper.Fill(text).value(), Eq("short string"));
 }
 
@@ -29,7 +29,7 @@ TEST(TextWrapperTest, ShortString) {
 TEST(TextWrapperTest, ExactString) {
   const auto *text = "short string";
   const size_t column_width = std::strlen(text);
-  const TextWrapper wrapper = TextWrapper::Create().Width(column_width);
+  const TextWrapper wrapper = asap::wrap::MakeWrapper().Width(column_width);
   EXPECT_THAT(wrapper.Fill(text).value(), Eq("short string"));
 }
 
@@ -56,7 +56,7 @@ public:
 TEST_P(LongStringTest, Fill) {
   const auto &[width, trim_lines, initial_indent, subsequent_indents,
       expected] = GetParam();
-  auto builder = TextWrapper::Create();
+  auto builder = asap::wrap::MakeWrapper();
   builder.Width(width);
   if (trim_lines) {
     builder.TrimLines();

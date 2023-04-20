@@ -15,7 +15,7 @@
 
 // Seed the random number generator with the current time
 std::random_device rd;
-std::mt19937 rng(rd()); // NOLINT
+std::mt19937 rng(rd());                // NOLINT
 using rng_type = std::uniform_int_distribution<std::mt19937::result_type>;
 rng_type word_char_generator(33, 126); // NOLINT
 rng_type ws_generator(0, 11);          // NOLINT
@@ -143,7 +143,7 @@ auto main(int /*argc*/, const char ** /*argv*/) -> int {
     auto text = GenerateText(i);
     const auto size = text.size();
     for (size_t column_width = 1; column_width < size; ++column_width) {
-      const TextWrapper &text_wrapper = TextWrapper::Create()
+      const TextWrapper &text_wrapper = asap::wrap::MakeWrapper()
                                             .Width(column_width)
                                             .CollapseWhiteSpace()
                                             .BreakOnHyphens()

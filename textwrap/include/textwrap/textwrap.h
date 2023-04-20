@@ -74,12 +74,6 @@ public:
   [[nodiscard]] ASAP_TEXTWRAP_API auto Fill(const std::string &str) const
       -> std::optional<std::string>;
 
-  /*!
-   * \brief Create a new TextWrapperBuilder instance to start building a
-   * TextWrapper.
-   */
-  static ASAP_TEXTWRAP_API auto Create() -> TextWrapperBuilder;
-
   friend class TextWrapperBuilder;
   friend ASAP_TEXTWRAP_API auto operator<<(
       std::ostream &out, const TextWrapper &wrapper) -> std::ostream &;
@@ -218,5 +212,13 @@ public:
 private:
   mutable TextWrapper wrapper;
 };
+
+/*!
+ * \brief Create a new TextWrapperBuilder instance to start building a
+ * TextWrapper.
+ */
+inline auto MakeWrapper() -> asap::wrap::TextWrapperBuilder {
+  return {};
+}
 
 } // namespace asap::wrap

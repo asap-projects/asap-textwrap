@@ -22,7 +22,7 @@ namespace {
 TEST(TextWrapperSpecialCasesTest, EmptyString) {
   constexpr size_t column_width = 30;
   const auto *text = "";
-  const TextWrapper wrapper = TextWrapper::Create().Width(column_width);
+  const TextWrapper wrapper = asap::wrap::MakeWrapper().Width(column_width);
   EXPECT_THAT(wrapper.Fill(text).value(), Eq(""));
 }
 
@@ -30,7 +30,7 @@ TEST(TextWrapperSpecialCasesTest, EmptyString) {
 TEST(TextWrapperSpecialCasesTest, Space) {
   constexpr size_t column_width = 30;
   const auto *text = " ";
-  const TextWrapper wrapper = TextWrapper::Create().Width(column_width);
+  const TextWrapper wrapper = asap::wrap::MakeWrapper().Width(column_width);
   EXPECT_THAT(wrapper.Fill(text).value(), Eq(" "));
 }
 
@@ -38,7 +38,7 @@ TEST(TextWrapperSpecialCasesTest, Space) {
 TEST(TextWrapperSpecialCasesTest, EmptyLine) {
   constexpr size_t column_width = 30;
   const auto *text = "\n";
-  const TextWrapper wrapper = TextWrapper::Create().Width(column_width);
+  const TextWrapper wrapper = asap::wrap::MakeWrapper().Width(column_width);
   EXPECT_THAT(wrapper.Fill(text).value(), Eq(""));
 }
 
@@ -46,7 +46,7 @@ TEST(TextWrapperSpecialCasesTest, EmptyLine) {
 TEST(TextWrapperSpecialCasesTest, OneShortWord) {
   constexpr size_t column_width = 30;
   const auto *text = "hello";
-  const TextWrapper wrapper = TextWrapper::Create().Width(column_width);
+  const TextWrapper wrapper = asap::wrap::MakeWrapper().Width(column_width);
   EXPECT_THAT(wrapper.Fill(text).value(), Eq("hello"));
 }
 
@@ -54,14 +54,14 @@ TEST(TextWrapperSpecialCasesTest, OneShortWord) {
 TEST(TextWrapperSpecialCasesTest, OneLongWord) {
   constexpr size_t column_width = 5;
   const auto *text = "unequivocally";
-  const TextWrapper wrapper = TextWrapper::Create().Width(column_width);
+  const TextWrapper wrapper = asap::wrap::MakeWrapper().Width(column_width);
   EXPECT_THAT(wrapper.Fill(text).value(), Eq("unequivocally"));
 }
 // NOLINTNEXTLINE
 TEST(TextWrapperSpecialCasesTest, EndingWithNewLineAndSpace) {
   constexpr size_t column_width = 10;
   const auto *text = "q\'4\"k4AqFX.  |kWPF{Yh>,\v\t";
-  const TextWrapper wrapper = TextWrapper::Create()
+  const TextWrapper wrapper = asap::wrap::MakeWrapper()
                                   .Width(column_width)
                                   .CollapseWhiteSpace()
                                   .BreakOnHyphens()

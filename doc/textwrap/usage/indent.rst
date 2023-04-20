@@ -41,7 +41,7 @@ Here is an example that displays a list of definitions:
 
     constexpr size_t column_width = 60;
     const TextWrapper term_wrapper =
-        TextWrapper::Create().Width(column_width).TrimLines();
+        asap::wrap::MakeWrapper().Width(column_width).TrimLines();
 
     std::cout << term_wrapper.Fill(term).value_or("error") << std::endl;
 
@@ -53,7 +53,7 @@ Here is an example that displays a list of definitions:
       first_line_prefix << std::setw(prefix_width - 2) << std::right << index
                         << "  ";
       std::string other_lines_prefix(prefix_width, ' ');
-      TextWrapper definition_wrapper = TextWrapper::Create()
+      TextWrapper definition_wrapper = asap::wrap::MakeWrapper()
                                           .Width(column_width)
                                           .TrimLines()
                                           .IndentWith()

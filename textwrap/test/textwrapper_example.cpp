@@ -22,7 +22,7 @@ TEST(TextWrapperExamples, TypicalWrapWithLineBreaksAndCollapsedSpaces) {
       "of a wife.   ";
 
   constexpr size_t column_width = 28;
-  const TextWrapper wrapper = TextWrapper::Create()
+  const TextWrapper wrapper = asap::wrap::MakeWrapper()
                                   .Width(column_width)
                                   .TrimLines()
                                   .CollapseWhiteSpace()

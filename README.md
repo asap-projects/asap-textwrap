@@ -57,7 +57,7 @@ And the code to get that done is as simple as:
 ```c++
   const auto *passage = "There were doors all round the hall, but they ...";
   const TextWrapper wrapper =
-      TextWrapper::Create().Width(50).TrimLines();
+      asap::wrap::MakeWrapper().Width(50).TrimLines();
 
   std::cout << wrapper.Fill(passage).value_or("error") << std::endl;
 ```

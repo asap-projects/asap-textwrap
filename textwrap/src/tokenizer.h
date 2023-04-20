@@ -152,8 +152,8 @@ public:
    * into multiple chunks.
    */
   explicit Tokenizer(std::string tab, bool collapse_ws, bool break_on_hyphens)
-      : tab_(std::move(tab)), collapse_ws_{collapse_ws}, break_on_hyphens_{
-                                                             break_on_hyphens} {
+      : tab_(std::move(tab)), collapse_ws_{collapse_ws},
+        break_on_hyphens_{break_on_hyphens} {
   }
 
   /*!

@@ -21,7 +21,7 @@ namespace {
 TEST(TextWrapperIndentTest, IndentInitialOnly) {
   constexpr size_t column_width = 6;
   const auto *text = "hello world!";
-  const TextWrapper wrapper = TextWrapper::Create()
+  const TextWrapper wrapper = asap::wrap::MakeWrapper()
                                   .Width(column_width)
                                   .TrimLines()
                                   .IndentWith()
@@ -33,7 +33,7 @@ TEST(TextWrapperIndentTest, IndentInitialOnly) {
 TEST(TextWrapperIndentTest, IndentNoInitial) {
   constexpr size_t column_width = 6;
   const auto *text = "hello world!";
-  const TextWrapper wrapper = TextWrapper::Create()
+  const TextWrapper wrapper = asap::wrap::MakeWrapper()
                                   .Width(column_width)
                                   .TrimLines()
                                   .IndentWith()
@@ -46,7 +46,7 @@ TEST(TextWrapperIndentTest, IndentNoInitial) {
 TEST(TextWrapperIndentTest, IndentAll) {
   constexpr size_t column_width = 6;
   const auto *text = "hello world!";
-  const TextWrapper wrapper = TextWrapper::Create()
+  const TextWrapper wrapper = asap::wrap::MakeWrapper()
                                   .Width(column_width)
                                   .TrimLines()
                                   .IndentWith()
@@ -59,7 +59,7 @@ TEST(TextWrapperIndentTest, IndentAll) {
 TEST(TextWrapperIndentTest, IndentOneWord) {
   constexpr size_t column_width = 3;
   const auto *text = "hello";
-  const TextWrapper wrapper = TextWrapper::Create()
+  const TextWrapper wrapper = asap::wrap::MakeWrapper()
                                   .Width(column_width)
                                   .TrimLines()
                                   .IndentWith()
@@ -72,7 +72,7 @@ TEST(TextWrapperIndentTest, IndentOneWord) {
 TEST(TextWrapperIndentTest, IndentExactWidth) {
   constexpr size_t column_width = 17;
   const auto *text = "hello world!";
-  const TextWrapper wrapper = TextWrapper::Create()
+  const TextWrapper wrapper = asap::wrap::MakeWrapper()
                                   .Width(column_width)
                                   .TrimLines()
                                   .IndentWith()
@@ -85,7 +85,7 @@ TEST(TextWrapperIndentTest, IndentExactWidth) {
 TEST(TextWrapperIndentTest, IndentMultipleLines) {
   constexpr size_t column_width = 10;
   const auto *text = "bye world - welcome universe!";
-  const TextWrapper wrapper = TextWrapper::Create()
+  const TextWrapper wrapper = asap::wrap::MakeWrapper()
                                   .Width(column_width)
                                   .TrimLines()
                                   .IndentWith()
@@ -102,7 +102,7 @@ TEST(TextWrapperIndentTest, IndentMultipleLines) {
 TEST(TextWrapperIndentTest, IndentEmptyStringNotIndented) {
   constexpr size_t column_width = 17;
   const auto *text = "";
-  const TextWrapper wrapper = TextWrapper::Create()
+  const TextWrapper wrapper = asap::wrap::MakeWrapper()
                                   .Width(column_width)
                                   .IndentWith()
                                   .Initially("==== ")
@@ -114,7 +114,7 @@ TEST(TextWrapperIndentTest, IndentEmptyStringNotIndented) {
 TEST(TextWrapperIndentTest, IndentEmptyLineNotIndented) {
   constexpr size_t column_width = 17;
   const auto *text = "\nworld!";
-  const TextWrapper wrapper = TextWrapper::Create()
+  const TextWrapper wrapper = asap::wrap::MakeWrapper()
                                   .Width(column_width)
                                   .IndentWith()
                                   .Initially("==== ")
@@ -126,7 +126,7 @@ TEST(TextWrapperIndentTest, IndentEmptyLineNotIndented) {
 TEST(TextWrapperIndentTest, IndentOnlyNewLineProducesTwoIndentedLines) {
   constexpr size_t column_width = 17;
   const auto *text = "\n";
-  const TextWrapper wrapper = TextWrapper::Create()
+  const TextWrapper wrapper = asap::wrap::MakeWrapper()
                                   .Width(column_width)
                                   .IndentWith()
                                   .Initially("==== ")
@@ -138,7 +138,7 @@ TEST(TextWrapperIndentTest, IndentOnlyNewLineProducesTwoIndentedLines) {
 TEST(TextWrapperIndentTest, IndentNewLineIsIndented) {
   constexpr size_t column_width = 17;
   const auto *text = "hello\nworld!";
-  const TextWrapper wrapper = TextWrapper::Create()
+  const TextWrapper wrapper = asap::wrap::MakeWrapper()
                                   .Width(column_width)
                                   .IndentWith()
                                   .Initially("==== ")
