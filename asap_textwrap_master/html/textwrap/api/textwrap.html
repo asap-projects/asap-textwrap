@@ -380,7 +380,7 @@ which form the core of the text wrapper module public API.</p>
 <span class="w">      </span><span class="s">&quot;of a wife.   &quot;</span><span class="p">;</span>
 
 <span class="w">  </span><span class="k">constexpr</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="n">column_width</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">28</span><span class="p">;</span>
-<span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="n">TextWrapper</span><span class="w"> </span><span class="n">wrapper</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TextWrapper</span><span class="o">::</span><span class="n">Create</span><span class="p">()</span>
+<span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="n">TextWrapper</span><span class="w"> </span><span class="n">wrapper</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">asap</span><span class="o">::</span><span class="n">wrap</span><span class="o">::</span><span class="n">MakeWrapper</span><span class="p">()</span>
 <span class="w">                                  </span><span class="p">.</span><span class="n">Width</span><span class="p">(</span><span class="n">column_width</span><span class="p">)</span>
 <span class="w">                                  </span><span class="p">.</span><span class="n">TrimLines</span><span class="p">()</span>
 <span class="w">                                  </span><span class="p">.</span><span class="n">CollapseWhiteSpace</span><span class="p">()</span>
@@ -438,15 +438,6 @@ which form the core of the text wrapper module public API.</p>
 
 </div>
 <div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-static-functions">Public Static Functions</p>
-<dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N4asap4wrap11TextWrapper6CreateEv">
-<span id="_CPPv3N4asap4wrap11TextWrapper6CreateEv"></span><span id="_CPPv2N4asap4wrap11TextWrapper6CreateEv"></span><span id="asap::wrap::TextWrapper::Create"></span><span class="target" id="classasap_1_1wrap_1_1_text_wrapper_1ab8ea152405e704b3f9010d8b19114b26"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="n"><span class="pre">ASAP_TEXTWRAP_API</span></span><span class="w"> </span><span class="k"><span class="pre">auto</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Create</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="o"><span class="pre">-&gt;</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N4asap4wrap18TextWrapperBuilderE" title="asap::wrap::TextWrapperBuilder"><span class="n"><span class="pre">TextWrapperBuilder</span></span></a><a class="headerlink" href="#_CPPv4N4asap4wrap11TextWrapper6CreateEv" title="Permalink to this definition">#</a><br /></dt>
-<dd><p>Create a new <a class="reference internal" href="#classasap_1_1wrap_1_1_text_wrapper_builder"><span class="std std-ref">TextWrapperBuilder</span></a> instance to start building a <a class="reference internal" href="#classasap_1_1wrap_1_1_text_wrapper"><span class="std std-ref">TextWrapper</span></a>. </p>
-</dd></dl>
-
-</div>
-<div class="breathe-sectiondef docutils container">
 <p class="breathe-sectiondef-title rubric" id="breathe-section-title-friends">Friends</p>
 <dl class="cpp function">
 <dt class="sig sig-object cpp" id="_CPPv4N4asap4wrap11TextWrapperlsERNSt7ostreamERK11TextWrapper">
@@ -484,7 +475,7 @@ which form the core of the text wrapper module public API.</p>
 <span class="w">      </span><span class="s">&quot;of a wife.   &quot;</span><span class="p">;</span>
 
 <span class="w">  </span><span class="k">constexpr</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="n">column_width</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">28</span><span class="p">;</span>
-<span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="n">TextWrapper</span><span class="w"> </span><span class="n">wrapper</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TextWrapper</span><span class="o">::</span><span class="n">Create</span><span class="p">()</span>
+<span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="n">TextWrapper</span><span class="w"> </span><span class="n">wrapper</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">asap</span><span class="o">::</span><span class="n">wrap</span><span class="o">::</span><span class="n">MakeWrapper</span><span class="p">()</span>
 <span class="w">                                  </span><span class="p">.</span><span class="n">Width</span><span class="p">(</span><span class="n">column_width</span><span class="p">)</span>
 <span class="w">                                  </span><span class="p">.</span><span class="n">TrimLines</span><span class="p">()</span>
 <span class="w">                                  </span><span class="p">.</span><span class="n">CollapseWhiteSpace</span><span class="p">()</span>

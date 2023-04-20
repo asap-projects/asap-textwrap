@@ -37,7 +37,7 @@ Here is an example:
         "still lives in your mind?  Do you remember how you came here?'";
 
     constexpr size_t column_width = 70;
-    const TextWrapper wrapper = TextWrapper::Create()
+    const TextWrapper wrapper = asap::wrap::MakeWrapper()
                                     .Width(column_width)
                                     .ExpandTabs("")
                                     .CollapseWhiteSpace()
