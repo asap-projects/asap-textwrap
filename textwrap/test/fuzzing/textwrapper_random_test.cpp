@@ -14,8 +14,8 @@
 #include <common/compilers.h>
 
 // Seed the random number generator with the current time
-std::random_device rd;
-std::mt19937 rng(rd());                // NOLINT
+std::random_device rnd;  // NOLINT
+std::mt19937 rng(rnd()); // NOLINT
 using rng_type = std::uniform_int_distribution<std::mt19937::result_type>;
 rng_type word_char_generator(33, 126); // NOLINT
 rng_type ws_generator(0, 11);          // NOLINT
@@ -92,11 +92,11 @@ public:
   }
 };
 
-std::string escape(const std::string &s) {
+auto escape(const std::string &str) -> std::string {
   std::string result;
 
-  for (char c : s) {
-    switch (c) {
+  for (char chr : str) {
+    switch (chr) {
     case '\\':
       result += "\\\\";
       break;
@@ -123,7 +123,7 @@ std::string escape(const std::string &s) {
       break;
     // Add more cases here
     default:
-      result += c;
+      result += chr;
       break;
     }
   }
