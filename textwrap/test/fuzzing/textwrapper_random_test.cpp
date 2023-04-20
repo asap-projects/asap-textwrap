@@ -21,7 +21,7 @@ rng_type word_char_generator(33, 126); // NOLINT
 rng_type ws_generator(0, 11);          // NOLINT
 rng_type word_size_generator(1, 10);   // NOLINT
 rng_type ws_size_generator(1, 2);      // NOLINT
-rng_type punct_generator(0, 40);       // NOLINT
+rng_type punct_generator(0, 4);        // NOLINT
 
 auto RandomWordChar() -> char {
   return static_cast<char>(word_char_generator(rng));
@@ -53,6 +53,8 @@ auto GenerateText(size_t words) -> std::string {
   for (; words > 0; --words) {
     text += GenerateWord();
     switch (punct_generator(rng)) {
+    case 0:
+      text += ";";
     case 1:
     case 2:
       text += ",";
