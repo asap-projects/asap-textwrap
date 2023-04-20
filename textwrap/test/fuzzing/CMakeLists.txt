@@ -24,9 +24,7 @@ swift_add_valgrind_callgrind(${MAIN_TEST_TARGET_NAME})
 # Run executable test as part of CTest
 # ------------------------------------------------------------------------------
 
-if(ASAP_BUILD_TESTS)
-  add_test(
-    NAME ${MAIN_TEST_TARGET_NAME}
-    COMMAND ${MAIN_TEST_TARGET_NAME}
-    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR})
-endif()
+add_test(
+  NAME "Fuzzing:RandomText"
+  COMMAND $<TARGET_FILE:${MAIN_TEST_TARGET_NAME}>
+  WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR})
